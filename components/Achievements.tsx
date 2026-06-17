@@ -12,7 +12,7 @@ const stats = [
   { to: 4, suffix: "+", label: "Competition wins" },
   { to: 8, suffix: "+", label: "Articles published" },
   { to: 20, suffix: "+", label: "Projects shipped" },
-  { to: 8, suffix: ".19", label: "CGPA", raw: true },
+  { to: 8, suffix: ".23", label: "CGPA", raw: true },
 ];
 
 export default function Achievements() {
@@ -36,7 +36,7 @@ export default function Achievements() {
             className="glass rounded-2xl p-5 text-center"
           >
             <div className="font-display text-3xl font-bold gradient-text">
-              {s.raw ? "8.19" : <Counter to={s.to} suffix={s.suffix} />}
+              {s.raw ? "8.23" : <Counter to={s.to} suffix={s.suffix} />}
             </div>
             <div className="mt-1 text-xs uppercase tracking-wider text-space-star/55">
               {s.label}
