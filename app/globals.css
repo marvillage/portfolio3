@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Sora", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #03040a;
+  color: #e6ecff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle deep-space radial wash behind everything */
+.space-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(76, 110, 245, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(124, 92, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 60% at 10% 80%, rgba(56, 189, 248, 0.10), transparent 55%),
+    #03040a;
+}
+
+.glass {
+  background: rgba(10, 14, 39, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(124, 140, 255, 0.12);
+}
+
+.glass:hover {
+  border-color: rgba(124, 140, 255, 0.35);
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #e6ecff 0%, #7c5cff 45%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 140, 255, 0.4), transparent);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #03040a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a2148;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4c6ef5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
