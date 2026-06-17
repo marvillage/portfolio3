@@ -9,7 +9,6 @@ const nextConfig = {
       { protocol: "https", hostname: "github-readme-streak-stats.herokuapp.com" },
     ],
   },
-  transpilePackages: ["three"],
 };
 
 export default nextConfig;

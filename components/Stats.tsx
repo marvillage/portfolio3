@@ -16,7 +16,7 @@ export default function Stats() {
   return (
     <section id="stats" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="04 — Telemetry"
+        index="07 — Telemetry"
         title="Live Stats"
         subtitle="Auto-updating snapshots of my open-source activity and problem solving."
       />

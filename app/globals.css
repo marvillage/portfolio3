@@ -69,6 +69,206 @@ body {
   background: #4c6ef5;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   2D space background (no WebGL)
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Starfields: repeated radial-gradient dots, drifting upward for parallax */
+.stars {
+  position: absolute;
+  inset: -200px;
+  background-repeat: repeat;
+  will-change: transform;
+}
+.stars--sm {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 120px, #cfe0ff, transparent),
+    radial-gradient(1px 1px at 160px 60px, #fff, transparent),
+    radial-gradient(1px 1px at 200px 180px, #bcd0ff, transparent),
+    radial-gradient(1px 1px at 50px 160px, #fff, transparent);
+  background-size: 220px 220px;
+  opacity: 0.7;
+  animation: star-drift 90s linear infinite, twinkle 5s ease-in-out infinite;
+}
+.stars--md {
+  background-image:
+    radial-gradient(1.5px 1.5px at 120px 80px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 280px 220px, #e6ecff, transparent),
+    radial-gradient(1.5px 1.5px at 340px 120px, #fff, transparent),
+    radial-gradient(2px 2px at 60px 260px, #cfe0ff, transparent);
+  background-size: 400px 400px;
+  opacity: 0.85;
+  animation: star-drift 140s linear infinite, twinkle 7s ease-in-out infinite;
+}
+.stars--lg {
+  background-image:
+    radial-gradient(2px 2px at 200px 150px, #fff, transparent),
+    radial-gradient(2.5px 2.5px at 500px 400px, #7c5cff, transparent),
+    radial-gradient(2px 2px at 650px 200px, #38bdf8, transparent),
+    radial-gradient(2.5px 2.5px at 100px 500px, #fff, transparent);
+  background-size: 700px 700px;
+  opacity: 0.9;
+  animation: star-drift 220s linear infinite;
+}
+
+@keyframes star-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-220px); }
+}
+
+/* Soft nebula clouds */
+.nebula {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+.nebula--violet {
+  width: 46vw;
+  height: 46vw;
+  top: -8vw;
+  right: -6vw;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.55), transparent 65%);
+}
+.nebula--cyan {
+  width: 40vw;
+  height: 40vw;
+  bottom: -10vw;
+  left: -8vw;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4), transparent 65%);
+}
+
+/* ── Black hole ──────────────────────────────────────────────────────────── */
+.blackhole-wrap {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: min(46vw, 460px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+.event-horizon {
+  position: absolute;
+  inset: 28%;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 50%, #000 0 58%, rgba(0, 0, 0, 0.85) 70%, transparent 78%);
+  box-shadow:
+    0 0 70px 14px rgba(0, 0, 0, 0.9),
+    inset 0 0 40px 6px rgba(56, 189, 248, 0.15);
+}
+.accretion {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(124, 92, 255, 0.9) 60deg,
+    rgba(56, 189, 248, 0.95) 140deg,
+    transparent 200deg,
+    rgba(124, 92, 255, 0.7) 300deg,
+    transparent 360deg
+  );
+  filter: blur(10px);
+  -webkit-mask: radial-gradient(circle, transparent 33%, #000 38%, #000 60%, transparent 66%);
+  mask: radial-gradient(circle, transparent 33%, #000 38%, #000 60%, transparent 66%);
+  animation: spin 16s linear infinite;
+}
+.accretion--2 {
+  inset: -10%;
+  filter: blur(22px);
+  opacity: 0.55;
+  animation: spin 26s linear infinite reverse;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Shooting stars ──────────────────────────────────────────────────────── */
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+}
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+  transform: translateY(-50%);
+}
+.shooting-star--1 {
+  top: 12%;
+  left: 70%;
+  animation: shoot 7s ease-in 2s infinite;
+}
+.shooting-star--2 {
+  top: 26%;
+  left: 85%;
+  animation: shoot 9s ease-in 5s infinite;
+}
+.shooting-star--3 {
+  top: 8%;
+  left: 50%;
+  animation: shoot 11s ease-in 8s infinite;
+}
+@keyframes shoot {
+  0% { opacity: 0; transform: translate(0, 0) rotate(18deg); }
+  6% { opacity: 1; }
+  18% { opacity: 1; }
+  28% { opacity: 0; transform: translate(-340px, 180px) rotate(18deg); }
+  100% { opacity: 0; transform: translate(-340px, 180px) rotate(18deg); }
+}
+
+/* ── Planets ─────────────────────────────────────────────────────────────── */
+.planet {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.planet--blue {
+  width: 70px;
+  height: 70px;
+  top: 18%;
+  left: 12%;
+  background: radial-gradient(circle at 30% 30%, #5ea8ff, #1e3a8a 70%, #0a1330);
+  box-shadow: 0 0 40px -6px rgba(56, 189, 248, 0.6);
+  animation: float 9s ease-in-out infinite;
+}
+.planet--violet {
+  width: 44px;
+  height: 44px;
+  bottom: 22%;
+  right: 16%;
+  background: radial-gradient(circle at 35% 30%, #b39bff, #5b3df0 70%, #1a1145);
+  box-shadow: 0 0 34px -6px rgba(124, 92, 255, 0.6);
+  animation: float 7s ease-in-out infinite 1s;
+}
+.planet--pale {
+  width: 26px;
+  height: 26px;
+  top: 30%;
+  right: 24%;
+  background: radial-gradient(circle at 35% 30%, #fff, #9fb3d9 70%, #41506e);
+  box-shadow: 0 0 24px -4px rgba(230, 236, 255, 0.5);
+  animation: float 11s ease-in-out infinite 0.5s;
+}
+
+@media (max-width: 640px) {
+  .planet--pale { display: none; }
+  .blackhole-wrap { width: 70vw; top: 38%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

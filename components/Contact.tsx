@@ -55,7 +55,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="05 — Transmit"
+        index="08 — Transmit"
         title="Get In Touch"
         subtitle="Have a project, role, or idea? Send a signal across the void."
       />

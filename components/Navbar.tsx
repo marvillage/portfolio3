@@ -6,8 +6,11 @@ import { Menu, X } from "lucide-react";
 const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Achievements", href: "#achievements" },
   { label: "Writing", href: "#writing" },
+  { label: "Books", href: "#publications" },
   { label: "Stats", href: "#stats" },
   { label: "Contact", href: "#contact" },
 ];
@@ -39,7 +42,7 @@ export default function Navbar() {
           <span className="text-space-star/60">.dev</span>
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-5 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -54,14 +57,14 @@ export default function Navbar() {
 
         <a
           href="#contact"
-          className="hidden rounded-full border border-space-accent/40 bg-space-accent/10 px-4 py-2 text-sm font-medium text-space-star transition-all hover:bg-space-accent/25 hover:shadow-glow md:inline-block"
+          className="hidden rounded-full border border-space-accent/40 bg-space-accent/10 px-4 py-2 text-sm font-medium text-space-star transition-all hover:bg-space-accent/25 hover:shadow-glow lg:inline-block"
         >
           Let&apos;s talk
         </a>
 
         <button
           aria-label="Toggle menu"
-          className="text-space-star md:hidden"
+          className="text-space-star lg:hidden"
           onClick={() => setOpen((o) => !o)}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -69,7 +72,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="glass mx-4 mt-2 rounded-2xl p-4 md:hidden">
+        <div className="glass mx-4 mt-2 rounded-2xl p-4 lg:hidden">
           <ul className="flex flex-col gap-3">
             {links.map((l) => (
               <li key={l.href}>

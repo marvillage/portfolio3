@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, FileText } from "lucide-react";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
+import RotatingRoles from "./RotatingRoles";
 
 export default function Hero() {
   return (
@@ -36,7 +37,16 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-5 text-lg text-space-star/80 sm:text-xl"
         >
-          {profile.roles.join("  ·  ")}
+          I&apos;m a <RotatingRoles roles={profile.roles} />
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="mt-2 font-display text-sm tracking-[0.2em] text-space-star/45 uppercase"
+        >
+          Space Coder · AI Builder · Full-Stack Adventurer
         </motion.p>
 
         <motion.p

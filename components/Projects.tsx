@@ -13,7 +13,7 @@ export default function Projects() {
   return (
     <section id="projects" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="02 — Constellations"
+        index="03 — Constellations"
         title="Projects"
         subtitle="Things I've designed, built and shipped. Each one links to its live deployment or source."
       />
@@ -24,9 +24,10 @@ export default function Projects() {
             key={p.title}
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -8, scale: 1.02 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-            className="glass group relative flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glow"
+            className="glass group relative flex flex-col rounded-2xl p-6 transition-shadow duration-300 hover:shadow-glow"
           >
             <div className="mb-4 flex items-start justify-between">
               <span className="text-3xl" aria-hidden>

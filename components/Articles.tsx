@@ -6,56 +6,72 @@ import { articles, mediumProfile } from "@/data/articles";
 import SectionHeading from "./SectionHeading";
 
 const tagColor: Record<string, string> = {
-  Tech: "text-space-cyan border-space-cyan/30 bg-space-cyan/5",
-  Essay: "text-space-violet border-space-violet/30 bg-space-violet/5",
-  Story: "text-emerald-300 border-emerald-400/30 bg-emerald-400/5",
-  Horror: "text-rose-300 border-rose-400/30 bg-rose-400/5",
+  Tech: "text-space-cyan border-space-cyan/40 bg-space-cyan/10",
+  Essay: "text-space-violet border-space-violet/40 bg-space-violet/10",
+  Story: "text-emerald-300 border-emerald-400/40 bg-emerald-400/10",
+  Horror: "text-rose-300 border-rose-400/40 bg-rose-400/10",
 };
 
 export default function Articles() {
   return (
     <section id="writing" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="03 — Signals"
+        index="05 — Signals"
         title="Writing"
         subtitle="Beyond code, I write essays, reflections and horror stories on Medium."
       />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((a, i) => (
           <motion.a
             key={a.url}
             href={a.url}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -6 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45, delay: (i % 2) * 0.06 }}
-            className="glass group flex items-start justify-between gap-4 rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-glow"
+            transition={{ duration: 0.45, delay: (i % 3) * 0.07 }}
+            className="glass group flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-glow"
           >
-            <div>
-              <div className="mb-2 flex items-center gap-3">
-                <span
-                  className={`rounded-md border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${
-                    tagColor[a.tag] ?? tagColor.Essay
-                  }`}
-                >
-                  {a.tag}
-                </span>
-                <span className="text-xs text-space-star/40">{a.date}</span>
-              </div>
+            {/* cover image */}
+            <div className="relative h-44 overflow-hidden">
+              {a.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={a.image}
+                  alt={a.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              ) : (
+                <div className="h-full w-full bg-gradient-to-br from-space-deep to-space-navy" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-space-void via-space-void/20 to-transparent" />
+              <span
+                className={`absolute left-3 top-3 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur ${
+                  tagColor[a.tag] ?? tagColor.Essay
+                }`}
+              >
+                {a.tag}
+              </span>
+            </div>
+
+            {/* body */}
+            <div className="flex flex-1 flex-col p-5">
+              <span className="mb-1.5 text-xs text-space-star/40">{a.date}</span>
               <h3 className="font-medium leading-snug text-space-star transition-colors group-hover:text-space-cyan">
                 {a.title}
               </h3>
               {a.excerpt && (
-                <p className="mt-1.5 text-sm text-space-star/55">{a.excerpt}</p>
+                <p className="mt-2 text-sm text-space-star/55">{a.excerpt}</p>
               )}
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-space-cyan opacity-0 transition-opacity group-hover:opacity-100">
+                Read story
+                <ArrowUpRight size={14} />
+              </span>
             </div>
-            <ArrowUpRight
-              size={18}
-              className="mt-1 shrink-0 text-space-star/40 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-space-cyan"
-            />
           </motion.a>
         ))}
       </div>
