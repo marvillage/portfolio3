@@ -25,6 +25,8 @@ export const profile = {
   github: "marvillage",
   leetcode: "marvillageman",
   codolio: "marvillage",
+  codechef: "marvillageman",
+  gfg: "kushsrlq43",
 
   experience: [
     {

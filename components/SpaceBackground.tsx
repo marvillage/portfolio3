@@ -1,5 +1,5 @@
-// Pure 2D CSS space background — starfield, meteor shower, a black hole with a
-// rotating accretion ring, and drifting planets. No WebGL / three.js.
+// Pure 2D CSS space background — starfield, red meteor shower (falling stars)
+// and soft nebula glow. No WebGL / three.js.
 
 // Deterministic spread of meteors (no Math.random — keeps SSR stable).
 const meteors = Array.from({ length: 16 }, (_, i) => ({
@@ -41,18 +41,6 @@ export default function SpaceBackground() {
       <div className="shooting-star shooting-star--1" />
       <div className="shooting-star shooting-star--2" />
       <div className="shooting-star shooting-star--3" />
-
-      {/* black hole */}
-      <div className="blackhole-wrap">
-        <div className="accretion" />
-        <div className="accretion accretion--2" />
-        <div className="event-horizon" />
-      </div>
-
-      {/* drifting planets */}
-      <div className="planet planet--blue" />
-      <div className="planet planet--violet" />
-      <div className="planet planet--pale" />
 
       {/* readability vignette */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-space-black/30 via-transparent to-space-black/85" />

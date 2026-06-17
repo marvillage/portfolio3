@@ -139,54 +139,6 @@ body {
   background: radial-gradient(circle, rgba(76, 141, 255, 0.4), transparent 65%);
 }
 
-/* ── Black hole ──────────────────────────────────────────────────────────── */
-.blackhole-wrap {
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  width: min(46vw, 460px);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-}
-.event-horizon {
-  position: absolute;
-  inset: 28%;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 50% 50%, #000 0 58%, rgba(0, 0, 0, 0.85) 70%, transparent 78%);
-  box-shadow:
-    0 0 70px 14px rgba(0, 0, 0, 0.9),
-    inset 0 0 40px 6px rgba(255, 46, 77, 0.18);
-}
-.accretion {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(255, 46, 77, 0.95) 60deg,
-    rgba(76, 141, 255, 0.9) 140deg,
-    transparent 200deg,
-    rgba(255, 46, 77, 0.8) 300deg,
-    transparent 360deg
-  );
-  filter: blur(10px);
-  -webkit-mask: radial-gradient(circle, transparent 33%, #000 38%, #000 60%, transparent 66%);
-  mask: radial-gradient(circle, transparent 33%, #000 38%, #000 60%, transparent 66%);
-  animation: spin 16s linear infinite;
-}
-.accretion--2 {
-  inset: -10%;
-  filter: blur(22px);
-  opacity: 0.55;
-  animation: spin 26s linear infinite reverse;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 /* ── Shooting stars ──────────────────────────────────────────────────────── */
 .shooting-star {
   position: absolute;
@@ -273,45 +225,6 @@ body {
   18% { opacity: 1; }
   28% { opacity: 0; transform: translate(-340px, 180px) rotate(18deg); }
   100% { opacity: 0; transform: translate(-340px, 180px) rotate(18deg); }
-}
-
-/* ── Planets ─────────────────────────────────────────────────────────────── */
-.planet {
-  position: absolute;
-  border-radius: 9999px;
-  will-change: transform;
-}
-.planet--blue {
-  width: 70px;
-  height: 70px;
-  top: 18%;
-  left: 12%;
-  background: radial-gradient(circle at 30% 30%, #5ea8ff, #1e3a8a 70%, #0a1330);
-  box-shadow: 0 0 40px -6px rgba(76, 141, 255, 0.6);
-  animation: float 9s ease-in-out infinite;
-}
-.planet--violet {
-  width: 44px;
-  height: 44px;
-  bottom: 22%;
-  right: 16%;
-  background: radial-gradient(circle at 35% 30%, #ff8a9b, #e11d3a 65%, #4a0a14);
-  box-shadow: 0 0 34px -6px rgba(255, 46, 77, 0.65);
-  animation: float 7s ease-in-out infinite 1s;
-}
-.planet--pale {
-  width: 26px;
-  height: 26px;
-  top: 30%;
-  right: 24%;
-  background: radial-gradient(circle at 35% 30%, #fff, #9fb3d9 70%, #41506e);
-  box-shadow: 0 0 24px -4px rgba(230, 236, 255, 0.5);
-  animation: float 11s ease-in-out infinite 0.5s;
-}
-
-@media (max-width: 640px) {
-  .planet--pale { display: none; }
-  .blackhole-wrap { width: 70vw; top: 38%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

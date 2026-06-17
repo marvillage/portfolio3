@@ -16,10 +16,25 @@ export default function Articles() {
   return (
     <section id="writing" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="05 — Signals"
+        index="08 — Signals"
         title="Writing"
         subtitle="Beyond code, I write essays, reflections and horror stories on Medium."
       />
+
+      <div className="mb-10 flex flex-wrap gap-4">
+        {[
+          { n: `${articles.length}+`, l: "Stories featured" },
+          { n: "4", l: "Genres" },
+          { n: "@KUSH_24", l: "on Medium" },
+        ].map((s) => (
+          <div key={s.l} className="glass rounded-xl px-5 py-3 text-center">
+            <div className="font-display text-xl font-bold gradient-text">{s.n}</div>
+            <div className="text-xs uppercase tracking-wider text-space-star/55">
+              {s.l}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((a, i) => (

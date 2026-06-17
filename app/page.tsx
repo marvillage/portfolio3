@@ -4,6 +4,9 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
+import CodeContent from "@/components/CodeContent";
+import Education from "@/components/Education";
+import Certifications from "@/components/Certifications";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Articles from "@/components/Articles";
@@ -21,6 +24,9 @@ export default function Home() {
         <Hero />
         <About />
         <Experience />
+        <CodeContent />
+        <Education />
+        <Certifications />
         <Projects />
         <Achievements />
         <Articles />

@@ -16,7 +16,7 @@ export default function Stats() {
   return (
     <section id="stats" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="06 — Telemetry"
+        index="09 — Telemetry"
         title="Live Stats"
         subtitle="Auto-updating snapshots of my open-source activity and problem solving."
       />
@@ -86,7 +86,23 @@ export default function Stats() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
         >
-          <Code2 size={16} /> Codolio — full coding profile <ExternalLink size={14} />
+          <Code2 size={16} /> Codolio <ExternalLink size={14} />
+        </a>
+        <a
+          href={`https://www.codechef.com/users/${profile.codechef}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
+        >
+          <Code2 size={16} /> CodeChef <ExternalLink size={14} />
+        </a>
+        <a
+          href={`https://www.geeksforgeeks.org/user/${profile.gfg}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
+        >
+          <Code2 size={16} /> GeeksforGeeks <ExternalLink size={14} />
         </a>
       </div>
     </section>

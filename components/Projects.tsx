@@ -13,7 +13,7 @@ export default function Projects() {
   return (
     <section id="projects" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="03 — Constellations"
+        index="06 — Constellations"
         title="Projects"
         subtitle="Things I've designed, built and shipped. Each one links to its live deployment or source."
       />

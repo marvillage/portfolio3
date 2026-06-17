@@ -19,7 +19,7 @@ export default function Achievements() {
   return (
     <section id="achievements" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="04 — Milestones"
+        index="07 — Milestones"
         title="Achievements"
         subtitle="Wins, ranks and recognitions along the way."
       />
