@@ -7,7 +7,6 @@ import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Articles from "@/components/Articles";
-import Publications from "@/components/Publications";
 import Stats from "@/components/Stats";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -25,7 +24,6 @@ export default function Home() {
         <Projects />
         <Achievements />
         <Articles />
-        <Publications />
         <Stats />
         <Contact />
         <Footer />
