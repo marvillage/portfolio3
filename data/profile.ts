@@ -29,10 +29,11 @@ export const profile = {
   experience: [
     {
       company: "AECAD.ai",
-      role: "Software Engineer (SDE)",
-      period: "Mar 2025 – Present",
+      role: "Software Engineer Intern → SDE (Full-time)",
+      period: "Jan 2026 – Present",
       location: "Remote",
       points: [
+        "Promoted from Software Engineer Intern (Jan–May 2026) to full-time SDE.",
         "Built a FastAPI onboarding system, reducing manual setup time by 40%.",
         "Designed UI flows in Figma and shipped production interfaces with React + TypeScript.",
         "Integrated authentication and RBAC using Clerk with PostgreSQL-backed REST APIs.",
@@ -42,7 +43,7 @@ export const profile = {
     {
       company: "Beehyv",
       role: "Software Developer Intern",
-      period: "Jun 2025 – Present",
+      period: "Jun 2025 – Dec 2025",
       location: "Hyderabad, India",
       points: [
         "Built scalable Spring Boot microservices with secure multi-tenant auth via Keycloak.",
