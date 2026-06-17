@@ -10,13 +10,15 @@ const config: Config = {
       colors: {
         space: {
           black: "#03040a",
-          void: "#060816",
+          void: "#070912",
           navy: "#0a0e27",
           deep: "#0f1535",
           slate: "#1a2148",
-          accent: "#4c6ef5",
-          cyan: "#38bdf8",
-          violet: "#7c5cff",
+          accent: "#ff2e4d", // red — primary accent
+          cyan: "#4c8dff", // navy blue — secondary accent
+          violet: "#ff5470", // red/pink — used in gradients
+          red: "#ff2e4d",
+          crimson: "#b3122e",
           star: "#e6ecff",
         },
       },
@@ -25,8 +27,8 @@ const config: Config = {
         display: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
-        glow: "0 0 40px -10px rgba(76,110,245,0.55)",
-        "glow-cyan": "0 0 36px -8px rgba(56,189,248,0.5)",
+        glow: "0 0 40px -10px rgba(255,46,77,0.55)",
+        "glow-cyan": "0 0 36px -8px rgba(76,141,255,0.5)",
       },
       keyframes: {
         float: {

@@ -25,9 +25,9 @@ body {
 /* Subtle deep-space radial wash behind everything */
 .space-bg {
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(76, 110, 245, 0.18), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(124, 92, 255, 0.12), transparent 55%),
-    radial-gradient(ellipse 70% 60% at 10% 80%, rgba(56, 189, 248, 0.10), transparent 55%),
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 46, 77, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(76, 141, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 60% at 10% 80%, rgba(255, 46, 77, 0.10), transparent 55%),
     #03040a;
 }
 
@@ -39,11 +39,11 @@ body {
 }
 
 .glass:hover {
-  border-color: rgba(124, 140, 255, 0.35);
+  border-color: rgba(255, 46, 77, 0.35);
 }
 
 .gradient-text {
-  background: linear-gradient(120deg, #e6ecff 0%, #7c5cff 45%, #38bdf8 100%);
+  background: linear-gradient(120deg, #e6ecff 0%, #ff2e4d 48%, #4c8dff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -51,7 +51,7 @@ body {
 
 .section-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(124, 140, 255, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 46, 77, 0.45), transparent);
 }
 
 /* Custom scrollbar */
@@ -66,7 +66,7 @@ body {
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4c6ef5;
+  background: #ff2e4d;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -129,14 +129,14 @@ body {
   height: 46vw;
   top: -8vw;
   right: -6vw;
-  background: radial-gradient(circle, rgba(124, 92, 255, 0.55), transparent 65%);
+  background: radial-gradient(circle, rgba(255, 46, 77, 0.5), transparent 65%);
 }
 .nebula--cyan {
   width: 40vw;
   height: 40vw;
   bottom: -10vw;
   left: -8vw;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.4), transparent 65%);
+  background: radial-gradient(circle, rgba(76, 141, 255, 0.4), transparent 65%);
 }
 
 /* ── Black hole ──────────────────────────────────────────────────────────── */
@@ -155,7 +155,7 @@ body {
   background: radial-gradient(circle at 50% 50%, #000 0 58%, rgba(0, 0, 0, 0.85) 70%, transparent 78%);
   box-shadow:
     0 0 70px 14px rgba(0, 0, 0, 0.9),
-    inset 0 0 40px 6px rgba(56, 189, 248, 0.15);
+    inset 0 0 40px 6px rgba(255, 46, 77, 0.18);
 }
 .accretion {
   position: absolute;
@@ -164,10 +164,10 @@ body {
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    rgba(124, 92, 255, 0.9) 60deg,
-    rgba(56, 189, 248, 0.95) 140deg,
+    rgba(255, 46, 77, 0.95) 60deg,
+    rgba(76, 141, 255, 0.9) 140deg,
     transparent 200deg,
-    rgba(124, 92, 255, 0.7) 300deg,
+    rgba(255, 46, 77, 0.8) 300deg,
     transparent 360deg
   );
   filter: blur(10px);
@@ -194,7 +194,7 @@ body {
   height: 2px;
   background: #fff;
   border-radius: 9999px;
-  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 6px 2px rgba(255, 46, 77, 0.8);
   opacity: 0;
 }
 .shooting-star::after {
@@ -204,8 +204,53 @@ body {
   right: 2px;
   width: 120px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+  background: linear-gradient(90deg, rgba(255, 90, 112, 0.9), transparent);
   transform: translateY(-50%);
+}
+
+/* ── Meteor shower (continuous falling stars) ────────────────────────────── */
+.meteors {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.meteor {
+  position: absolute;
+  top: -10%;
+  height: 2px;
+  width: 2px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 8px 2px rgba(255, 46, 77, 0.6);
+  transform: rotate(215deg);
+  animation: meteor-fall linear infinite;
+  opacity: 0;
+}
+.meteor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 46, 77, 0.85), transparent);
+}
+@keyframes meteor-fall {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-900px);
+    opacity: 0;
+  }
 }
 .shooting-star--1 {
   top: 12%;
@@ -242,7 +287,7 @@ body {
   top: 18%;
   left: 12%;
   background: radial-gradient(circle at 30% 30%, #5ea8ff, #1e3a8a 70%, #0a1330);
-  box-shadow: 0 0 40px -6px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 40px -6px rgba(76, 141, 255, 0.6);
   animation: float 9s ease-in-out infinite;
 }
 .planet--violet {
@@ -250,8 +295,8 @@ body {
   height: 44px;
   bottom: 22%;
   right: 16%;
-  background: radial-gradient(circle at 35% 30%, #b39bff, #5b3df0 70%, #1a1145);
-  box-shadow: 0 0 34px -6px rgba(124, 92, 255, 0.6);
+  background: radial-gradient(circle at 35% 30%, #ff8a9b, #e11d3a 65%, #4a0a14);
+  box-shadow: 0 0 34px -6px rgba(255, 46, 77, 0.65);
   animation: float 7s ease-in-out infinite 1s;
 }
 .planet--pale {
