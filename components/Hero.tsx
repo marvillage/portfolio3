@@ -18,7 +18,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="mb-5 inline-block rounded-full border border-space-accent/30 bg-space-navy/40 px-4 py-1.5 text-xs font-medium tracking-widest text-space-cyan uppercase"
         >
-          ✦ Available for opportunities
+          ✦ Currently SDE @ AECAD.ai
         </motion.p>
 
         <motion.h1

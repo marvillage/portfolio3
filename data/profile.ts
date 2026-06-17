@@ -13,7 +13,7 @@ export const profile = {
 
   // Short intro for the hero / about section
   intro:
-    "I build production-grade web platforms and AI systems — from FastAPI onboarding flows and Spring Boot microservices to multi-agent LLM pipelines. CSE @ IIIT Nagpur. When I'm not shipping code, I write stories and essays on Medium.",
+    "Currently a Software Engineer (SDE) at AECAD.ai. I build production-grade web platforms and AI systems — from FastAPI onboarding flows and Spring Boot microservices to multi-agent LLM pipelines. CSE @ IIIT Nagpur. When I'm not shipping code, I write stories and essays on Medium.",
 
   about: [
     "I'm a Computer Science engineer (IIIT Nagpur, '26) who enjoys working across the full stack and the AI layer on top of it. I've built onboarding systems with FastAPI, multi-tenant backends with Spring Boot + Keycloak, and CAD visualization workflows with the ODA Viewer SDK.",
@@ -23,10 +23,22 @@ export const profile = {
 
   // Coding handles
   github: "marvillage",
-  leetcode: "marvillage", // ⚠️ confirm your exact LeetCode username
+  leetcode: "marvillageman",
   codolio: "marvillage",
 
   experience: [
+    {
+      company: "AECAD.ai",
+      role: "Software Engineer (SDE)",
+      period: "Mar 2025 – Present",
+      location: "Remote",
+      points: [
+        "Built a FastAPI onboarding system, reducing manual setup time by 40%.",
+        "Designed UI flows in Figma and shipped production interfaces with React + TypeScript.",
+        "Integrated authentication and RBAC using Clerk with PostgreSQL-backed REST APIs.",
+        "Enhanced CAD visualization workflows using the ODA Viewer SDK for 2D/3D editing.",
+      ],
+    },
     {
       company: "Beehyv",
       role: "Software Developer Intern",
@@ -37,18 +49,6 @@ export const profile = {
         "Optimized large-scale analytical queries on Amazon Redshift; managed secure pipelines via S3.",
         "Implemented OAuth 2.0 integrations under Intentwise Connectors for third-party connectivity.",
         "Built automated reporting pipelines with AWS Lambda, cutting manual reporting effort by 60%.",
-      ],
-    },
-    {
-      company: "AECAD.ai",
-      role: "Software Engineer Intern",
-      period: "Mar 2025 – Jun 2025",
-      location: "Remote",
-      points: [
-        "Built a FastAPI onboarding system, reducing manual setup time by 40%.",
-        "Designed UI flows in Figma and shipped production interfaces with React + TypeScript.",
-        "Integrated authentication and RBAC using Clerk with PostgreSQL-backed REST APIs.",
-        "Enhanced CAD visualization workflows using the ODA Viewer SDK for 2D/3D editing.",
       ],
     },
   ],

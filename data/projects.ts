@@ -31,10 +31,10 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Dendrite AI",
+    title: "Dendrite AI — Whiteboard ML Studio",
     blurb:
-      "An AI-powered web application. (Live on Vercel — update this blurb with the full description.)",
-    tags: ["TypeScript", "Next.js", "AI"],
+      "A collaborative whiteboard with built-in machine learning. Users draw and sketch together in real time over WebSockets, with on-the-fly image classification powered by TensorFlow.js MobileNet.",
+    tags: ["TypeScript", "Vite", "Fabric.js", "TensorFlow.js", "WebSocket"],
     github: "https://github.com/marvillage/dendrite_AI",
     live: "https://dendrite-ai.vercel.app",
     planet: "🌌",
@@ -42,8 +42,8 @@ export const projects: Project[] = [
   {
     title: "DevRishi 2.0",
     blurb:
-      "Developer-focused web platform. (Live on Vercel — update this blurb with the full description.)",
-    tags: ["TypeScript", "Next.js"],
+      "An intelligent Ayurvedic recommendation system. It surfaces drugs and formulations for given diseases/symptoms by searching classical Ayurvedic texts, while accounting for patient constitution, comorbidities and ingredient contraindications.",
+    tags: ["React", "Python", "Node.js", "NLP", "Healthcare"],
     github: "https://github.com/marvillage/DevRishi2.0",
     live: "https://dev-rishi2-0.vercel.app",
     planet: "☄️",
