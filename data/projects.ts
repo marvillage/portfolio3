@@ -31,6 +31,15 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    title: "MindRelic — Web3 AI Memory Vault",
+    blurb:
+      "A cyberpunk journaling app that turns thoughts into AI-analyzed 'memory relics.' Detects mood and keyword themes on-device (no API key needed), with optional Claude-powered analysis, voice journaling via the Web Speech API, and a searchable relic gallery. Explore instantly in guest mode or connect a Web3 wallet.",
+    tags: ["Next.js", "React", "TypeScript", "Web3", "AI", "Tailwind"],
+    github: "https://github.com/marvillage/mindrelic2",
+    live: "https://mindrelic2.vercel.app",
+    planet: "🧠",
+  },
+  {
     title: "Dendrite AI — Whiteboard ML Studio",
     blurb:
       "A collaborative whiteboard with built-in machine learning. Users draw and sketch together in real time over WebSockets, with on-the-fly image classification powered by TensorFlow.js MobileNet.",
