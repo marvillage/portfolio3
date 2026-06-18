@@ -27,6 +27,7 @@ export const projects: Project[] = [
       "Real-time e-waste analytics dashboard. Fine-tuned LLaMA 3.2 + Gemini 1.5 Flash chatbot, a LangGraph multi-agent system for ESG/EPR compliance reporting, and XGBoost/CatBoost hazard-score prediction.",
     tags: ["Python", "Streamlit", "Neo4j", "LLaMA", "LangGraph", "XGBoost"],
     github: "https://github.com/marvillage/G-TRON-2.O",
+    live: "https://mindrelic2-yy5z.vercel.app",
     planet: "🌑",
     featured: true,
   },
