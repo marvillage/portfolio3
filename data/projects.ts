@@ -12,6 +12,16 @@ export type Project = {
 // Edit freely — each project renders as a card. `featured: true` cards show first.
 export const projects: Project[] = [
   {
+    title: "AthleteInsight — Anti-Doping Monitoring",
+    blurb:
+      "Full-stack athlete integrity dashboard. Sports authorities register athletes, track doping-risk scores and biological-passport markers, and flag athletes for review — backed by a real Postgres database with row-level security and Supabase email/password auth.",
+    tags: ["React", "TypeScript", "Supabase", "Postgres", "Auth", "Dashboard"],
+    github: "https://github.com/marvillage/AthleteInsight",
+    live: "https://athlete-insight-gamma.vercel.app",
+    planet: "🏅",
+    featured: true,
+  },
+  {
     title: "Call Insight",
     blurb:
       "End-to-end call-center analytics platform. Speech-to-text + NLP for automated conversation summarization and sentiment analysis, with a web admin panel and interactive dashboards for real-time call metrics.",
