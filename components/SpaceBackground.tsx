@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 
-// Black-and-white space: paper-dot starfield, white ink shooting stars,
-// and a toon-shaded Earth rendered in Three.js (client only, no SSR).
-const EarthCanvas = dynamic(() => import("./three/EarthCanvas"), {
+// Black-and-white space: paper-dot starfield, white ink shooting stars, and a
+// Three.js cosmos (spiral galaxy with a dark core + toon-shaded Earth), client only.
+const CosmosCanvas = dynamic(() => import("./three/CosmosCanvas"), {
   ssr: false,
 });
 
@@ -25,8 +25,8 @@ export default function SpaceBackground() {
         }}
       />
 
-      {/* the Earth, fixed behind content */}
-      <EarthCanvas />
+      {/* galaxy + Earth, fixed behind content */}
+      <CosmosCanvas />
 
       {/* occasional shooting stars */}
       <div className="shooting-star shooting-star--1" />
@@ -36,6 +36,7 @@ export default function SpaceBackground() {
       {/* readability vignettes: bottom fade everywhere, left-side shade on phones */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/20 via-transparent to-ink/80" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/30 to-transparent md:hidden" />
+      <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink/55 via-ink/15 to-transparent md:block" />
     </div>
   );
 }
