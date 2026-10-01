@@ -30,9 +30,12 @@ export default function RotatingRoles({ roles }: { roles: string[] }) {
   }, [text, deleting, index, roles]);
 
   return (
-    <span className="text-space-cyan">
+    <span className="font-display tracking-wide text-paper">
       {text}
-      <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-space-cyan align-middle" style={{ height: "1em" }} />
+      <span
+        className="ml-1 inline-block w-[3px] animate-pulse bg-paper align-middle"
+        style={{ height: "1em" }}
+      />
     </span>
   );
 }

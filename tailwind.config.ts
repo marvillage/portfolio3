@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 
+// Black-and-white comic palette: ink (page), paper (ink on the page), ash (halftone grey).
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,27 +9,29 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        space: {
-          black: "#03040a",
-          void: "#070912",
-          navy: "#0a0e27",
-          deep: "#0f1535",
-          slate: "#1a2148",
-          accent: "#ff2e4d", // red — primary accent
-          cyan: "#4c8dff", // navy blue — secondary accent
-          violet: "#ff5470", // red/pink — used in gradients
-          red: "#ff2e4d",
-          crimson: "#b3122e",
-          star: "#e6ecff",
+        ink: {
+          DEFAULT: "#0a0a0c",
+          2: "#141417",
+          3: "#1f1f24",
         },
+        paper: {
+          DEFAULT: "#f3f1ea",
+          dim: "#c9c6bc",
+        },
+        ash: "#8c8a84",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "Helvetica Neue", "Arial", "sans-serif"],
+        display: ["var(--font-display)", "Impact", "Arial Narrow", "sans-serif"],
+        hand: ["var(--font-hand)", "Comic Sans MS", "Segoe Print", "cursive"],
+        mono: ["var(--font-mono)", "Consolas", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 40px -10px rgba(255,46,77,0.55)",
-        "glow-cyan": "0 0 36px -8px rgba(76,141,255,0.5)",
+        ink: "6px 6px 0 #f3f1ea",
+        "ink-sm": "4px 4px 0 #f3f1ea",
+        ash: "6px 6px 0 #8c8a84",
+        "ash-sm": "3px 3px 0 #8c8a84",
+        glow: "0 0 18px 2px rgba(243,241,234,0.45)",
       },
       keyframes: {
         float: {
@@ -43,11 +46,19 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        flicker: {
+          "0%, 100%": { opacity: "1" },
+          "92%": { opacity: "1" },
+          "93%": { opacity: "0.55" },
+          "94%": { opacity: "1" },
+          "97%": { opacity: "0.7" },
+        },
       },
       animation: {
         float: "float 6s ease-in-out infinite",
         twinkle: "twinkle 3s ease-in-out infinite",
         "fade-up": "fade-up 0.7s ease-out forwards",
+        flicker: "flicker 6s linear infinite",
       },
     },
   },

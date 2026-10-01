@@ -6,21 +6,25 @@ import Reveal from "./Reveal";
 import { GraduationCap, MapPin, Briefcase, PenLine } from "lucide-react";
 
 const facts = [
-  { icon: GraduationCap, label: "Education", value: "B.Tech CSE · IIIT Nagpur ('26)" },
+  {
+    icon: GraduationCap,
+    label: "Education",
+    value: `B.Tech CSE · IIIT Nagpur ('26) · CGPA ${profile.cgpa}`,
+  },
   { icon: Briefcase, label: "Current", value: "SDE @ AECAD.ai" },
-  { icon: MapPin, label: "Based in", value: "Ghaziabad, India" },
+  { icon: MapPin, label: "Based in", value: profile.location },
   { icon: PenLine, label: "Also", value: "Writer on Medium" },
 ];
 
-export default function About() {
+export default function About({ portraitArt }: { portraitArt?: string }) {
   return (
     <section id="about" className="relative mx-auto max-w-6xl px-6 py-24">
-      <SectionHeading index="01 — Origin" title="About Me" />
+      <SectionHeading index="Log 01 · Origin" title="About Me" />
 
       <div className="grid gap-10 md:grid-cols-5">
         <div className="md:col-span-3">
           <Reveal>
-            <div className="space-y-4 leading-relaxed text-space-star/75">
+            <div className="space-y-4 leading-relaxed text-paper/75">
               {profile.about.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
@@ -30,20 +34,29 @@ export default function About() {
 
         <div className="md:col-span-2">
           <Reveal delay={0.15}>
+            {portraitArt && (
+              <div className="panel relative mb-6 overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={portraitArt}
+                  alt="Pencil portrait of Kushagra Srivastava"
+                  className="ink-img block w-full"
+                />
+                <div className="halftone pointer-events-none absolute inset-0 opacity-20" />
+                <span className="caption absolute left-3 top-3">Pilot ID</span>
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1">
               {facts.map((f) => (
-                <div
-                  key={f.label}
-                  className="glass flex items-center gap-3 rounded-xl p-4 transition-all hover:-translate-y-0.5 hover:shadow-glow"
-                >
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-space-accent/15 text-space-cyan">
+                <div key={f.label} className="panel-thin flex items-center gap-3 p-4">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center border-2 border-paper bg-paper text-ink">
                     <f.icon size={18} />
                   </span>
-                  <span>
-                    <span className="block text-xs uppercase tracking-wider text-space-star/45">
+                  <span className="min-w-0">
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-paper/50">
                       {f.label}
                     </span>
-                    <span className="text-sm text-space-star">{f.value}</span>
+                    <span className="text-sm text-paper">{f.value}</span>
                   </span>
                 </div>
               ))}
@@ -53,20 +66,17 @@ export default function About() {
       </div>
 
       {/* Skills */}
-      <Reveal delay={0.2} className="mt-12">
-        <h3 className="mb-5 text-sm font-semibold uppercase tracking-wider text-space-cyan">
-          Tech I work with
-        </h3>
-        <div className="space-y-4">
+      <Reveal delay={0.2} className="mt-14">
+        <span className="caption-ink">Loadout</span>
+        <div className="mt-5 space-y-4">
           {Object.entries(profile.skills).map(([group, items]) => (
-            <div key={group} className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <span className="w-28 shrink-0 text-sm text-space-star/50">{group}</span>
+            <div key={group} className="flex flex-col gap-2 sm:flex-row sm:items-start">
+              <span className="w-32 shrink-0 pt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-paper/50">
+                {group}
+              </span>
               <div className="flex flex-wrap gap-2">
                 {items.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full border border-space-accent/20 bg-space-navy/40 px-3 py-1 text-xs text-space-star/85 transition-colors hover:border-space-cyan/50 hover:text-space-cyan"
-                  >
+                  <span key={s} className="tag">
                     {s}
                   </span>
                 ))}

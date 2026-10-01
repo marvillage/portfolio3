@@ -9,8 +9,8 @@ export const education: Education[] = [
   {
     degree: "B.Tech, Computer Science & Engineering",
     institution: "Indian Institute of Information Technology, Nagpur",
-    period: "Nov 2022 – Jul 2026",
-    detail: "CGPA: 8.23 · Nagpur, Maharashtra",
+    period: "2022 – 2026",
+    detail: "CGPA: 8.32 / 10 · Nagpur, Maharashtra",
   },
   {
     degree: "Class XII (ISC)",

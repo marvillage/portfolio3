@@ -4,50 +4,46 @@ import { motion } from "framer-motion";
 import { Code2, PenLine, Users } from "lucide-react";
 import { involvement } from "@/data/involvement";
 import SectionHeading from "./SectionHeading";
+import ArtStrip from "./ArtStrip";
 
-const kindMeta: Record<string, { color: string; Icon: typeof Code2 }> = {
-  Content: { color: "text-space-cyan border-space-cyan/40 bg-space-cyan/10", Icon: PenLine },
-  Tech: { color: "text-space-accent border-space-accent/40 bg-space-accent/10", Icon: Code2 },
-  Leadership: { color: "text-amber-300 border-amber-400/40 bg-amber-400/10", Icon: Users },
+const kindIcon: Record<string, typeof Code2> = {
+  Content: PenLine,
+  Tech: Code2,
+  Leadership: Users,
 };
 
-export default function CodeContent() {
+export default function CodeContent({ banner }: { banner?: string }) {
   return (
     <section id="code-content" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="03 — Dual Orbit"
+        index="Log 03 · Dual Orbit"
         title="Crafted in Code & Content"
-        subtitle="Two sides of the same orbit — building software and leading content, editorial and creative teams at IIIT Nagpur."
+        subtitle="Two sides of the same orbit: building software and leading content, editorial and creative teams at IIIT Nagpur."
       />
+
+      {banner && <ArtStrip src={banner} alt="A pilot coding and a pilot on stage" caption="Dual orbit" />}
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {involvement.map((r, i) => {
-          const meta = kindMeta[r.kind];
+          const Icon = kindIcon[r.kind] ?? Code2;
           return (
             <motion.div
               key={`${r.title}-${r.org}-${i}`}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -5 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: (i % 3) * 0.06 }}
-              className="glass flex flex-col rounded-2xl p-5 transition-shadow hover:shadow-glow"
+              className="panel-thin flex flex-col p-5"
             >
               <div className="mb-3 flex items-center justify-between">
-                <span
-                  className={`grid h-9 w-9 place-items-center rounded-lg border ${meta.color}`}
-                >
-                  <meta.Icon size={16} />
+                <span className="grid h-9 w-9 place-items-center border-2 border-paper bg-paper text-ink">
+                  <Icon size={16} />
                 </span>
-                <span className="text-xs text-space-star/45">{r.period}</span>
+                <span className="font-mono text-[11px] text-paper/50">{r.period}</span>
               </div>
-              <h3 className="font-medium leading-snug text-space-star">{r.title}</h3>
-              <p className="mt-1 text-sm text-space-star/60">{r.org}</p>
-              <span
-                className={`mt-3 w-fit rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${meta.color}`}
-              >
-                {r.kind}
-              </span>
+              <h3 className="font-display text-xl tracking-wide text-paper">{r.title}</h3>
+              <p className="mt-1 font-hand text-sm text-paper/70">{r.org}</p>
+              <span className="tag mt-4 w-fit">{r.kind}</span>
             </motion.div>
           );
         })}

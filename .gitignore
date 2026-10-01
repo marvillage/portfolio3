@@ -30,3 +30,6 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# original art exports (processed copies live in public/art)
+/art-src

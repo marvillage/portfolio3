@@ -6,11 +6,40 @@ export type Project = {
   live?: string;
   // emoji/planet used as the visual marker
   planet: string;
+  // optional inked thumbnail, e.g. /art/projects/zentro.png (auto-detected by slug when omitted)
+  image?: string;
   featured?: boolean;
 };
 
 // Edit freely — each project renders as a card. `featured: true` cards show first.
 export const projects: Project[] = [
+  {
+    title: "ZENTRO — Multi-Tenant Digital Workplace Platform",
+    blurb:
+      "Modular FastAPI + PostgreSQL backend behind a React/TypeScript workplace: a transactional outbox event bus with at-least-once delivery and dead-letter replay, a durable job scheduler and async full-text search. Three-tier tenant isolation (JWT-scoped org context, repository filtering, row-level security), capability-based auth, TOTP step-up, a hash-chained audit log and Redis rate limiting that fails closed. Ships an approval workflow engine, idempotent payment release, an authorizing WebSocket gateway and HMAC-verified GitHub webhooks.",
+    tags: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "Redis", "Docker", "React", "TypeScript", "WebSockets", "S3"],
+    live: "https://zentro-app.vercel.app",
+    planet: "🛰️",
+    featured: true,
+  },
+  {
+    title: "CivicFix — Civic Issue Reporting & Resolution",
+    blurb:
+      "Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin.",
+    tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary"],
+    github: "https://github.com/marvillage/civicfix",
+    planet: "🏙️",
+    featured: true,
+  },
+  {
+    title: "AgriGuard — Smart Irrigation & Crop Intelligence",
+    blurb:
+      "AI + IoT platform for Indian farmers. ESP32 field nodes stream soil moisture, NPK, flow and energy data to an Express + Prisma + PostgreSQL decision engine (FAO-56 water balance, weather forecasts, ML disease risk) that switches pumps on and off automatically. A Next.js PWA dashboard in English, Hindi, Marathi and Telugu proves the savings in litres, kWh, CO₂ and rupees. Built for EcoLogic 1.0 with team Mavestorm.",
+    tags: ["Next.js", "Express", "Prisma", "PostgreSQL", "IoT / ESP32", "AI / ML", "PWA"],
+    github: "https://github.com/marvillage/AgriGuard",
+    planet: "🌱",
+    featured: true,
+  },
   {
     title: "AthleteInsight — Anti-Doping Monitoring",
     blurb:

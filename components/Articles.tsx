@@ -4,22 +4,18 @@ import { ArrowUpRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { articles, mediumProfile } from "@/data/articles";
 import SectionHeading from "./SectionHeading";
+import ArtStrip from "./ArtStrip";
 
-const tagColor: Record<string, string> = {
-  Tech: "text-space-cyan border-space-cyan/40 bg-space-cyan/10",
-  Essay: "text-space-violet border-space-violet/40 bg-space-violet/10",
-  Story: "text-emerald-300 border-emerald-400/40 bg-emerald-400/10",
-  Horror: "text-rose-300 border-rose-400/40 bg-rose-400/10",
-};
-
-export default function Articles() {
+export default function Articles({ banner }: { banner?: string }) {
   return (
     <section id="writing" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="08 — Signals"
+        index="Log 08 · Transmissions"
         title="Writing"
         subtitle="Beyond code, I write essays, reflections and horror stories on Medium."
       />
+
+      {banner && <ArtStrip src={banner} alt="Writing desk aboard a space station" caption="Transmissions" />}
 
       <div className="mb-10 flex flex-wrap gap-4">
         {[
@@ -27,9 +23,9 @@ export default function Articles() {
           { n: "4", l: "Genres" },
           { n: "@KUSH_24", l: "on Medium" },
         ].map((s) => (
-          <div key={s.l} className="glass rounded-xl px-5 py-3 text-center">
-            <div className="font-display text-xl font-bold gradient-text">{s.n}</div>
-            <div className="text-xs uppercase tracking-wider text-space-star/55">
+          <div key={s.l} className="panel-thin px-5 py-3 text-center">
+            <div className="font-display text-2xl tracking-wide text-paper">{s.n}</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper/55">
               {s.l}
             </div>
           </div>
@@ -45,44 +41,33 @@ export default function Articles() {
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -6 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.45, delay: (i % 3) * 0.07 }}
-            className="glass group flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-glow"
+            className="panel-thin group flex flex-col overflow-hidden"
           >
-            {/* cover image */}
-            <div className="relative h-44 overflow-hidden">
+            {/* cover image, inked */}
+            <div className="relative h-44 overflow-hidden border-b border-paper/40 bg-ink">
               {a.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={a.image}
                   alt={a.title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="ink-img h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className="h-full w-full bg-gradient-to-br from-space-deep to-space-navy" />
+                <div className="halftone h-full w-full opacity-30" />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-space-void via-space-void/20 to-transparent" />
-              <span
-                className={`absolute left-3 top-3 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide backdrop-blur ${
-                  tagColor[a.tag] ?? tagColor.Essay
-                }`}
-              >
-                {a.tag}
-              </span>
+              <div className="halftone pointer-events-none absolute inset-0 opacity-15" />
+              <span className="caption absolute left-3 top-3 !py-0.5 !text-[11px]">{a.tag}</span>
             </div>
 
             {/* body */}
             <div className="flex flex-1 flex-col p-5">
-              <span className="mb-1.5 text-xs text-space-star/40">{a.date}</span>
-              <h3 className="font-medium leading-snug text-space-star transition-colors group-hover:text-space-cyan">
-                {a.title}
-              </h3>
-              {a.excerpt && (
-                <p className="mt-2 text-sm text-space-star/55">{a.excerpt}</p>
-              )}
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-space-cyan opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="mb-1.5 font-mono text-[11px] text-paper/45">{a.date}</span>
+              <h3 className="font-medium leading-snug text-paper">{a.title}</h3>
+              {a.excerpt && <p className="mt-2 text-sm text-paper/60">{a.excerpt}</p>}
+              <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-paper/60 transition-colors group-hover:text-paper">
                 Read story
                 <ArrowUpRight size={14} />
               </span>
@@ -91,13 +76,8 @@ export default function Articles() {
         ))}
       </div>
 
-      <div className="mt-10 text-center">
-        <a
-          href={mediumProfile}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-6 py-3 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
-        >
+      <div className="mt-12 text-center">
+        <a href={mediumProfile} target="_blank" rel="noopener noreferrer" className="btn-ghost">
           <BookOpen size={16} /> Read more on Medium
         </a>
       </div>

@@ -5,105 +5,64 @@ import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
 
-// github-readme-stats themed to the space palette
+// External stat cards themed to ink and paper; `ink-img` greys out anything left over.
 const gh = profile.github;
-const statsUrl = `https://github-readme-stats.vercel.app/api?username=${gh}&show_icons=true&hide_border=true&bg_color=0a0e27&title_color=38bdf8&text_color=e6ecff&icon_color=7c5cff&ring_color=7c5cff`;
-const langsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${gh}&layout=compact&hide_border=true&bg_color=0a0e27&title_color=38bdf8&text_color=e6ecff&langs_count=8`;
-const streakUrl = `https://streak-stats.demolab.com?user=${gh}&hide_border=true&background=0a0e27&ring=7c5cff&fire=38bdf8&currStreakLabel=38bdf8&sideLabels=e6ecff&currStreakNum=e6ecff&sideNums=e6ecff&dayLabels=e6ecff&dates=8899bb`;
-const leetUrl = `https://leetcard.jacoblin.cool/${profile.leetcode}?theme=dark&font=Inter&ext=heatmap&bg=0a0e27`;
+const statsUrl = `https://github-readme-stats.vercel.app/api?username=${gh}&show_icons=true&hide_border=true&bg_color=0a0a0c&title_color=f3f1ea&text_color=f3f1ea&icon_color=8c8a84&ring_color=f3f1ea`;
+const langsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${gh}&layout=compact&hide_border=true&bg_color=0a0a0c&title_color=f3f1ea&text_color=f3f1ea&langs_count=8`;
+const streakUrl = `https://streak-stats.demolab.com?user=${gh}&hide_border=true&background=0a0a0c&ring=f3f1ea&fire=f3f1ea&currStreakLabel=f3f1ea&sideLabels=f3f1ea&currStreakNum=f3f1ea&sideNums=f3f1ea&dayLabels=c9c6bc&dates=8c8a84`;
+const leetUrl = `https://leetcard.jacoblin.cool/${profile.leetcode}?theme=dark&font=IBM%20Plex%20Mono&ext=heatmap&bg=0a0a0c`;
+
+const cards = [
+  { src: statsUrl, alt: "GitHub stats" },
+  { src: langsUrl, alt: "Most used languages" },
+  { src: streakUrl, alt: "GitHub contribution streak" },
+  { src: leetUrl, alt: "LeetCode stats" },
+];
+
+const handles = [
+  { label: "GitHub", href: `https://github.com/${profile.github}`, Icon: Github },
+  { label: "Codolio", href: `https://codolio.com/profile/${profile.codolio}`, Icon: Code2 },
+  { label: "CodeChef", href: `https://www.codechef.com/users/${profile.codechef}`, Icon: Code2 },
+  { label: "GeeksforGeeks", href: `https://www.geeksforgeeks.org/user/${profile.gfg}`, Icon: Code2 },
+];
 
 export default function Stats() {
   return (
     <section id="stats" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="09 — Telemetry"
+        index="Log 09 · Telemetry"
         title="Live Stats"
         subtitle="Auto-updating snapshots of my open-source activity and problem solving."
       />
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Reveal>
-          <div className="glass overflow-hidden rounded-2xl p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={statsUrl}
-              alt="GitHub stats"
-              loading="lazy"
-              className="mx-auto w-full max-w-md"
-            />
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="glass overflow-hidden rounded-2xl p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={langsUrl}
-              alt="Most used languages"
-              loading="lazy"
-              className="mx-auto w-full max-w-md"
-            />
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <div className="glass overflow-hidden rounded-2xl p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={streakUrl}
-              alt="GitHub contribution streak"
-              loading="lazy"
-              className="mx-auto w-full max-w-md"
-            />
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <div className="glass flex flex-col overflow-hidden rounded-2xl p-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={leetUrl}
-              alt="LeetCode stats"
-              loading="lazy"
-              className="mx-auto w-full max-w-md"
-            />
-          </div>
-        </Reveal>
+        {cards.map((c, i) => (
+          <Reveal key={c.alt} delay={i * 0.05}>
+            <div className="panel-thin overflow-hidden p-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.src}
+                alt={c.alt}
+                loading="lazy"
+                className="ink-img mx-auto w-full max-w-md"
+              />
+            </div>
+          </Reveal>
+        ))}
       </div>
 
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <a
-          href={`https://github.com/${profile.github}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
-        >
-          <Github size={16} /> GitHub
-        </a>
-        <a
-          href={`https://codolio.com/profile/${profile.codolio}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
-        >
-          <Code2 size={16} /> Codolio <ExternalLink size={14} />
-        </a>
-        <a
-          href={`https://www.codechef.com/users/${profile.codechef}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
-        >
-          <Code2 size={16} /> CodeChef <ExternalLink size={14} />
-        </a>
-        <a
-          href={`https://www.geeksforgeeks.org/user/${profile.gfg}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-space-accent/40 px-5 py-2.5 text-sm font-medium text-space-star transition-colors hover:bg-space-accent/15"
-        >
-          <Code2 size={16} /> GeeksforGeeks <ExternalLink size={14} />
-        </a>
+      <div className="mt-10 flex flex-wrap justify-center gap-4">
+        {handles.map((h) => (
+          <a
+            key={h.label}
+            href={h.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost !px-4 !py-2.5 !text-sm"
+          >
+            <h.Icon size={15} /> {h.label} <ExternalLink size={12} />
+          </a>
+        ))}
       </div>
     </section>
   );

@@ -22,32 +22,27 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-3" : "py-5"
+        scrolled ? "border-b-2 border-paper bg-ink/95 py-2" : "bg-transparent py-4"
       }`}
     >
-      <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3 transition-all ${
-          scrolled ? "glass shadow-glow" : "bg-transparent"
-        } mx-4 md:mx-auto`}
-      >
-        <a href="#home" className="font-display text-lg font-bold tracking-tight">
-          <span className="gradient-text">KS</span>
-          <span className="text-space-star/60">.dev</span>
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
+        <a href="#home" className="caption" aria-label="Back to top">
+          KS · DEV
         </a>
 
-        <ul className="hidden items-center gap-4 xl:flex">
+        <ul className="hidden items-center gap-5 xl:flex">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm text-space-star/70 transition-colors hover:text-space-cyan"
+                className="font-mono text-[11px] uppercase tracking-[0.16em] text-paper/65 transition-colors hover:text-paper"
               >
                 {l.label}
               </a>
@@ -55,31 +50,29 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-full border border-space-accent/40 bg-space-accent/10 px-4 py-2 text-sm font-medium text-space-star transition-all hover:bg-space-accent/25 hover:shadow-glow xl:inline-block"
-        >
-          Let&apos;s talk
+        <a href="#contact" className="btn-ink hidden !px-4 !py-2 !text-sm xl:inline-flex">
+          Transmit
         </a>
 
         <button
           aria-label="Toggle menu"
-          className="text-space-star xl:hidden"
+          aria-expanded={open}
+          className="grid h-10 w-10 place-items-center border-2 border-paper text-paper xl:hidden"
           onClick={() => setOpen((o) => !o)}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
       {open && (
-        <div className="glass mx-4 mt-2 rounded-2xl p-4 xl:hidden">
-          <ul className="flex flex-col gap-3">
+        <div className="panel mx-4 mt-3 p-4 xl:hidden">
+          <ul className="flex flex-col gap-1">
             {links.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-space-star/80 hover:bg-space-accent/10 hover:text-space-cyan"
+                  className="block px-3 py-2 font-mono text-xs uppercase tracking-[0.16em] text-paper/80 hover:bg-paper hover:text-ink"
                 >
                   {l.label}
                 </a>

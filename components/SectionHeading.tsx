@@ -1,5 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
+// Comic caption box for the log number, display title with ash drop shadow,
+// and a saber line that wipes in from the left.
 export default function SectionHeading({
   index,
   title,
@@ -11,14 +16,16 @@ export default function SectionHeading({
 }) {
   return (
     <Reveal className="mb-12">
-      <p className="mb-2 font-mono text-sm text-space-cyan">{index}</p>
-      <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-        <span className="gradient-text">{title}</span>
-      </h2>
-      {subtitle && (
-        <p className="mt-3 max-w-2xl text-space-star/60">{subtitle}</p>
-      )}
-      <div className="section-line mt-6 w-full" />
+      <span className="caption">{index}</span>
+      <h2 className="title-solid mt-4 text-4xl sm:text-5xl md:text-6xl">{title}</h2>
+      {subtitle && <p className="mt-4 max-w-2xl text-paper/65">{subtitle}</p>}
+      <motion.div
+        className="saber mt-6 w-full"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      />
     </Reveal>
   );
 }

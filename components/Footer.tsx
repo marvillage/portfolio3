@@ -4,11 +4,12 @@ import { profile } from "@/data/profile";
 export default function Footer() {
   return (
     <footer className="relative mx-auto max-w-6xl px-6 pb-10 pt-6">
-      <div className="section-line mb-6 w-full" />
-      <div className="flex flex-col items-center justify-between gap-4 text-sm text-space-star/50 sm:flex-row">
+      <div className="mb-8 text-center">
+        <span className="caption !text-base">To be continued…</span>
+      </div>
+      <div className="flex flex-col items-center justify-between gap-4 border-t-2 border-paper/60 pt-6 font-mono text-xs text-paper/55 sm:flex-row">
         <p>
-          © {`2026`} {profile.name}. Built across the universe with Next.js &amp;
-          Tailwind.
+          © 2026 {profile.name}. Inked with Next.js, Tailwind and Three.js.
         </p>
         <div className="flex gap-4">
           {socials.map((s) => (
@@ -18,7 +19,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="transition-colors hover:text-space-cyan"
+              className="transition-colors hover:text-paper"
             >
               <s.icon size={18} />
             </a>
