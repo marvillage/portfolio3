@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 
 // Black-and-white space: paper-dot starfield, white ink shooting stars,
-// and a line-art station rendered in Three.js (client only, no SSR).
-const StationCanvas = dynamic(() => import("./three/StationCanvas"), {
+// and a toon-shaded Earth rendered in Three.js (client only, no SSR).
+const EarthCanvas = dynamic(() => import("./three/EarthCanvas"), {
   ssr: false,
 });
 
@@ -25,16 +25,17 @@ export default function SpaceBackground() {
         }}
       />
 
-      {/* the station, fixed behind content */}
-      <StationCanvas />
+      {/* the Earth, fixed behind content */}
+      <EarthCanvas />
 
       {/* occasional shooting stars */}
       <div className="shooting-star shooting-star--1" />
       <div className="shooting-star shooting-star--2" />
       <div className="shooting-star shooting-star--3" />
 
-      {/* readability vignette */}
+      {/* readability vignettes: bottom fade everywhere, left-side shade on phones */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/20 via-transparent to-ink/80" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/30 to-transparent md:hidden" />
     </div>
   );
 }

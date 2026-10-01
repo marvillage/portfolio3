@@ -69,3 +69,6 @@ export const articles: Article[] = [
 ];
 
 export const mediumProfile = "https://medium.com/@KUSH_24";
+
+// Total stories published on Medium (RSS only exposes the latest 10). Bump this as you publish.
+export const mediumStats = { published: 51 };

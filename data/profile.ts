@@ -26,6 +26,7 @@ export const profile = {
   about: [
     "I'm a Computer Science engineer (IIIT Nagpur, '26) who works across the full stack and the AI layer on top of it. At AECAD.ai I designed and built the web application and marketing site end to end, from Figma to production React and TypeScript, and built the platform's core 3D CAD/DWG viewer on the ODA Viewer SDK.",
     "On the backend I own services in FastAPI and Spring Boot over PostgreSQL: organization onboarding, user and plan management, auth and RBAC with Clerk and Keycloak, health probes across seven microservices on Kubernetes, and OWASP ZAP scans in CI/CD.",
+    "On the AI side I've fine-tuned LLaMA, orchestrated LangGraph multi-agent systems, shipped XGBoost and CatBoost models, and wired data pipelines on AWS (Lambda, S3, Redshift).",
     "Outside engineering, I'm a writer. I publish short stories and essays on Medium, from corporate-life reflections to horror.",
   ],
 
@@ -95,7 +96,20 @@ export const profile = {
       "WebSockets",
       "SQLAlchemy",
     ],
-    Data: ["PostgreSQL", "MySQL", "Redis", "Amazon Redshift", "Neo4j", "Alembic", "Query optimization"],
+    "AI / ML": [
+      "LangChain",
+      "LangGraph",
+      "LLaMA fine-tuning",
+      "TensorFlow",
+      "Keras",
+      "scikit-learn",
+      "XGBoost",
+      "CatBoost",
+      "OpenCV",
+      "spaCy",
+      "Streamlit",
+    ],
+    Data: ["PostgreSQL", "MySQL", "Redis", "Amazon Redshift", "Neo4j", "Firebase", "Alembic", "Query optimization"],
     "Cloud / DevOps": [
       "AWS Lambda",
       "S3",

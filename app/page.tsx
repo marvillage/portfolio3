@@ -16,6 +16,8 @@ import Stats from "@/components/Stats";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import InkDivider from "@/components/InkDivider";
+import { getMediumPosts } from "@/lib/medium";
+import { mediumStats } from "@/data/articles";
 
 // Optional hand-drawn art lives in /public/art (see public/art/PROMPTS.md).
 // Each piece is used only when its file exists, so the site renders fully
@@ -35,9 +37,13 @@ const listArt = (sub: string) => {
   }
 };
 
-export default function Home() {
+// Medium feed is cached for an hour, so the page re-renders at most hourly.
+export const revalidate = 3600;
+
+export default async function Home() {
   const projectArt = listArt("projects");
   const patches = listArt("patches").map((f) => `/art/patches/${f}`);
+  const medium = await getMediumPosts();
 
   return (
     <>
@@ -61,7 +67,12 @@ export default function Home() {
         <InkDivider />
         <Achievements banner={findArt("achievements-banner")} />
         <InkDivider />
-        <Articles banner={findArt("writing-banner")} />
+        <Articles
+          banner={findArt("writing-banner")}
+          posts={medium.posts}
+          live={medium.live}
+          published={mediumStats.published}
+        />
         <InkDivider />
         <Stats />
         <InkDivider />

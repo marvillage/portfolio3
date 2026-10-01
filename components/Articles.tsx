@@ -2,11 +2,22 @@
 
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import { articles, mediumProfile } from "@/data/articles";
+import { articles, mediumProfile, mediumStats, type Article } from "@/data/articles";
 import SectionHeading from "./SectionHeading";
 import ArtStrip from "./ArtStrip";
 
-export default function Articles({ banner }: { banner?: string }) {
+export default function Articles({
+  banner,
+  posts,
+  live = false,
+  published = mediumStats.published,
+}: {
+  banner?: string;
+  posts?: Article[];
+  live?: boolean;
+  published?: number;
+}) {
+  const list = posts && posts.length > 0 ? posts : articles;
   return (
     <section id="writing" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
@@ -17,9 +28,10 @@ export default function Articles({ banner }: { banner?: string }) {
 
       {banner && <ArtStrip src={banner} alt="Writing desk aboard a space station" caption="Transmissions" />}
 
-      <div className="mb-10 flex flex-wrap gap-4">
+      <div className="mb-10 flex flex-wrap items-stretch gap-4">
         {[
-          { n: `${articles.length}+`, l: "Stories featured" },
+          { n: `${published}+`, l: "Stories published" },
+          { n: String(list.length), l: live ? "Latest · synced hourly" : "Stories featured" },
           { n: "4", l: "Genres" },
           { n: "@KUSH_24", l: "on Medium" },
         ].map((s) => (
@@ -30,10 +42,15 @@ export default function Articles({ banner }: { banner?: string }) {
             </div>
           </div>
         ))}
+        {live && (
+          <div className="flex items-center">
+            <span className="caption animate-flicker">● Live feed</span>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {articles.map((a, i) => (
+        {list.map((a, i) => (
           <motion.a
             key={a.url}
             href={a.url}
