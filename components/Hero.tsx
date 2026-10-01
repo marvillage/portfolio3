@@ -6,12 +6,13 @@ import { ArrowDown, FileText } from "lucide-react";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
 import RotatingRoles from "./RotatingRoles";
+import CrashedConsole from "./CrashedConsole";
 
 type Phase = "pending" | "crawl" | "hero";
 
-// transmission 4.4s, title 4.6s + 6s, crawl 8.2s + 22s  → ~30.5s, then auto-finish
-const CRAWL_MS = 31500;
-const SEEN_KEY = "crawlSeen:v2";
+// The console calls back when it has finished typing; this is only a safety net.
+const MAX_INTRO_MS = 45000;
+const SEEN_KEY = "crawlSeen:v3";
 
 /** Fallback line-art starfighter used until /public/art/hero-ship.png exists. */
 function InkShip({ className = "" }: { className?: string }) {
@@ -62,7 +63,6 @@ function InkShip({ className = "" }: { className?: string }) {
 
 export default function Hero({ shipArt }: { shipArt?: string }) {
   const [phase, setPhase] = useState<Phase>("pending");
-  const [typed, setTyped] = useState("");
 
   const finish = useCallback(() => {
     setPhase("hero");
@@ -72,26 +72,6 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
       /* storage unavailable */
     }
   }, []);
-
-  // Typewriter for the opener line while the transmission is "decrypting".
-  useEffect(() => {
-    if (phase !== "crawl") return;
-    setTyped("");
-    const text = profile.crawlOpener;
-    let i = 0;
-    let tick: ReturnType<typeof setInterval> | undefined;
-    const start = setTimeout(() => {
-      tick = setInterval(() => {
-        i += 1;
-        setTyped(text.slice(0, i));
-        if (i >= text.length && tick) clearInterval(tick);
-      }, 34);
-    }, 900);
-    return () => {
-      clearTimeout(start);
-      if (tick) clearInterval(tick);
-    };
-  }, [phase]);
 
   // Decide once on mount: play the crawl, or go straight to the hero.
   useEffect(() => {
@@ -120,7 +100,7 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
       off();
       finish();
     };
-    const timer = setTimeout(skip, CRAWL_MS);
+    const timer = setTimeout(skip, MAX_INTRO_MS);
     window.addEventListener("keydown", skip);
     window.addEventListener("wheel", skip, { passive: true });
     window.addEventListener("touchmove", skip, { passive: true });
@@ -157,42 +137,10 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
             <div className="stars stars--sm" />
             <div className="stars stars--md" />
 
-            {/* mechanic B: incoming transmission */}
-            <div className="crawl-static pointer-events-none absolute inset-0" />
-            <div className="crawl-tx absolute inset-x-0 top-[34%] px-6 text-center">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-paper/70 sm:text-xs">
-                ▌▌▌ Signal acquired ▌▌▌
-              </p>
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/50 sm:text-xs">
-                From: Station AECAD · Orbit of Titan-1Ab
-              </p>
-              <p className="mx-auto mt-6 max-w-2xl font-hand text-xl leading-snug sm:text-2xl">
-                <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/50 sm:text-xs">
-                  Decrypting:
-                </span>
-                {typed}
-                <span className="crawl-cursor" aria-hidden="true" />
-              </p>
+            {/* a crashed ship's console types the flight log */}
+            <div className="absolute inset-x-0 top-[8vh] bottom-[88px] flex items-center justify-center px-4 sm:px-8">
+              <CrashedConsole onDone={finish} />
             </div>
-
-            <div className="crawl-title absolute inset-x-0 top-[30%] px-6 text-center">
-              <div className="font-display text-lg tracking-[0.25em] sm:text-2xl">
-                {profile.crawlTitle.ep}
-              </div>
-              <div className="title-hollow text-balance text-[clamp(52px,12vw,150px)]">
-                {profile.crawlTitle.big}
-              </div>
-            </div>
-
-            <div className="crawl-stage">
-              <div className="crawl-text">
-                {profile.crawl.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-            </div>
-
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-ink via-ink/80 to-transparent" />
 
             <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-4 px-6 pb-8 sm:px-10">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/50">

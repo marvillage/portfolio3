@@ -322,94 +322,146 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Opening crawl
+   Intro: crashed-ship console (CRT typewriter)
    ───────────────────────────────────────────────────────────────────────── */
-/* Incoming transmission: readout + typed opener, with static that bursts, then cuts */
-.crawl-tx {
-  opacity: 0;
-  animation: crawl-tx 4.4s ease forwards;
+.crt-wrap {
+  width: min(92vw, 880px);
+  transform: rotate(-0.8deg);
+  animation: crt-settle 0.9s ease-out both;
 }
-@keyframes crawl-tx {
-  0% { opacity: 0; transform: translateY(6px); }
-  8% { opacity: 1; transform: translateY(0); }
-  86% { opacity: 1; }
-  90% { opacity: 0.15; }
-  94% { opacity: 1; }
-  100% { opacity: 0; }
+@keyframes crt-settle {
+  0% { opacity: 0; transform: rotate(-0.8deg) translateY(14px) scale(0.985); }
+  100% { opacity: 1; transform: rotate(-0.8deg) translateY(0) scale(1); }
 }
-.crawl-static {
-  opacity: 0;
-  background-image:
-    radial-gradient(circle, rgba(243, 241, 234, 0.9) 0.7px, transparent 1.2px),
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(243, 241, 234, 0.08) 2px 3px);
-  background-size: 5px 5px, 100% 3px;
-  mix-blend-mode: screen;
-  animation: crawl-static 4.4s steps(14) forwards;
+.crt-bezel {
+  position: relative;
+  background: var(--ink-2);
+  border: 3px solid var(--paper);
+  box-shadow: 8px 8px 0 var(--paper), inset 0 0 0 2px var(--ink);
+  padding: 10px 12px 12px;
 }
-@keyframes crawl-static {
-  0% { opacity: 0.4; transform: translateY(0); }
-  10% { opacity: 0.12; transform: translateY(-2px); }
-  20% { opacity: 0.22; transform: translateY(1px); }
-  30% { opacity: 0.07; }
-  45% { opacity: 0.15; transform: translateY(-1px); }
-  60% { opacity: 0.05; }
-  75% { opacity: 0.11; transform: translateY(2px); }
-  86% { opacity: 0.07; }
-  91% { opacity: 0.6; transform: translateY(-3px); }
-  96% { opacity: 0.18; }
-  100% { opacity: 0; }
+.crt-header,
+.crt-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono), Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 234, 0.6);
 }
-.crawl-cursor {
+.crt-header { padding: 2px 4px 8px; }
+.crt-footer { padding: 8px 4px 0; }
+.crt-lights { display: inline-flex; align-items: center; gap: 6px; }
+.crt-lights i {
   display: inline-block;
-  width: 0.55em;
-  height: 1em;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--paper);
+  background: var(--paper);
+}
+.crt-lights .crt-light-blink { animation: crawl-blink 1.4s steps(2) infinite; }
+.crt-lights .crt-light-off { background: transparent; }
+.crt-screen {
+  position: relative;
+  height: min(56vh, 520px);
+  min-height: 280px;
+  overflow: hidden;
+  padding: 18px 20px 26px;
+  background: #050506;
+  border: 2px solid rgba(243, 241, 234, 0.45);
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.95), inset 0 0 2px rgba(243, 241, 234, 0.35);
+  animation: crt-flicker 3.4s steps(1) infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.38) 2px 3px);
+}
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+.crt-tear {
+  transform: translateX(4px) skewX(-1.5deg);
+}
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  6% { opacity: 0.93; }
+  7% { opacity: 1; }
+  44% { opacity: 0.97; }
+  45% { opacity: 1; }
+  70% { opacity: 0.88; }
+  71% { opacity: 1; }
+  86% { opacity: 0.95; }
+  87% { opacity: 1; }
+}
+.crt-line {
+  margin: 0;
+  font-family: var(--font-mono), Consolas, monospace;
+  text-shadow: 0 0 6px rgba(243, 241, 234, 0.35);
+  word-break: break-word;
+}
+.crt-line + .crt-line { margin-top: 0.45em; }
+.crt-sys {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 234, 0.7);
+}
+.crt-title {
+  margin-top: 0.3em !important;
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(30px, 6vw, 56px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--paper);
+  text-shadow: 3px 3px 0 var(--ash);
+}
+.crt-log {
+  margin-top: 0.9em !important;
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.55;
+  color: rgba(243, 241, 234, 0.92);
+  max-width: 70ch;
+}
+.crt-end {
+  margin-top: 1em !important;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 234, 0.55);
+}
+.crt-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
   margin-left: 3px;
   background: var(--paper);
-  vertical-align: -0.12em;
-  animation: crawl-blink 0.9s steps(2) infinite;
+  vertical-align: -0.15em;
+  animation: crawl-blink 0.8s steps(2) infinite;
 }
 @keyframes crawl-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
-.crawl-title {
-  opacity: 0;
-  animation: crawl-title 6s ease-in 4.6s forwards;
-}
-@keyframes crawl-title {
-  0% { opacity: 0; transform: scale(1.3); }
-  8% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0; transform: scale(0.12); }
-}
-.crawl-stage {
+.crt-crack {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  perspective: 320px;
-  perspective-origin: 50% 40%;
-}
-.crawl-text {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: min(84vw, 760px);
-  transform: translateX(-50%) rotateX(25deg);
-  transform-origin: 50% 100%;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  text-align: justify;
-  font-size: clamp(17px, 2.7vw, 32px);
-  line-height: 1.5;
-  opacity: 0; /* hidden until the crawl keyframes take over after the delay */
-  animation: crawl 22s linear 8.2s forwards;
-}
-.crawl-text p + p {
-  margin-top: 1.3em;
-}
-@keyframes crawl {
-  from { opacity: 1; top: 100%; transform: translateX(-50%) rotateX(25deg) translateZ(0); }
-  to { opacity: 1; top: -220%; transform: translateX(-50%) rotateX(25deg) translateZ(-900px); }
+  top: -3px;
+  right: -3px;
+  width: 200px;
+  max-width: 50%;
+  height: auto;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -35,8 +35,7 @@ export default function SpaceBackground() {
 
       {/* readability vignettes: bottom fade everywhere, left-side shade on phones */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/20 via-transparent to-ink/80" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/30 to-transparent md:hidden" />
-      <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink/55 via-ink/15 to-transparent md:block" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/60 via-ink/20 to-transparent md:hidden" />
     </div>
   );
 }

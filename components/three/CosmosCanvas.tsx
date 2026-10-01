@@ -5,23 +5,23 @@ import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Black-and-white cosmos behind the page:
-//  • a spiral galaxy of white particles with a dark core and a bright accretion
-//    ring (the "black hole" look), tilted and slowly turning, faster on scroll
-//  • a real Earth: grayscale NASA-derived map on a toon-shaded sphere, white
-//    fresnel atmosphere and a slow cloud layer, anchored off the right edge
-// Everything is procedural except two small textures in /public/textures.
+//  • a spiral galaxy of soft white dust, centred behind the content and tilted
+//    like a classic deep-field photograph, with a bright core; slow spin that
+//    speeds up a little with scroll
+//  • a real Earth: grayscale NASA-derived map with relief and ocean highlights,
+//    white fresnel atmosphere and a slow cloud layer, rising from the lower right
+// Everything is procedural except four small textures in /public/textures.
 
 type Progress = { p: number; v: number };
 
 const PAPER = "#f3f1ea";
-const EARTH_RADIUS = 1.2;
+const EARTH_RADIUS = 1.25;
 
-/* ---------- galaxy ---------- */
+/* ---------- shared soft sprite ---------- */
 
-/** Soft round sprite so particles read as stars and dust, not squares. */
-function useStarSprite() {
+function useSoftSprite() {
   return useMemo(() => {
-    const size = 64;
+    const size = 128;
     const c = document.createElement("canvas");
     c.width = size;
     c.height = size;
@@ -29,7 +29,7 @@ function useStarSprite() {
     if (ctx) {
       const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
       g.addColorStop(0, "rgba(255,255,255,1)");
-      g.addColorStop(0.35, "rgba(255,255,255,0.6)");
+      g.addColorStop(0.3, "rgba(255,255,255,0.55)");
       g.addColorStop(1, "rgba(255,255,255,0)");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, size, size);
@@ -40,19 +40,21 @@ function useStarSprite() {
   }, []);
 }
 
+/* ---------- galaxy ---------- */
+
 function Galaxy({ progress, count }: { progress: React.MutableRefObject<Progress>; count: number }) {
-  const group = useRef<THREE.Group>(null);
-  const sprite = useStarSprite();
+  const outer = useRef<THREE.Group>(null);
+  const spin = useRef<THREE.Group>(null);
+  const sprite = useSoftSprite();
 
   const { positions, colors } = useMemo(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
-    const radius = 3.9;
+    const radius = 4.6;
     const branches = 3;
-    const spin = 1.15;
-    const randomness = 0.38;
-    const power = 2.7;
-    const hole = 0.5; // nothing inside the event horizon
+    const spinRate = 1.05;
+    const randomness = 0.42;
+    const power = 2.6;
     let seed = 20261002;
     const rnd = () => {
       seed = (seed * 16807) % 2147483647;
@@ -60,19 +62,19 @@ function Galaxy({ progress, count }: { progress: React.MutableRefObject<Progress
     };
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
-      const r = hole + Math.pow(rnd(), 0.85) * (radius - hole);
+      const r = 0.05 + Math.pow(rnd(), 0.7) * radius; // denser toward the core
       const branchAngle = ((i % branches) / branches) * Math.PI * 2;
-      const spinAngle = r * spin;
+      const spinAngle = r * spinRate;
       const sgn = () => (rnd() < 0.5 ? 1 : -1);
       const rx = Math.pow(rnd(), power) * sgn() * randomness * r;
-      const ry = Math.pow(rnd(), power) * sgn() * randomness * r * 0.3;
+      const ry = Math.pow(rnd(), power) * sgn() * randomness * r * 0.28;
       const rz = Math.pow(rnd(), power) * sgn() * randomness * r;
       pos[i3] = Math.cos(branchAngle + spinAngle) * r + rx;
       pos[i3 + 1] = ry;
       pos[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + rz;
-      const t = (r - hole) / (radius - hole); // 0 at the core, 1 at the rim
-      const b = 0.85 - t * 0.7 + (rnd() - 0.5) * 0.2;
-      const v = Math.max(0.08, Math.min(0.9, b));
+      const t = r / radius; // 0 at the core, 1 at the rim
+      const b = 0.9 - t * 0.78 + (rnd() - 0.5) * 0.2;
+      const v = Math.max(0.06, Math.min(0.95, b));
       col[i3] = v;
       col[i3 + 1] = v;
       col[i3 + 2] = v;
@@ -81,26 +83,28 @@ function Galaxy({ progress, count }: { progress: React.MutableRefObject<Progress
   }, [count]);
 
   useFrame((_, dt) => {
-    const g = group.current;
-    if (!g) return;
-    g.rotation.y += dt * 0.025 + progress.current.v * 0.00012;
+    const s = spin.current;
+    const o = outer.current;
+    if (!s || !o) return;
+    const { p, v } = progress.current;
+    s.rotation.y += dt * 0.022 + v * 0.0001;
+    o.position.y = 0.3 + p * 0.6; // gentle parallax as the page scrolls
   });
 
   return (
-    // core sits in the top-right corner; arms sweep across the top, away from the text column
-    <group position={[2.5, 1.55, -2.6]} rotation={[-1.15, 0.1, 0.5]}>
-      <group ref={group}>
+    <group ref={outer} position={[0.2, 0.3, -3.2]} rotation={[-1.12, 0.05, 0.32]}>
+      <group ref={spin}>
         <points>
           <bufferGeometry>
             <bufferAttribute attach="attributes-position" args={[positions, 3]} />
             <bufferAttribute attach="attributes-color" args={[colors, 3]} />
           </bufferGeometry>
           <pointsMaterial
-            size={0.05}
+            size={0.045}
             sizeAttenuation
             vertexColors
             transparent
-            opacity={0.55}
+            opacity={0.5}
             map={sprite}
             alphaMap={sprite}
             alphaTest={0.02}
@@ -108,37 +112,33 @@ function Galaxy({ progress, count }: { progress: React.MutableRefObject<Progress
             blending={THREE.AdditiveBlending}
           />
         </points>
-        {/* event horizon and accretion rings */}
-        <mesh>
-          <sphereGeometry args={[0.42, 32, 24]} />
-          <meshBasicMaterial color="#000000" />
-        </mesh>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.56, 0.014, 8, 128]} />
-          <meshBasicMaterial color={PAPER} transparent opacity={0.9} />
-        </mesh>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.72, 0.006, 6, 128]} />
-          <meshBasicMaterial color={PAPER} transparent opacity={0.45} />
-        </mesh>
+        {/* bright core, two soft layers */}
+        <sprite scale={[2.4, 2.4, 1]}>
+          <spriteMaterial
+            map={sprite}
+            color={PAPER}
+            transparent
+            opacity={0.32}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
+          />
+        </sprite>
+        <sprite scale={[0.9, 0.9, 1]}>
+          <spriteMaterial
+            map={sprite}
+            color={PAPER}
+            transparent
+            opacity={0.6}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
+          />
+        </sprite>
       </group>
     </group>
   );
 }
 
 /* ---------- earth ---------- */
-
-function useToonGradient(steps = 4) {
-  return useMemo(() => {
-    const data = new Uint8Array(steps);
-    for (let i = 0; i < steps; i++) data[i] = Math.round(38 + (217 * i) / (steps - 1));
-    const tex = new THREE.DataTexture(data, steps, 1, THREE.RedFormat);
-    tex.minFilter = THREE.NearestFilter;
-    tex.magFilter = THREE.NearestFilter;
-    tex.needsUpdate = true;
-    return tex;
-  }, [steps]);
-}
 
 const atmosphereMaterial = () =>
   new THREE.ShaderMaterial({
@@ -153,8 +153,8 @@ const atmosphereMaterial = () =>
     fragmentShader: `
       varying vec3 vN; varying vec3 vP;
       void main() {
-        float f = pow(1.0 - abs(dot(normalize(vN), normalize(-vP))), 3.2);
-        gl_FragColor = vec4(vec3(0.95, 0.94, 0.90), f * 0.85);
+        float f = pow(1.0 - abs(dot(normalize(vN), normalize(-vP))), 3.0);
+        gl_FragColor = vec4(vec3(0.95, 0.94, 0.90), f * 0.8);
       }`,
     transparent: true,
     side: THREE.BackSide,
@@ -168,15 +168,16 @@ function Earth({ progress }: { progress: React.MutableRefObject<Progress> }) {
   const clouds = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 
-  const [map, cloudMap] = useLoader(THREE.TextureLoader, [
+  const [map, normalMap, specularMap, cloudMap] = useLoader(THREE.TextureLoader, [
     "/textures/earth-bw.jpg",
+    "/textures/earth-normal.jpg",
+    "/textures/earth-specular.jpg",
     "/textures/earth-clouds.png",
   ]);
   map.colorSpace = THREE.SRGBColorSpace;
   cloudMap.colorSpace = THREE.SRGBColorSpace;
-  map.anisotropy = 4;
+  map.anisotropy = 8;
 
-  const gradient = useToonGradient(4);
   const atmos = useMemo(atmosphereMaterial, []);
   useEffect(() => () => atmos.dispose(), [atmos]);
 
@@ -185,31 +186,34 @@ function Earth({ progress }: { progress: React.MutableRefObject<Progress> }) {
     const s = spin.current;
     if (!t || !s) return;
     const { p, v } = progress.current;
-    s.rotation.y += dt * 0.05 + v * 0.00025;
-    if (clouds.current) clouds.current.rotation.y += dt * 0.014;
-    // right-edge anchor: half a globe on landscape, a crescent limb on portrait phones
+    s.rotation.y += dt * 0.045 + v * 0.0002;
+    if (clouds.current) clouds.current.rotation.y += dt * 0.012;
+    // a horizon rising from the lower right; on phones it sits centred at the bottom
     const portrait = viewport.width < viewport.height;
-    t.position.x = viewport.width / 2 + (portrait ? 0.82 : 0.05);
-    t.position.y = THREE.MathUtils.lerp(portrait ? -1.1 : -0.8, portrait ? 0.7 : 0.5, p);
+    const halfW = viewport.width / 2;
+    t.position.x = portrait ? 0.15 : halfW * 0.56;
+    t.position.y = THREE.MathUtils.lerp(portrait ? -2.15 : -1.85, portrait ? -1.6 : -1.05, p);
     progress.current.v *= 0.88;
   });
 
   return (
-    <group ref={tilt} rotation={[0, 0, 0.41]} scale={EARTH_RADIUS}>
+    <group ref={tilt} rotation={[0.1, 0, 0.41]} scale={EARTH_RADIUS}>
       <group ref={spin}>
         <mesh>
-          <sphereGeometry args={[1, 64, 48]} />
-          <meshToonMaterial map={map} gradientMap={gradient} color="#d9d7d0" />
+          <sphereGeometry args={[1, 96, 64]} />
+          <meshPhongMaterial
+            map={map}
+            normalMap={normalMap}
+            normalScale={new THREE.Vector2(0.55, 0.55)}
+            specularMap={specularMap}
+            specular={new THREE.Color("#8a8a86")}
+            shininess={16}
+            color="#d6d4cd"
+          />
         </mesh>
         <mesh ref={clouds}>
-          <sphereGeometry args={[1.012, 48, 36]} />
-          <meshToonMaterial
-            map={cloudMap}
-            gradientMap={gradient}
-            transparent
-            opacity={0.45}
-            depthWrite={false}
-          />
+          <sphereGeometry args={[1.012, 64, 48]} />
+          <meshPhongMaterial map={cloudMap} transparent opacity={0.55} depthWrite={false} />
         </mesh>
       </group>
       <mesh material={atmos}>
@@ -230,14 +234,18 @@ export function CosmosSketch({ className = "" }: { className?: string }) {
           <stop offset="0.55" stopColor="#5a5955" />
           <stop offset="1" stopColor="#0a0a0c" />
         </radialGradient>
+        <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stopColor="#f3f1ea" stopOpacity="0.7" />
+          <stop offset="1" stopColor="#f3f1ea" stopOpacity="0" />
+        </radialGradient>
       </defs>
-      <g fill="none" stroke={PAPER} opacity="0.35">
-        <ellipse cx="110" cy="70" rx="100" ry="34" strokeWidth="0.8" />
-        <ellipse cx="110" cy="70" rx="70" ry="24" strokeWidth="0.8" />
-        <ellipse cx="110" cy="70" rx="40" ry="14" strokeWidth="1.2" />
-        <circle cx="110" cy="70" r="7" fill="#0a0a0c" strokeWidth="1.5" />
+      <g fill="none" stroke={PAPER} opacity="0.3">
+        <ellipse cx="160" cy="80" rx="150" ry="46" strokeWidth="0.8" />
+        <ellipse cx="160" cy="80" rx="100" ry="30" strokeWidth="0.8" />
+        <ellipse cx="160" cy="80" rx="50" ry="15" strokeWidth="1" />
       </g>
-      <circle cx="250" cy="150" r="60" fill="url(#earth-shade)" stroke={PAPER} strokeWidth="1.2" />
+      <ellipse cx="160" cy="80" rx="40" ry="18" fill="url(#core-glow)" />
+      <circle cx="235" cy="215" r="80" fill="url(#earth-shade)" stroke={PAPER} strokeWidth="1.2" />
     </svg>
   );
 }
@@ -290,7 +298,7 @@ export default function CosmosCanvas() {
 
   if (mode === "static") {
     return (
-      <CosmosSketch className="absolute -right-[20vw] top-[18vh] w-[110vw] max-w-[1100px] opacity-80 md:-right-[8vw] md:w-[70vw]" />
+      <CosmosSketch className="absolute left-1/2 top-[14vh] w-[120vw] max-w-[1200px] -translate-x-1/2 opacity-80" />
     );
   }
 
@@ -309,8 +317,9 @@ export default function CosmosCanvas() {
         style={{ pointerEvents: "none" }}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
       >
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[-4, 2.5, 3]} intensity={2.4} />
+        <ambientLight intensity={0.22} />
+        <hemisphereLight args={[0x9a9a96, 0x000000, 0.35]} />
+        <directionalLight position={[-3.5, 1.8, 4]} intensity={2.6} />
         <Galaxy progress={progress} count={count} />
         <Suspense fallback={null}>
           <Earth progress={progress} />
