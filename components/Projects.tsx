@@ -38,7 +38,7 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
       <div className="grid gap-6 md:grid-cols-2">
         {ordered.map((p, i) => {
           const img = artFor(p.title, p.image);
-          const status = p.live ? "Live" : "Source";
+          const status = p.live ? "Live" : p.github ? "Source" : "Private";
           return (
             <motion.article
               key={p.title}

@@ -30,6 +30,8 @@ dash, lower-cased, with spaces turned into hyphens.
 | Slug | Scene idea |
 |---|---|
 | `zentro.png` | A space-station control deck with many small docking bays, each bay holding a different tiny ship: multi-tenant, one hub. |
+| `astronexus.png` | A mission-control wall of monitors inside an observatory: a sun with flares on one screen, an asteroid track on another, a tiny ISS passing a window. |
+| `momentum.png` | A sleek launch gantry at dawn with a countdown clock face (no numerals) and a line of small figures queuing up a boarding ramp. |
 | `civicfix.png` | A city skyline seen from orbit with a tractor beam from a small repair ship fixing a broken street light. |
 | `agriguard.png` | Terraced farm fields under a glass dome on a moon, with a small irrigation drone and a weather satellite overhead. |
 | `athleteinsight.png` | An astronaut runner on a zero-gravity track with a holographic heart-rate line trailing behind. |

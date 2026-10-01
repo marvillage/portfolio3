@@ -27,8 +27,18 @@ export const projects: Project[] = [
     blurb:
       "Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin.",
     tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary"],
-    github: "https://github.com/marvillage/civicfix",
+    // repo is private; no public link yet
     planet: "🏙️",
+    featured: true,
+  },
+  {
+    title: "AstroNexus — Space Intelligence Platform",
+    blurb:
+      "One dashboard for space weather, near-Earth asteroids, live ISS and satellite passes, a launch calendar, space news, an exoplanet explorer and the NASA picture of the day. Next.js App Router pulls NOAA SWPC, NASA NeoWs, Launch Library 2, Spaceflight News and the Exoplanet Archive, proxies and caches them server-side, and exposes a public JSON API. MVP live.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "NASA / NOAA APIs", "Redis cache", "Recharts", "Leaflet"],
+    github: "https://github.com/marvillage/astronexus",
+    live: "https://astronexus-three.vercel.app",
+    planet: "🌠",
     featured: true,
   },
   {
@@ -39,6 +49,15 @@ export const projects: Project[] = [
     github: "https://github.com/marvillage/AgriGuard",
     planet: "🌱",
     featured: true,
+  },
+  {
+    title: "Momentum — Daily Operator Waitlist",
+    blurb:
+      "SaaS landing page and beta waitlist for Momentum, a personal daily operator. Animated dashboard mockup, feature grid and FAQ; waitlist form with validation and duplicate prevention, confirmation emails via Resend, a live signup counter and launch countdown, and a Basic-auth admin dashboard with CSV export. Companion app in progress with Prisma and web push.",
+    tags: ["Next.js 16", "Tailwind v4", "Supabase", "Resend", "Prisma", "Web Push"],
+    github: "https://github.com/marvillage/momentum-waitlist",
+    live: "https://momentum-waitlist-sepia.vercel.app",
+    planet: "⏱️",
   },
   {
     title: "AthleteInsight — Anti-Doping Monitoring",
