@@ -19,13 +19,13 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { phase, navigate } = useInkWipe();
+  const { phase, label, navigate } = useInkWipe();
 
-  // Ink-splatter wipe, then jump to the section
-  const go = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // Ink-splatter wipe with the section name, then jump to the section
+  const go = (href: string, name?: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setOpen(false);
-    navigate(href);
+    navigate(href, name ?? links.find((l) => l.href === href)?.label ?? "");
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Navbar() {
         scrolled ? "border-b-2 border-paper bg-ink/95 py-2" : "bg-transparent py-4"
       }`}
     >
-      <InkWipe phase={phase} />
+      <InkWipe phase={phase} label={label} />
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
         <a href="#home" onClick={go("#home")} className="caption" aria-label="Back to top">
           KS · DEV
@@ -62,7 +62,7 @@ export default function Navbar() {
         </ul>
 
         <a href="#contact" onClick={go("#contact")} className="btn-ink hidden !px-4 !py-2 !text-sm xl:inline-flex">
-          Transmit
+          Let&apos;s talk
         </a>
 
         <button

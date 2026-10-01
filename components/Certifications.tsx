@@ -11,7 +11,7 @@ export default function Certifications() {
       <SectionHeading
         index="Log 05 · Credentials"
         title="Certifications & Courses"
-        subtitle="Verified coursework across AI/ML, web, cloud, security, and a little astrophysics."
+        subtitle="Verified coursework across AI/ML, web, cloud, security — and a little astrophysics."
       />
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

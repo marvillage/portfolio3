@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Kushagra Srivastava — Software Engineer & Writer",
   description:
-    "Portfolio of Kushagra Srivastava — full-stack software engineer and writer. React and TypeScript front ends over Spring Boot and FastAPI services, AI systems, and stories on Medium.",
+    "Portfolio of Kushagra Srivastava — software engineer, full-stack & AI developer, and writer. Projects, articles, and contact.",
   keywords: [
     "Kushagra Srivastava",
     "Software Engineer",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Kushagra Srivastava — Software Engineer & Writer",
     description:
-      "Full-stack software engineer and writer. Explore my projects and articles.",
+      "Software engineer, full-stack & AI developer, and writer. Explore my projects and articles.",
     type: "website",
     images: ogImages,
   },
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     card: ogImages ? "summary_large_image" : "summary",
     title: "Kushagra Srivastava — Software Engineer & Writer",
     description:
-      "Full-stack software engineer and writer. Explore my projects and articles.",
+      "Software engineer, full-stack & AI developer, and writer. Explore my projects and articles.",
     images: ogImages,
   },
 };

@@ -4,7 +4,6 @@ import { Github, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import SectionHeading from "./SectionHeading";
-import Note from "./Note";
 
 // Comic sound effects that pop on hover, and fallback dialogue for cards without a quip
 const BURSTS = ["SHIP IT!", "POW!", "ORBIT!", "WHOOSH!", "KA-CHUNK!", "MERGED!", "200 OK!", "ZAP!", "BOOM!", "LIFT-OFF!"];
@@ -40,9 +39,9 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
   return (
     <section id="projects" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="Log 06 · Mission Logs"
+        index="Log 06 · Constellations"
         title="Projects"
-        subtitle="Things I've designed, built and shipped. Each log links to its live deployment or source."
+        subtitle="Things I've designed, built and shipped. Each one links to its live deployment or source."
       />
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -60,8 +59,6 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
               transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
               className="panel-thin group relative flex flex-col"
             >
-              {i === 0 && <Note text="start here, pilot" arrow="down" className="-top-16 left-3" />}
-
               {/* comic sound effect + dialogue, on hover / focus */}
               <span
                 aria-hidden="true"
@@ -77,9 +74,16 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
               </div>
               {/* log header */}
               <div className="flex items-center justify-between border-b border-paper/40 px-5 py-3">
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60">
-                  Log {String(i + 1).padStart(2, "0")}
-                  {p.featured && <span className="ml-3 text-paper">★ Featured</span>}
+                <span className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60">
+                  <span>
+                    Log {String(i + 1).padStart(2, "0")}
+                    {p.featured && <span className="ml-3 text-paper">★ Featured</span>}
+                  </span>
+                  {i === 0 && (
+                    <span className="hidden font-hand text-sm normal-case tracking-normal text-paper/70 md:inline">
+                      ← start here, pilot
+                    </span>
+                  )}
                 </span>
                 <span className="caption -rotate-3 !py-1 !text-xs">{status}</span>
               </div>

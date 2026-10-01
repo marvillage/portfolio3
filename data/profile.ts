@@ -6,7 +6,7 @@ export const profile = {
   roles: [
     "Software Engineer",
     "Full-Stack Developer",
-    "AI Builder",
+    "AI / ML Builder",
     "Writer",
   ],
   location: "Ghaziabad, India",
@@ -14,9 +14,13 @@ export const profile = {
   resumeUrl: "/Kushagra_Resume.pdf",
   cgpa: "8.32",
 
-  // Short intro for the hero
+  // Short intro for the hero (original wording)
   intro:
-    "Full-stack Software Engineer with 1+ years shipping production web applications end to end: React and TypeScript front ends over Spring Boot and FastAPI services on PostgreSQL, AWS and Kubernetes, with multi-tenant architecture, secure auth and CI/CD. SDE at AECAD.ai, CSE at IIIT Nagpur, and a writer of stories and essays on Medium.",
+    "Currently a Software Engineer (SDE) at AECAD.ai. I build production-grade web platforms and AI systems — from FastAPI onboarding flows and Spring Boot microservices to multi-agent LLM pipelines. CSE @ IIIT Nagpur. When I'm not shipping code, I write stories and essays on Medium.",
+
+  // Résumé summary, shown as the lead paragraph in About
+  summary:
+    "Full-stack Software Engineer with 1+ years shipping production web applications end to end: React and TypeScript front ends over Java (Spring Boot) and Python (FastAPI) services on PostgreSQL, AWS and Kubernetes, with multi-tenant architecture, secure auth (OAuth 2.0, RBAC, MFA) and CI/CD.",
 
   // Opening sequence: incoming transmission (typed opener) → title card → crawl.
   // "Flight Log" script, first person. Keep each paragraph short; they scroll past.
@@ -29,10 +33,11 @@ export const profile = {
   ],
 
   about: [
-    "I'm a Computer Science engineer (IIIT Nagpur, '26) who works across the full stack and the AI layer on top of it. At AECAD.ai I designed and built the web application and marketing site end to end, from Figma to production React and TypeScript, and built the platform's core 3D CAD/DWG viewer on the ODA Viewer SDK.",
+    "I'm a Computer Science engineer (IIIT Nagpur, '26) who enjoys working across the full stack and the AI layer on top of it. I've built onboarding systems with FastAPI, multi-tenant backends with Spring Boot + Keycloak, and CAD visualization workflows with the ODA Viewer SDK.",
+    "At AECAD.ai I designed and built the web application and marketing site end to end, from Figma to production React and TypeScript, and built the platform's core 3D CAD/DWG viewer on the ODA Viewer SDK.",
     "On the backend I own services in FastAPI and Spring Boot over PostgreSQL: organization onboarding, user and plan management, auth and RBAC with Clerk and Keycloak, health probes across seven microservices on Kubernetes, and OWASP ZAP scans in CI/CD.",
-    "On the AI side I've fine-tuned LLaMA, orchestrated LangGraph multi-agent systems, shipped XGBoost and CatBoost models, and wired data pipelines on AWS (Lambda, S3, Redshift).",
-    "Outside engineering, I'm a writer. I publish short stories and essays on Medium, from corporate-life reflections to horror.",
+    "Lately I've been deep in LLM tooling — fine-tuning LLaMA, orchestrating LangGraph multi-agent systems, and wiring up data pipelines on AWS (Lambda, S3, Redshift).",
+    "Outside engineering, I'm a writer. I publish short stories and essays on Medium — everything from corporate-life reflections to horror.",
   ],
 
   // Coding handles
@@ -45,27 +50,28 @@ export const profile = {
   experience: [
     {
       company: "AECAD.ai",
-      role: "Software Engineer (Intern Apr – Jun 2026, then full-time)",
+      role: "Software Engineer Intern → SDE (Full-time) · intern Apr – Jun 2026",
       period: "Apr 2026 – Present",
       location: "Remote",
       points: [
+        "Promoted from Software Engineer Intern to full-time SDE.",
         "Designed and implemented the AECAD web application and marketing website end to end, from full UI design in Figma to production React and TypeScript, for an AI-powered CAD automation platform.",
-        "Built the platform's core 3D CAD/DWG viewer from the first commit with the ODA Viewer SDK: layer and object management, tagging workflows, level-of-detail, TIN surfaces and snap points, plus render-performance work to unblock the main thread.",
+        "Built the platform's core 3D CAD/DWG viewer from the first commit with the ODA Viewer SDK: layer and object management, tagging workflows, level-of-detail, TIN surfaces and snap points, plus render-performance work to unblock the main thread, enhancing CAD visualization workflows for 2D/3D editing.",
         "Owned organization onboarding full-stack (React front end, FastAPI user-management service, PostgreSQL schema), delivered as coordinated cross-repository releases and cutting manual setup time by 40%.",
-        "Developed user-management, plan-management and configuration REST APIs with schema migrations, and implemented authentication and role-based access control with Clerk.",
+        "Developed user-management, plan-management and configuration REST APIs with schema migrations, and integrated authentication and role-based access control (RBAC) using Clerk with PostgreSQL-backed REST APIs.",
         "Drove platform reliability: health endpoints and Kubernetes probes across seven microservices, OWASP ZAP DAST in CI/CD, event-driven cache invalidation, and end-to-end release testing on every deployment.",
         "Shipped 130+ merged pull requests across 12 repositories spanning React/Next.js front ends, Python services, database migrations and Kubernetes/CI infrastructure.",
       ],
     },
     {
-      company: "BeeHyv Software Solutions",
+      company: "BeeHyv Software Solutions (Beehyv)",
       role: "Software Developer Intern",
       period: "Jun 2025 – Mar 2026",
       location: "Hyderabad, India",
       points: [
         "Developed scalable Java and Spring Boot microservices with secure multi-tenant authentication via Keycloak.",
         "Implemented OAuth 2.0 integrations for Intentwise Connectors, enabling third-party connectivity including the Meta Marketing API.",
-        "Profiled, debugged and optimized large-scale analytical queries on Amazon Redshift over secure S3 data pipelines.",
+        "Profiled, debugged and optimized large-scale analytical queries on Amazon Redshift; managed secure data pipelines via S3.",
         "Built automated reporting pipelines on AWS Lambda that reduced manual reporting effort by 60%.",
       ],
     },
@@ -73,8 +79,8 @@ export const profile = {
 
   achievements: [
     "🏆 Winner — Analytics Attax @ IIT Kanpur: built UniBot, lifting university support responsiveness by 85%.",
-    "🥈 2nd Place — Bug Bounty Competition: identified critical vulnerabilities and shipped fixes.",
-    "🥉 3rd Place — Genathon 24-Hour Hackathon, Tantrafiesta 2K24.",
+    "🥈 2nd Rank — Bug Bounty Competition: identified critical vulnerabilities & shipped fixes.",
+    "🥉 3rd Rank — Genathon 24-Hour Hackathon, Tantrafiesta 2K24.",
     "🥉 3rd Rank — Innovative Ideas for Sustainable Startup @ IIIT Nagpur: pitched Krishi Seva, an AI farming app.",
   ],
 

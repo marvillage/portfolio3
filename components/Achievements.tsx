@@ -6,7 +6,6 @@ import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
 import Counter from "./Counter";
 import ArtStrip from "./ArtStrip";
-import Note from "./Note";
 
 const icons = [Trophy, Bug, Award, Medal];
 
@@ -21,7 +20,7 @@ export default function Achievements({ banner }: { banner?: string }) {
   return (
     <section id="achievements" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
-        index="Log 07 · Medals"
+        index="Log 07 · Milestones"
         title="Achievements"
         subtitle="Wins, ranks and recognitions along the way."
       />
@@ -51,7 +50,6 @@ export default function Achievements({ banner }: { banner?: string }) {
 
       {/* achievement cards */}
       <div className="relative grid gap-5 sm:grid-cols-2">
-        <Note text="the IIT Kanpur one" arrow="down" className="-top-16 left-4" />
         {profile.achievements.map((a, i) => {
           const Icon = icons[i % icons.length];
           // strip the leading emoji from the data string for clean display
@@ -63,8 +61,11 @@ export default function Achievements({ banner }: { banner?: string }) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: (i % 2) * 0.08 }}
-              className="panel-thin flex gap-4 p-5"
+              className="panel-thin relative flex gap-4 p-5"
             >
+              {i === 0 && (
+                <span className="caption absolute -top-3 right-4 !py-0.5 !text-[11px]">the IIT Kanpur one</span>
+              )}
               <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-paper bg-paper text-ink">
                 <Icon size={20} />
               </span>

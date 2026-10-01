@@ -1,6 +1,6 @@
-// Hand-lettered marginalia with a curved ink arrow. Desktop only (hidden below md)
-// so phones never lose readability to decoration. Position it with `className`
-// inside a `relative` parent.
+// Hand-lettered marginalia with a curved ink arrow. Hidden on small screens
+// (md by default, or xl when `from="xl"`) so phones never lose readability to
+// decoration. Position it with `className` inside a `relative` parent.
 type Arrow = "down-right" | "down-left" | "up-right" | "up-left" | "right" | "down";
 
 const paths: Record<Arrow, string> = {
@@ -15,16 +15,19 @@ const paths: Record<Arrow, string> = {
 export default function Note({
   text,
   arrow = "down-right",
+  from = "md",
   className = "",
 }: {
   text: string;
   arrow?: Arrow;
+  from?: "md" | "xl";
   className?: string;
 }) {
+  const show = from === "xl" ? "hidden xl:block" : "hidden md:block";
   return (
     <div
       aria-hidden="true"
-      className={`note pointer-events-none absolute z-20 hidden max-w-[190px] md:block ${className}`}
+      className={`note pointer-events-none absolute z-20 max-w-[190px] ${show} ${className}`}
     >
       <span className="block">{text}</span>
       <svg viewBox="0 0 60 48" className="mt-1 h-10 w-14 text-paper/80">

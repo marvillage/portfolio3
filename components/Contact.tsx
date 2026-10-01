@@ -68,9 +68,9 @@ export default function Contact({ art }: { art?: string }) {
         <Reveal>
           <div className="space-y-6">
             <p className="leading-relaxed text-paper/70">
-              I&apos;m open to full-time roles, freelance work and collaborations. The
-              fastest way to reach me is email, or use the form and it lands directly in
-              my inbox.
+              I&apos;m open to full-time roles, internships, freelance work and
+              collaborations. The fastest way to reach me is email — or use the form and
+              it lands directly in my inbox.
             </p>
 
             <a
@@ -168,10 +168,10 @@ export default function Contact({ art }: { art?: string }) {
               {status === "sent" && <CheckCircle2 size={18} />}
               {(status === "idle" || status === "error") && <Send size={18} />}
               {status === "sent"
-                ? "Transmitted. Thank you!"
+                ? "Message sent — thank you!"
                 : status === "sending"
-                ? "Transmitting…"
-                : "Transmit"}
+                ? "Sending…"
+                : "Send message"}
             </button>
 
             {note && (

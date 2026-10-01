@@ -160,7 +160,7 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
           animate={{ opacity: show ? 1 : 0, y: show ? 0 : 24 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="caption">Currently SDE @ AECAD.ai</span>
+          <span className="caption">✦ Currently SDE @ AECAD.ai</span>
 
           <h1 className="title-solid mt-6 text-[clamp(52px,9vw,120px)]">
             Kushagra
@@ -173,14 +173,14 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
           </p>
 
           <p className="mt-2 font-mono text-xs uppercase tracking-[0.22em] text-paper/50">
-            Full-stack · AI systems · Stories on Medium
+            Space Coder · AI Builder · Full-Stack Adventurer
           </p>
 
           <p className="mt-6 max-w-xl leading-relaxed text-paper/70">{profile.intro}</p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <a href="#projects" className="btn-ink">
-              View missions
+              View my work
             </a>
             <a
               href={profile.resumeUrl}

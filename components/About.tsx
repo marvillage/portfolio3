@@ -32,6 +32,7 @@ export default function About({
         <div className="md:col-span-3">
           <Reveal>
             <div className="space-y-4 leading-relaxed text-paper/75">
+              <p className="font-medium text-paper/90">{profile.summary}</p>
               {profile.about.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
@@ -79,7 +80,7 @@ export default function About({
 
       {/* Skills */}
       <Reveal delay={0.2} className="mt-14">
-        <span className="caption-ink">Loadout</span>
+        <span className="caption-ink">Loadout · Tech I work with</span>
         <div className="mt-5 space-y-4">
           {Object.entries(profile.skills).map(([group, items]) => (
             <div key={group} className="flex flex-col gap-2 sm:flex-row sm:items-start">

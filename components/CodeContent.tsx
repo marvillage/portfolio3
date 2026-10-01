@@ -18,7 +18,7 @@ export default function CodeContent({ banner }: { banner?: string }) {
       <SectionHeading
         index="Log 03 · Dual Orbit"
         title="Crafted in Code & Content"
-        subtitle="Two sides of the same orbit: building software and leading content, editorial and creative teams at IIIT Nagpur."
+        subtitle="Two sides of the same orbit — building software and leading content, editorial and creative teams at IIIT Nagpur."
       />
 
       {banner && <ArtStrip src={banner} alt="A pilot coding and a pilot on stage" caption="Dual orbit" />}

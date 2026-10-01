@@ -9,7 +9,8 @@ export default function Footer() {
       </div>
       <div className="flex flex-col items-center justify-between gap-4 border-t-2 border-paper/60 pt-6 font-mono text-xs text-paper/55 sm:flex-row">
         <p>
-          © 2026 {profile.name}. Inked with Next.js, Tailwind and Three.js.
+          © 2026 {profile.name}. Built across the universe with Next.js, Tailwind &amp;
+          Three.js.
         </p>
         <div className="flex gap-4">
           {socials.map((s) => (
