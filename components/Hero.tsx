@@ -9,8 +9,9 @@ import RotatingRoles from "./RotatingRoles";
 
 type Phase = "pending" | "crawl" | "hero";
 
-// intro 4.2s, title 3.8s + 6s, crawl 6.8s + 22s  → ~29s, then auto-finish
-const CRAWL_MS = 29500;
+// transmission 4.4s, title 4.6s + 6s, crawl 8.2s + 22s  → ~30.5s, then auto-finish
+const CRAWL_MS = 31500;
+const SEEN_KEY = "crawlSeen:v2";
 
 /** Fallback line-art starfighter used until /public/art/hero-ship.png exists. */
 function InkShip({ className = "" }: { className?: string }) {
@@ -61,22 +62,43 @@ function InkShip({ className = "" }: { className?: string }) {
 
 export default function Hero({ shipArt }: { shipArt?: string }) {
   const [phase, setPhase] = useState<Phase>("pending");
+  const [typed, setTyped] = useState("");
 
   const finish = useCallback(() => {
     setPhase("hero");
     try {
-      sessionStorage.setItem("crawlSeen", "1");
+      sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
       /* storage unavailable */
     }
   }, []);
+
+  // Typewriter for the opener line while the transmission is "decrypting".
+  useEffect(() => {
+    if (phase !== "crawl") return;
+    setTyped("");
+    const text = profile.crawlOpener;
+    let i = 0;
+    let tick: ReturnType<typeof setInterval> | undefined;
+    const start = setTimeout(() => {
+      tick = setInterval(() => {
+        i += 1;
+        setTyped(text.slice(0, i));
+        if (i >= text.length && tick) clearInterval(tick);
+      }, 34);
+    }, 900);
+    return () => {
+      clearTimeout(start);
+      if (tick) clearInterval(tick);
+    };
+  }, [phase]);
 
   // Decide once on mount: play the crawl, or go straight to the hero.
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let seen = false;
     try {
-      seen = sessionStorage.getItem("crawlSeen") === "1";
+      seen = sessionStorage.getItem(SEEN_KEY) === "1";
     } catch {
       /* storage unavailable */
     }
@@ -135,13 +157,31 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
             <div className="stars stars--sm" />
             <div className="stars stars--md" />
 
-            <p className="crawl-intro absolute inset-x-0 top-[40%] px-6 text-center font-hand text-xl sm:text-2xl">
-              A long time ago, in a dev shop far, far away…
-            </p>
+            {/* mechanic B: incoming transmission */}
+            <div className="crawl-static pointer-events-none absolute inset-0" />
+            <div className="crawl-tx absolute inset-x-0 top-[34%] px-6 text-center">
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-paper/70 sm:text-xs">
+                ▌▌▌ Signal acquired ▌▌▌
+              </p>
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/50 sm:text-xs">
+                From: Station AECAD · Orbit of Titan-1Ab
+              </p>
+              <p className="mx-auto mt-6 max-w-2xl font-hand text-xl leading-snug sm:text-2xl">
+                <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/50 sm:text-xs">
+                  Decrypting:
+                </span>
+                {typed}
+                <span className="crawl-cursor" aria-hidden="true" />
+              </p>
+            </div>
 
             <div className="crawl-title absolute inset-x-0 top-[30%] px-6 text-center">
-              <div className="font-display text-xl tracking-[0.25em] sm:text-2xl">Episode IV</div>
-              <div className="title-hollow text-[clamp(56px,13vw,160px)]">A New Dev</div>
+              <div className="font-display text-lg tracking-[0.25em] sm:text-2xl">
+                {profile.crawlTitle.ep}
+              </div>
+              <div className="title-hollow text-balance text-[clamp(52px,12vw,150px)]">
+                {profile.crawlTitle.big}
+              </div>
             </div>
 
             <div className="crawl-stage">

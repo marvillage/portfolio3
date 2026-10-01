@@ -1,3 +1,5 @@
+import { mediumStats } from "./articles";
+
 export const profile = {
   name: "Kushagra Srivastava",
   // Short tagline shown under the name in the hero
@@ -16,11 +18,14 @@ export const profile = {
   intro:
     "Full-stack Software Engineer with 1+ years shipping production web applications end to end: React and TypeScript front ends over Spring Boot and FastAPI services on PostgreSQL, AWS and Kubernetes, with multi-tenant architecture, secure auth and CI/CD. SDE at AECAD.ai, CSE at IIIT Nagpur, and a writer of stories and essays on Medium.",
 
-  // Paragraphs for the opening crawl. Keep each short; they scroll past.
+  // Opening sequence: incoming transmission (typed opener) → title card → crawl.
+  // "Flight Log" script, first person. Keep each paragraph short; they scroll past.
+  crawlOpener: "Pilot's log. Coordinates: Ghaziabad. Status: shipping.",
+  crawlTitle: { ep: "Flight Log · Year One and Counting", big: "Callsign Mavestorm" },
   crawl: [
-    "It is a period of rapid shipping. KUSHAGRA SRIVASTAVA, software engineer at AECAD.AI, builds production web platforms and AI systems from a hidden base in Ghaziabad.",
-    "Armed with React, TypeScript, Spring Boot and FastAPI, he has built a 3D CAD viewer from its first commit, cut onboarding time by 40 percent and shipped 130+ pull requests across 12 repositories.",
-    "Between missions he writes stories and essays on Medium. His next assignment awaits below…",
+    "I fly full-stack. React and TypeScript up front, FastAPI and Spring Boot behind, PostgreSQL in the hold, Kubernetes keeping the lights on across seven decks. I trained at Nagpur Academy, Sector IIIT, and I have been in the air one year and counting.",
+    "My current posting is Station AECAD, orbit of Titan-1Ab. I built its 3D CAD viewer from the first commit, took onboarding time down 40 percent, and left 130+ pull requests across 12 repositories on the way.",
+    `When the console is quiet I switch to the Medium frequency. ${mediumStats.published}+ stories so far: essays, horror, and whatever the night suggests. The flight log continues below.`,
   ],
 
   about: [
