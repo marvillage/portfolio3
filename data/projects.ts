@@ -47,6 +47,7 @@ export const projects: Project[] = [
       "AI + IoT platform for Indian farmers. ESP32 field nodes stream soil moisture, NPK, flow and energy data to an Express + Prisma + PostgreSQL decision engine (FAO-56 water balance, weather forecasts, ML disease risk) that switches pumps on and off automatically. A Next.js PWA dashboard in English, Hindi, Marathi and Telugu proves the savings in litres, kWh, CO₂ and rupees. Built for EcoLogic 1.0 with team Mavestorm.",
     tags: ["Next.js", "Express", "Prisma", "PostgreSQL", "IoT / ESP32", "AI / ML", "PWA"],
     github: "https://github.com/marvillage/AgriGuard",
+    live: "https://mavestorm-agriguard.onrender.com",
     planet: "🌱",
     featured: true,
   },
