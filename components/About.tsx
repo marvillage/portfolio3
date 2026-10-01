@@ -3,6 +3,7 @@
 import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
+import OriginStrip from "./OriginStrip";
 import { GraduationCap, MapPin, Briefcase, PenLine } from "lucide-react";
 
 const facts = [
@@ -16,7 +17,13 @@ const facts = [
   { icon: PenLine, label: "Also", value: "Writer on Medium" },
 ];
 
-export default function About({ portraitArt }: { portraitArt?: string }) {
+export default function About({
+  portraitArt,
+  originArt = [],
+}: {
+  portraitArt?: string;
+  originArt?: (string | undefined)[];
+}) {
   return (
     <section id="about" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading index="Log 01 · Origin" title="About Me" />
@@ -64,6 +71,11 @@ export default function About({ portraitArt }: { portraitArt?: string }) {
           </Reveal>
         </div>
       </div>
+
+      {/* Origin story strip */}
+      <Reveal delay={0.1}>
+        <OriginStrip images={originArt} />
+      </Reveal>
 
       {/* Skills */}
       <Reveal delay={0.2} className="mt-14">

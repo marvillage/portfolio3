@@ -58,6 +58,9 @@ None of these are required. Each appears only when the file exists.
 | `achievements-banner.png` | 1800 × 600, black background | Strip under the Achievements heading | Trophy shelf bolted to a ship bulkhead: cups, medals, a laurel wreath around a small planet, a numberless stopwatch. |
 | `writing-banner.png` | 1800 × 600, black background | Strip under the Writing heading | A writer's desk in a space-station observation deck: typewriter, ink bottle, pages drifting in zero gravity, a nebula through the big window. |
 | `contact-signal.png` | 1200 × 675, black background | Left column of Contact, under the social links | A comms dish on a small asteroid outpost beaming signal arcs across the void toward a distant starfighter. |
+| `origin/1.png` | 1200 × 900 (4:3), black background | Origin strip, panel 1 | A small domed outpost on a rocky plain under a star-filled sky, one lit window, a young figure at a desk inside, Ghaziabad water tower silhouette in the distance. |
+| `origin/2.png` | 1200 × 900 (4:3), black background | Origin strip, panel 2 | A space-academy campus: a columned hall with a rocket-shaped spire, cadets walking with tablets, a chalkboard full of circuit diagrams through a window. |
+| `origin/3.png` | 1200 × 900 (4:3), black background | Origin strip, panel 3 | A ringed space station in orbit of a large moon, a figure at a control deck inside with a 3D wireframe building hovering above the console. |
 
 ## Checklist for readability
 

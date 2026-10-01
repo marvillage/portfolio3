@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { articles, mediumProfile, mediumStats, type Article } from "@/data/articles";
 import SectionHeading from "./SectionHeading";
 import ArtStrip from "./ArtStrip";
+import Note from "./Note";
 
 export default function Articles({
   banner,
@@ -28,7 +29,8 @@ export default function Articles({
 
       {banner && <ArtStrip src={banner} alt="Writing desk aboard a space station" caption="Transmissions" />}
 
-      <div className="mb-10 flex flex-wrap items-stretch gap-4">
+      <div className="relative mb-10 flex flex-wrap items-stretch gap-4">
+        <Note text="and counting…" arrow="down-left" className="-top-14 left-36" />
         {[
           { n: `${published}+`, l: "Stories published" },
           { n: String(list.length), l: live ? "Latest · synced hourly" : "Stories featured" },

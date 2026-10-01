@@ -168,11 +168,12 @@ function Earth({ progress }: { progress: React.MutableRefObject<Progress> }) {
   const clouds = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 
-  const [map, normalMap, specularMap, cloudMap] = useLoader(THREE.TextureLoader, [
+  const [map, normalMap, specularMap, cloudMap, lightsMap] = useLoader(THREE.TextureLoader, [
     "/textures/earth-bw.jpg",
     "/textures/earth-normal.jpg",
     "/textures/earth-specular.jpg",
     "/textures/earth-clouds.png",
+    "/textures/earth-lights.jpg",
   ]);
   map.colorSpace = THREE.SRGBColorSpace;
   cloudMap.colorSpace = THREE.SRGBColorSpace;
@@ -209,6 +210,9 @@ function Earth({ progress }: { progress: React.MutableRefObject<Progress> }) {
             specular={new THREE.Color("#8a8a86")}
             shininess={16}
             color="#d6d4cd"
+            emissiveMap={lightsMap}
+            emissive={new THREE.Color("#ffffff")}
+            emissiveIntensity={0.55}
           />
         </mesh>
         <mesh ref={clouds}>

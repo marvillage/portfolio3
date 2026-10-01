@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { profile } from "@/data/profile";
 
 // A damaged ship console that types the flight log out, character by character,
 // with stutters, the odd mistyped glyph that gets corrected, and a screen tear
 // now and then. Typing is driven by wall-clock time, so a slow frame rate never
-// stretches the sequence. Calls onDone a moment after the last line finishes.
+// stretches the sequence. Optional sound (typewriter clicks + console hum) is
+// synthesised with the Web Audio API, off by default, remembered per browser.
+// Calls onDone a moment after the last line finishes.
 
 type Kind = "sys" | "title" | "log" | "end";
 type Line = { text: string; kind: Kind; speed: number; pause: number };
@@ -25,12 +27,132 @@ const script: Line[] = [
 ];
 
 const GLYPHS = "#%&@*+=?/\\|<>[]{}~^";
+const SOUND_KEY = "introSound";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+type Audio = { ctx: AudioContext; master: GainNode };
 
 export default function CrashedConsole({ onDone }: { onDone: () => void }) {
   const [lines, setLines] = useState<Shown[]>([]);
   const [tear, setTear] = useState(false);
+  const [sound, setSound] = useState(false);
   const screen = useRef<HTMLDivElement>(null);
+  const audio = useRef<Audio | null>(null);
+  const lastClick = useRef(0);
+
+  /* ---------- sound ---------- */
+
+  const startAudio = useCallback(() => {
+    if (audio.current) {
+      void audio.current.ctx.resume();
+      return;
+    }
+    const Ctx = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const master = ctx.createGain();
+    master.gain.value = 0.7;
+    master.connect(ctx.destination);
+
+    // low console hum
+    const osc = ctx.createOscillator();
+    osc.type = "sawtooth";
+    osc.frequency.value = 52;
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = 170;
+    const humGain = ctx.createGain();
+    humGain.gain.value = 0.045;
+    osc.connect(lp).connect(humGain).connect(master);
+    osc.start();
+
+    // faint static bed
+    const seconds = 2;
+    const buf = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    noise.loop = true;
+    const bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 900;
+    bp.Q.value = 0.7;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.value = 0.01;
+    noise.connect(bp).connect(noiseGain).connect(master);
+    noise.start();
+
+    audio.current = { ctx, master };
+  }, []);
+
+  const stopAudio = useCallback((fadeMs = 400) => {
+    const a = audio.current;
+    if (!a) return;
+    const t = a.ctx.currentTime;
+    a.master.gain.cancelScheduledValues(t);
+    a.master.gain.setValueAtTime(a.master.gain.value, t);
+    a.master.gain.linearRampToValueAtTime(0.0001, t + fadeMs / 1000);
+    setTimeout(() => {
+      void a.ctx.close().catch(() => undefined);
+      if (audio.current === a) audio.current = null;
+    }, fadeMs + 50);
+  }, []);
+
+  const click = useCallback(() => {
+    const a = audio.current;
+    if (!a) return;
+    const now = performance.now();
+    if (now - lastClick.current < 28) return;
+    lastClick.current = now;
+    const t = a.ctx.currentTime;
+    const o = a.ctx.createOscillator();
+    o.type = "square";
+    o.frequency.setValueAtTime(1500 + Math.random() * 900, t);
+    const g = a.ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.09, t + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+    o.connect(g).connect(a.master);
+    o.start(t);
+    o.stop(t + 0.05);
+  }, []);
+
+  const toggleSound = () => {
+    const next = !sound;
+    setSound(next);
+    try {
+      localStorage.setItem(SOUND_KEY, next ? "on" : "off");
+    } catch {
+      /* storage unavailable */
+    }
+    if (next) startAudio();
+    else stopAudio();
+  };
+
+  // Remember the choice, but never auto-start audio: browsers need a gesture.
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(SOUND_KEY) === "on") setSound(true);
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
+  useEffect(() => () => stopAudio(150), [stopAudio]);
+
+  // If the stored preference is "on", start on the first key or pointer event.
+  useEffect(() => {
+    if (!sound || audio.current) return;
+    const arm = () => startAudio();
+    window.addEventListener("pointerdown", arm, { once: true });
+    window.addEventListener("keydown", arm, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", arm);
+      window.removeEventListener("keydown", arm);
+    };
+  }, [sound, startAudio]);
+
+  /* ---------- typing ---------- */
 
   useEffect(() => {
     let cancelled = false;
@@ -81,11 +203,13 @@ export default function CrashedConsole({ onDone }: { onDone: () => void }) {
             if (glitchAt.has(next - 1)) {
               const wrong = GLYPHS[Math.floor(rnd() * GLYPHS.length)];
               setLast(line.kind, chars.slice(0, next - 1).join("") + wrong);
+              click();
               await sleep(110);
               if (cancelled) return;
             }
             idx = next;
             setLast(line.kind, chars.slice(0, idx).join(""));
+            click();
             if (rnd() < 0.05) {
               setTear(true);
               await sleep(110);
@@ -98,13 +222,16 @@ export default function CrashedConsole({ onDone }: { onDone: () => void }) {
         await sleep(line.pause);
       }
       await sleep(2200);
-      if (!cancelled) onDone();
+      if (!cancelled) {
+        stopAudio(600);
+        onDone();
+      }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [onDone]);
+  }, [onDone, click, stopAudio]);
 
   // keep the newest line in view
   useEffect(() => {
@@ -117,8 +244,19 @@ export default function CrashedConsole({ onDone }: { onDone: () => void }) {
       <div className="crt-bezel">
         <div className="crt-header">
           <span>AECAD-class survey craft · console 03</span>
-          <span className="crt-lights" aria-hidden="true">
-            <i /> <i className="crt-light-blink" /> <i className="crt-light-off" /> PWR 41%
+          <span className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={toggleSound}
+              aria-pressed={sound}
+              aria-label={sound ? "Turn intro sound off" : "Turn intro sound on"}
+              className="crt-sound"
+            >
+              {sound ? "◆ SND ON" : "◇ SND OFF"}
+            </button>
+            <span className="crt-lights" aria-hidden="true">
+              <i /> <i className="crt-light-blink" /> <i className="crt-light-off" /> PWR 41%
+            </span>
           </span>
         </div>
 

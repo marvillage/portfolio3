@@ -6,6 +6,7 @@ import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
 import Counter from "./Counter";
 import ArtStrip from "./ArtStrip";
+import Note from "./Note";
 
 const icons = [Trophy, Bug, Award, Medal];
 
@@ -49,7 +50,8 @@ export default function Achievements({ banner }: { banner?: string }) {
       </div>
 
       {/* achievement cards */}
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="relative grid gap-5 sm:grid-cols-2">
+        <Note text="the IIT Kanpur one" arrow="down" className="-top-16 left-4" />
         {profile.achievements.map((a, i) => {
           const Icon = icons[i % icons.length];
           // strip the leading emoji from the data string for clean display

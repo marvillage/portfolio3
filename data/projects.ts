@@ -8,6 +8,8 @@ export type Project = {
   planet: string;
   // optional inked thumbnail, e.g. /art/projects/zentro.png (auto-detected by slug when omitted)
   image?: string;
+  // one-line speech-bubble quip shown on hover (comic-strip dialogue)
+  quip?: string;
   featured?: boolean;
 };
 
@@ -15,6 +17,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "ZENTRO — Multi-Tenant Digital Workplace Platform",
+    quip: "Three tiers of isolation. Nobody boards without a badge.",
     blurb:
       "Modular FastAPI + PostgreSQL backend behind a React/TypeScript workplace: a transactional outbox event bus with at-least-once delivery and dead-letter replay, a durable job scheduler and async full-text search. Three-tier tenant isolation (JWT-scoped org context, repository filtering, row-level security), capability-based auth, TOTP step-up, a hash-chained audit log and Redis rate limiting that fails closed. Ships an approval workflow engine, idempotent payment release, an authorizing WebSocket gateway and HMAC-verified GitHub webhooks.",
     tags: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "Redis", "Docker", "React", "TypeScript", "WebSockets", "S3"],
@@ -24,6 +27,7 @@ export const projects: Project[] = [
   },
   {
     title: "CivicFix — Civic Issue Reporting & Resolution",
+    quip: "Report a pothole from orbit. City hall gets the ping.",
     blurb:
       "Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin.",
     tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary"],
@@ -33,6 +37,7 @@ export const projects: Project[] = [
   },
   {
     title: "AstroNexus — Space Intelligence Platform",
+    quip: "Solar flare inbound. Your coffee is safe. Probably.",
     blurb:
       "One dashboard for space weather, near-Earth asteroids, live ISS and satellite passes, a launch calendar, space news, an exoplanet explorer and the NASA picture of the day. Next.js App Router pulls NOAA SWPC, NASA NeoWs, Launch Library 2, Spaceflight News and the Exoplanet Archive, proxies and caches them server-side, and exposes a public JSON API. MVP live.",
     tags: ["Next.js", "TypeScript", "Tailwind", "NASA / NOAA APIs", "Redis cache", "Recharts", "Leaflet"],
@@ -43,6 +48,7 @@ export const projects: Project[] = [
   },
   {
     title: "AgriGuard — Smart Irrigation & Crop Intelligence",
+    quip: "The pump runs when the soil says so.",
     blurb:
       "AI + IoT platform for Indian farmers. ESP32 field nodes stream soil moisture, NPK, flow and energy data to an Express + Prisma + PostgreSQL decision engine (FAO-56 water balance, weather forecasts, ML disease risk) that switches pumps on and off automatically. A Next.js PWA dashboard in English, Hindi, Marathi and Telugu proves the savings in litres, kWh, CO₂ and rupees. Built for EcoLogic 1.0 with team Mavestorm.",
     tags: ["Next.js", "Express", "Prisma", "PostgreSQL", "IoT / ESP32", "AI / ML", "PWA"],
@@ -53,6 +59,7 @@ export const projects: Project[] = [
   },
   {
     title: "Momentum — Daily Operator Waitlist",
+    quip: "Queue up, pilot. Launch is soon.",
     blurb:
       "SaaS landing page and beta waitlist for Momentum, a personal daily operator. Animated dashboard mockup, feature grid and FAQ; waitlist form with validation and duplicate prevention, confirmation emails via Resend, a live signup counter and launch countdown, and a Basic-auth admin dashboard with CSV export. Companion app in progress with Prisma and web push.",
     tags: ["Next.js 16", "Tailwind v4", "Supabase", "Resend", "Prisma", "Web Push"],
@@ -62,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     title: "AthleteInsight — Anti-Doping Monitoring",
+    quip: "Clean sheet, clean passport.",
     blurb:
       "Full-stack athlete integrity dashboard. Sports authorities register athletes, track doping-risk scores and biological-passport markers, and flag athletes for review — backed by a real Postgres database with row-level security and Supabase email/password auth.",
     tags: ["React", "TypeScript", "Supabase", "Postgres", "Auth", "Dashboard"],
@@ -72,6 +80,7 @@ export const projects: Project[] = [
   },
   {
     title: "Call Insight",
+    quip: "Every call summarised before you hang up.",
     blurb:
       "End-to-end call-center analytics platform. Speech-to-text + NLP for automated conversation summarization and sentiment analysis, with a web admin panel and interactive dashboards for real-time call metrics.",
     tags: ["React", "TypeScript", "NLP", "Speech-to-Text", "Dashboards"],
@@ -82,6 +91,7 @@ export const projects: Project[] = [
   },
   {
     title: "E-Waste Management (G-Tron)",
+    quip: "One ship's junk is a recycler's cargo.",
     blurb:
       "Real-time e-waste analytics dashboard. Fine-tuned LLaMA 3.2 + Gemini 1.5 Flash chatbot, a LangGraph multi-agent system for ESG/EPR compliance reporting, and XGBoost/CatBoost hazard-score prediction.",
     tags: ["Python", "Streamlit", "Neo4j", "LLaMA", "LangGraph", "XGBoost"],
@@ -92,6 +102,7 @@ export const projects: Project[] = [
   },
   {
     title: "MindRelic — Web3 AI Memory Vault",
+    quip: "Thoughts in, relics out.",
     blurb:
       "A cyberpunk journaling app that turns thoughts into AI-analyzed 'memory relics.' Detects mood and keyword themes on-device (no API key needed), with optional Claude-powered analysis, voice journaling via the Web Speech API, and a searchable relic gallery. Explore instantly in guest mode or connect a Web3 wallet.",
     tags: ["Next.js", "React", "TypeScript", "Web3", "AI", "Tailwind"],
@@ -101,6 +112,7 @@ export const projects: Project[] = [
   },
   {
     title: "Dendrite AI — Whiteboard ML Studio",
+    quip: "Sketch it. The model names it.",
     blurb:
       "A collaborative whiteboard with built-in machine learning. Users draw and sketch together in real time over WebSockets, with on-the-fly image classification powered by TensorFlow.js MobileNet.",
     tags: ["TypeScript", "Vite", "Fabric.js", "TensorFlow.js", "WebSocket"],
@@ -110,6 +122,7 @@ export const projects: Project[] = [
   },
   {
     title: "DevRishi 2.0",
+    quip: "Ancient texts, modern search.",
     blurb:
       "An intelligent Ayurvedic recommendation system. It surfaces drugs and formulations for given diseases/symptoms by searching classical Ayurvedic texts, while accounting for patient constitution, comorbidities and ingredient contraindications.",
     tags: ["React", "Python", "Node.js", "NLP", "Healthcare"],
@@ -119,6 +132,7 @@ export const projects: Project[] = [
   },
   {
     title: "College Predictor",
+    quip: "Chart the course before launch day.",
     blurb:
       "Tool that lets Indian students predict colleges from their exam ranks, with an integrated scholarship search.",
     tags: ["Python", "Jupyter", "Data"],

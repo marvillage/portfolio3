@@ -4,6 +4,16 @@ import { Github, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import SectionHeading from "./SectionHeading";
+import Note from "./Note";
+
+// Comic sound effects that pop on hover, and fallback dialogue for cards without a quip
+const BURSTS = ["SHIP IT!", "POW!", "ORBIT!", "WHOOSH!", "KA-CHUNK!", "MERGED!", "200 OK!", "ZAP!", "BOOM!", "LIFT-OFF!"];
+const QUIPS = [
+  "Deployed. No casualties.",
+  "Hold my coffee, pilot.",
+  "It compiled on the first try. Honest.",
+  "Logged, tagged and launched.",
+];
 
 /** "ZENTRO — Multi-Tenant…" → "zentro"; used to find /art/projects/<slug>.png */
 export function projectSlug(title: string) {
@@ -39,6 +49,8 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
         {ordered.map((p, i) => {
           const img = artFor(p.title, p.image);
           const status = p.live ? "Live" : p.github ? "Source" : "Private";
+          const burst = BURSTS[i % BURSTS.length];
+          const quip = p.quip ?? QUIPS[i % QUIPS.length];
           return (
             <motion.article
               key={p.title}
@@ -48,6 +60,21 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
               transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
               className="panel-thin group relative flex flex-col"
             >
+              {i === 0 && <Note text="start here, pilot" arrow="down" className="-top-16 left-3" />}
+
+              {/* comic sound effect + dialogue, on hover / focus */}
+              <span
+                aria-hidden="true"
+                className="burst pointer-events-none absolute -right-3 -top-6 z-20 h-20 w-20 rotate-6 scale-0 text-[13px] transition-transform duration-200 ease-[cubic-bezier(.2,1.6,.4,1)] group-hover:scale-100 group-focus-within:scale-100 sm:h-24 sm:w-24 sm:text-[15px]"
+              >
+                {burst}
+              </span>
+              <div
+                aria-hidden="true"
+                className="bubble pointer-events-none absolute left-4 top-16 z-20 max-w-[72%] translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
+              >
+                {quip}
+              </div>
               {/* log header */}
               <div className="flex items-center justify-between border-b border-paper/40 px-5 py-3">
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60">
@@ -67,7 +94,7 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
                     loading="lazy"
                     className="ink-img h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="halftone pointer-events-none absolute inset-0 opacity-20" />
+                  <div className="halftone pointer-events-none absolute inset-0 opacity-20 transition-all duration-300 group-hover:opacity-40 group-hover:[background-size:11px_11px]" />
                 </div>
               )}
 

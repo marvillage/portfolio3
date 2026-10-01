@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import InkWipe, { useInkWipe } from "./InkWipe";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -18,6 +19,14 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { phase, navigate } = useInkWipe();
+
+  // Ink-splatter wipe, then jump to the section
+  const go = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setOpen(false);
+    navigate(href);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -32,8 +41,9 @@ export default function Navbar() {
         scrolled ? "border-b-2 border-paper bg-ink/95 py-2" : "bg-transparent py-4"
       }`}
     >
+      <InkWipe phase={phase} />
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
-        <a href="#home" className="caption" aria-label="Back to top">
+        <a href="#home" onClick={go("#home")} className="caption" aria-label="Back to top">
           KS · DEV
         </a>
 
@@ -42,6 +52,7 @@ export default function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
+                onClick={go(l.href)}
                 className="font-mono text-[11px] uppercase tracking-[0.16em] text-paper/65 transition-colors hover:text-paper"
               >
                 {l.label}
@@ -50,7 +61,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a href="#contact" className="btn-ink hidden !px-4 !py-2 !text-sm xl:inline-flex">
+        <a href="#contact" onClick={go("#contact")} className="btn-ink hidden !px-4 !py-2 !text-sm xl:inline-flex">
           Transmit
         </a>
 
@@ -71,7 +82,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={go(l.href)}
                   className="block px-3 py-2 font-mono text-xs uppercase tracking-[0.16em] text-paper/80 hover:bg-paper hover:text-ink"
                 >
                   {l.label}

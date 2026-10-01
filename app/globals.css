@@ -470,3 +470,83 @@ body {
     transition: none !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Comic extras: speech bubbles, hand-lettered notes, ink-splatter wipe
+   ───────────────────────────────────────────────────────────────────────── */
+.bubble {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-hand), "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  box-shadow: 3px 3px 0 var(--ash);
+}
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: -12px;
+  border: 7px solid transparent;
+  border-top: 9px solid var(--ink);
+  border-left-width: 3px;
+}
+.bubble::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  bottom: -7px;
+  border: 5px solid transparent;
+  border-top: 7px solid var(--paper);
+  border-left-width: 2px;
+  z-index: 1;
+}
+.note {
+  font-family: var(--font-hand), "Comic Sans MS", cursive;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: rgba(243, 241, 234, 0.8);
+  transform: rotate(-3deg);
+}
+.ink-splat {
+  fill: var(--paper);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: ink-splat 0.34s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+}
+@keyframes ink-splat {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.ink-wipe-out {
+  animation: ink-wipe-out 0.45s ease-in forwards;
+}
+@keyframes ink-wipe-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.crt-sound {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--paper);
+  background: transparent;
+  border: 1.5px solid rgba(243, 241, 234, 0.5);
+  padding: 2px 8px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.crt-sound:hover,
+.crt-sound[aria-pressed="true"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+.crt-sound:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 2px;
+}

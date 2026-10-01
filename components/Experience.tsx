@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
+import Note from "./Note";
 
 /** "BeeHyv Software Solutions" → "beehyv-software-solutions"; matches /art/patches/<slug>.png */
 const slug = (s: string) =>
@@ -40,6 +41,10 @@ export default function Experience({ patches = [] }: { patches?: string[] }) {
             <span className="absolute -left-[43px] top-3 grid h-6 w-6 place-items-center border-2 border-paper bg-ink">
               <span className="h-2 w-2 bg-paper" />
             </span>
+
+            {i === 0 && (
+              <Note text="built from the first commit" arrow="down-right" className="-top-11 right-60" />
+            )}
 
             <div className="panel panel-hover relative p-6 sm:p-7">
               {patch && (

@@ -43,6 +43,7 @@ export const revalidate = 3600;
 export default async function Home() {
   const projectArt = listArt("projects");
   const patches = listArt("patches").map((f) => `/art/patches/${f}`);
+  const originArt = [1, 2, 3].map((n) => findArt(`origin/${n}`));
   const medium = await getMediumPosts();
 
   return (
@@ -53,7 +54,7 @@ export default async function Home() {
       <main className="relative z-10">
         <Hero shipArt={findArt("hero-ship")} />
         <InkDivider />
-        <About portraitArt={findArt("pilot-portrait")} />
+        <About portraitArt={findArt("pilot-portrait")} originArt={originArt} />
         <InkDivider />
         <Experience patches={patches} />
         <InkDivider />
