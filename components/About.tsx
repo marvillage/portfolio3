@@ -28,6 +28,20 @@ export default function About({
     <section id="about" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading index="Log 01 · Origin" title="About Me" />
 
+      {/* Pilot ID card: a floating cut-out over the starfield, no panel box */}
+      {portraitArt && (
+        <Reveal className="mb-14">
+          <div className="relative mx-auto w-full max-w-3xl md:mx-0 md:-rotate-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={portraitArt}
+              alt="Pilot ID card: Kushagra Srivastava, callsign Mavestorm, Software Engineer at AECAD"
+              className="animate-float block w-full drop-shadow-[0_0_30px_rgba(243,241,234,0.22)] transition-transform duration-300 hover:rotate-1 hover:scale-[1.02]"
+            />
+          </div>
+        </Reveal>
+      )}
+
       <div className="grid gap-10 md:grid-cols-5">
         <div className="md:col-span-3">
           <Reveal>
@@ -42,18 +56,6 @@ export default function About({
 
         <div className="md:col-span-2">
           <Reveal delay={0.15}>
-            {portraitArt && (
-              <div className="panel relative mb-6 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={portraitArt}
-                  alt="Pencil portrait of Kushagra Srivastava"
-                  className="ink-img block w-full"
-                />
-                <div className="halftone pointer-events-none absolute inset-0 opacity-20" />
-                <span className="caption absolute left-3 top-3">Pilot ID</span>
-              </div>
-            )}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1">
               {facts.map((f) => (
                 <div key={f.label} className="panel-thin flex items-center gap-3 p-4">
