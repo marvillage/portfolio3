@@ -61,8 +61,8 @@ export default function Articles({
   live?: boolean;
   published?: number;
 }) {
-  // Latest posts from the live feed, then the hand-picked archive (deduplicated)
-  const feed = posts && posts.length > 0 ? posts : [];
+  // Latest nine posts from the live feed (a full 3×3 grid), then the hand-picked archive (deduplicated)
+  const feed = posts && posts.length > 0 ? posts.slice(0, 9) : [];
   const seen = new Set(feed.map((p) => p.url.split("?")[0]));
   const archive = articles.filter((a) => !seen.has(a.url.split("?")[0]));
   const featured = feed.length > 0 ? feed : archive;

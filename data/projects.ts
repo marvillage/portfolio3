@@ -58,16 +58,6 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Momentum — Daily Operator Waitlist",
-    quip: "Queue up, pilot. Launch is soon.",
-    blurb:
-      "SaaS landing page and beta waitlist for Momentum, a personal daily operator. Animated dashboard mockup, feature grid and FAQ; waitlist form with validation and duplicate prevention, confirmation emails via Resend, a live signup counter and launch countdown, and a Basic-auth admin dashboard with CSV export. Companion app in progress with Prisma and web push.",
-    tags: ["Next.js 16", "Tailwind v4", "Supabase", "Resend", "Prisma", "Web Push"],
-    github: "https://github.com/marvillage/momentum-waitlist",
-    live: "https://momentum-waitlist-sepia.vercel.app",
-    planet: "⏱️",
-  },
-  {
     title: "AthleteInsight — Anti-Doping Monitoring",
     quip: "Clean sheet, clean passport.",
     blurb:
@@ -139,14 +129,5 @@ export const projects: Project[] = [
     github: "https://github.com/marvillage/college-predictor",
     live: "https://futures.avantifellows.org",
     planet: "🛰️",
-  },
-  {
-    title: "Constitution (SIH 24)",
-    blurb:
-      "Smart India Hackathon 2024 project — an interactive web experience around the Indian Constitution.",
-    tags: ["Web", "Next.js", "Hackathon"],
-    github: "https://github.com/marvillage/SIH24",
-    live: "https://constitution-sable.vercel.app",
-    planet: "✨",
   },
 ];
