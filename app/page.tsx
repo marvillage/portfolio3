@@ -44,6 +44,15 @@ export default async function Home() {
   const projectArt = listArt("projects");
   const patches = listArt("patches").map((f) => `/art/patches/${f}`);
   const originArt = [1, 2, 3].map((n) => findArt(`origin/${n}`));
+  const stopArt = {
+    ghaziabad: findArt("origin/1"),
+    nagpur: findArt("origin/2"),
+    hyderabad: findArt("stations/hyderabad"),
+    aecad: findArt("origin/3"),
+  };
+  const yearArt = Object.fromEntries(
+    ["2022", "2023", "2024", "2025", "2026"].map((y) => [y, findArt(`years/${y}`)])
+  );
   const medium = await getMediumPosts();
 
   return (
@@ -56,9 +65,9 @@ export default async function Home() {
         <InkDivider />
         <About portraitArt={findArt("pilot-portrait")} originArt={originArt} />
         <InkDivider />
-        <Experience patches={patches} />
+        <Experience patches={patches} stations={{ beehyv: findArt("stations/hyderabad"), aecad: findArt("stations/aecad") }} />
         <InkDivider />
-        <CodeContent banner={findArt("code-content-banner")} />
+        <CodeContent banner={findArt("code-content-banner")} stopArt={stopArt} yearArt={yearArt} />
         <InkDivider />
         <Education crest={findArt("education-crest")} />
         <InkDivider />

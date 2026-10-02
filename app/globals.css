@@ -567,3 +567,25 @@ body {
   outline: 2px solid var(--paper);
   outline-offset: 2px;
 }
+
+/* flight chart: ping ring on the current waypoint */
+.chart-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: chart-ping 1.8s ease-out infinite;
+}
+@keyframes chart-ping {
+  0% { transform: scale(0.4); opacity: 0.9; }
+  80% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* zig-zag chart: ping ring on the current waypoint pin (HTML) */
+.pin-ping {
+  animation: pin-ping 1.8s ease-out infinite;
+}
+@keyframes pin-ping {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  80% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
