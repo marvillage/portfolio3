@@ -42,7 +42,6 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const projectArt = listArt("projects");
-  const patches = listArt("patches").map((f) => `/art/patches/${f}`);
   const originArt = [1, 2, 3].map((n) => findArt(`origin/${n}`));
   const stopArt = {
     ghaziabad: findArt("origin/1"),
@@ -65,7 +64,7 @@ export default async function Home() {
         <InkDivider />
         <About portraitArt={findArt("pilot-portrait")} originArt={originArt} />
         <InkDivider />
-        <Experience patches={patches} stations={{ beehyv: findArt("stations/hyderabad"), aecad: findArt("stations/aecad") }} />
+        <Experience stations={{ beehyv: findArt("stations/hyderabad"), aecad: findArt("stations/aecad") }} />
         <InkDivider />
         <CodeContent banner={findArt("code-content-banner")} stopArt={stopArt} yearArt={yearArt} />
         <InkDivider />

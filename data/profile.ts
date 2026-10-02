@@ -52,7 +52,7 @@ export const profile = {
       company: "AECAD.ai",
       role: "Software Engineer Intern → SDE (Full-time) · intern Apr – Jun 2026",
       period: "Apr 2026 – Present",
-      location: "Remote",
+      location: "Remote (North Carolina)",
       points: [
         "Promoted from Software Engineer Intern to full-time SDE.",
         "Designed and implemented the AECAD web application and marketing website end to end, from full UI design in Figma to production React and TypeScript, for an AI-powered CAD automation platform.",
