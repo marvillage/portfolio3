@@ -1,13 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Trophy, Medal, Award, Bug } from "lucide-react";
 import { profile } from "@/data/profile";
 import SectionHeading from "./SectionHeading";
 import Counter from "./Counter";
 import ArtStrip from "./ArtStrip";
-
-const icons = [Trophy, Bug, Award, Medal];
+import MedalWall, { type AwardArt } from "./MedalWall";
 
 const stats = [
   { to: 4, suffix: "+", label: "Competition wins" },
@@ -16,7 +14,7 @@ const stats = [
   { to: 0, suffix: "", label: "CGPA", raw: profile.cgpa },
 ];
 
-export default function Achievements({ banner }: { banner?: string }) {
+export default function Achievements({ banner, awards, wall }: { banner?: string; awards?: AwardArt; wall?: string }) {
   return (
     <section id="achievements" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeading
@@ -25,7 +23,7 @@ export default function Achievements({ banner }: { banner?: string }) {
         subtitle="Wins, ranks and recognitions along the way."
       />
 
-      {banner && <ArtStrip src={banner} alt="Trophy wall aboard a ship" caption="Medal wall" />}
+      {banner && <ArtStrip src={banner} alt="Trophy wall aboard a ship" caption="Trophy shelf" />}
 
       {/* stat band */}
       <div className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -48,32 +46,8 @@ export default function Achievements({ banner }: { banner?: string }) {
         ))}
       </div>
 
-      {/* achievement cards */}
-      <div className="relative grid gap-5 sm:grid-cols-2">
-        {profile.achievements.map((a, i) => {
-          const Icon = icons[i % icons.length];
-          // strip the leading emoji from the data string for clean display
-          const text = a.replace(/^[^\sA-Za-z0-9]+\s*/, "");
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: (i % 2) * 0.08 }}
-              className="panel-thin relative flex gap-4 p-5"
-            >
-              {i === 0 && (
-                <span className="caption absolute -top-3 right-4 !py-0.5 !text-[11px]">the IIT Kanpur one</span>
-              )}
-              <span className="grid h-11 w-11 shrink-0 place-items-center border-2 border-paper bg-paper text-ink">
-                <Icon size={20} />
-              </span>
-              <p className="text-sm leading-relaxed text-paper/80">{text}</p>
-            </motion.div>
-          );
-        })}
-      </div>
+      {/* medal wall */}
+      <MedalWall art={awards} wall={wall} />
     </section>
   );
 }

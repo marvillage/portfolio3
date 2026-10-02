@@ -11,7 +11,7 @@ export type StationArt = Partial<Record<"aecad" | "beehyv", string>>;
 
 export default function Experience({ stations = {} }: { stations?: StationArt }) {
   return (
-    <section id="experience" className="relative mx-auto max-w-6xl px-6 py-24">
+    <section id="experience" className="relative mx-auto max-w-6xl overflow-x-clip px-6 py-24">
       <SectionHeading
         index="Log 02 · Trajectory"
         title="Experience"

@@ -6,7 +6,7 @@ import CertOrbit, { type CertArt } from "./CertOrbit";
 
 export default function Certifications({ art }: { art?: CertArt }) {
   return (
-    <section id="certifications" className="relative mx-auto max-w-6xl px-6 py-24">
+    <section id="certifications" className="relative mx-auto max-w-6xl overflow-x-clip px-6 py-24">
       <SectionHeading
         index="Log 05 · Credentials"
         title="Certifications & Courses"

@@ -286,11 +286,13 @@ function Orbit({ certs, art }: Props) {
         <g stroke="#f3f1ea" strokeWidth="1.4" opacity="0.7">
           {Array.from({ length: 24 }, (_, i) => {
             const a = (i / 24) * Math.PI * 2;
+            // rounded so server and client markup agree to the digit
+            const r2 = (v: number) => Math.round(v * 100) / 100;
             const x1 = cx + Math.cos(a) * rx;
             const y1 = cy + Math.sin(a) * rx * RY;
             const nx = Math.cos(a) * 7;
             const ny = Math.sin(a) * 7 * RY;
-            return <line key={i} x1={x1 - nx} y1={y1 - ny} x2={x1 + nx} y2={y1 + ny} />;
+            return <line key={i} x1={r2(x1 - nx)} y1={r2(y1 - ny)} x2={r2(x1 + nx)} y2={r2(y1 + ny)} />;
           })}
         </g>
         {/* inner and outer guide rings */}

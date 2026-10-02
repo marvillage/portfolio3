@@ -83,7 +83,16 @@ export default async function Home() {
         <InkDivider />
         <Projects artFiles={projectArt} />
         <InkDivider />
-        <Achievements banner={findArt("achievements-banner")} />
+        <Achievements
+          banner={findArt("achievements-banner")}
+          awards={{
+            trophy: findArt("awards/trophy"),
+            "medal-silver": findArt("awards/medal-silver"),
+            "medal-bronze": findArt("awards/medal-bronze"),
+            rosette: findArt("awards/rosette"),
+          }}
+          wall={findArt("awards/wall")}
+        />
         <InkDivider />
         <Articles
           banner={findArt("writing-banner")}
