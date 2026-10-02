@@ -61,11 +61,8 @@ export default function Articles({
   live?: boolean;
   published?: number;
 }) {
-  // Latest nine posts from the live feed (a full 3×3 grid), then the hand-picked archive (deduplicated)
-  const feed = posts && posts.length > 0 ? posts.slice(0, 9) : [];
-  const seen = new Set(feed.map((p) => p.url.split("?")[0]));
-  const archive = articles.filter((a) => !seen.has(a.url.split("?")[0]));
-  const featured = feed.length > 0 ? feed : archive;
+  // Latest nine posts from the live feed (a full 3×3 grid); the hand-picked list is the offline fallback
+  const featured = (posts && posts.length > 0 ? posts : articles).slice(0, 9);
 
   return (
     <section id="writing" className="relative mx-auto max-w-6xl px-6 py-24">
@@ -104,19 +101,6 @@ export default function Articles({
           <Card key={a.url} a={a} i={i} />
         ))}
       </div>
-
-      {feed.length > 0 && archive.length > 0 && (
-        <>
-          <div className="mt-12 mb-6">
-            <span className="caption-ink">From the archive · hand-picked</span>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {archive.map((a, i) => (
-              <Card key={a.url} a={a} i={i} />
-            ))}
-          </div>
-        </>
-      )}
 
       <div className="mt-12 text-center">
         <a href={mediumProfile} target="_blank" rel="noopener noreferrer" className="btn-ghost">
