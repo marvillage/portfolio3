@@ -589,3 +589,20 @@ body {
   80% { transform: scale(2.2); opacity: 0; }
   100% { transform: scale(2.2); opacity: 0; }
 }
+
+/* credentials orbit: verification seal */
+.seal {
+  display: inline-block;
+  border: 2px solid var(--paper);
+  border-radius: 9999px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform-origin: center;
+  rotate: -8deg;
+  box-shadow: 2px 2px 0 var(--ash);
+}

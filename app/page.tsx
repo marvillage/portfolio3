@@ -52,6 +52,15 @@ export default async function Home() {
   const yearArt = Object.fromEntries(
     ["2022", "2023", "2024", "2025", "2026"].map((y) => [y, findArt(`years/${y}`)])
   );
+  const certArt = {
+    station: findArt("certs/station"),
+    dock: findArt("certs/dock"),
+    pilot: findArt("certs/pilot"),
+    ship: findArt("certs/ship"),
+    icons: Object.fromEntries(
+      ["anomaly-detection", "supervised-ml", "azure-ai", "python", "backend", "cybersecurity", "cosmos", "flight"].map((k) => [k, findArt(`certs/icons/${k}`)])
+    ),
+  };
   const medium = await getMediumPosts();
 
   return (
@@ -70,7 +79,7 @@ export default async function Home() {
         <InkDivider />
         <Education crest={findArt("education-crest")} />
         <InkDivider />
-        <Certifications />
+        <Certifications art={certArt} />
         <InkDivider />
         <Projects artFiles={projectArt} />
         <InkDivider />
