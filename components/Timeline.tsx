@@ -9,7 +9,8 @@ import type { ReactNode } from "react";
 // a clear beginning and end.
 
 export function Timeline({ children }: { children: ReactNode }) {
-  return <div className="relative pl-12 sm:pl-14">{children}</div>;
+  // extra left room on wide screens so the start/end labels have space beside the rail
+  return <div className="relative pl-12 sm:pl-14 md:ml-24">{children}</div>;
 }
 
 export function TimelineItem({
@@ -33,7 +34,7 @@ export function TimelineItem({
     <motion.div
       initial={{ opacity: 0, x: 24 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-80px 0px -80px 0px" }}
       transition={{ duration: 0.5, delay: 0.05 }}
       className="relative pb-12 last:pb-0"
     >
@@ -44,7 +45,7 @@ export function TimelineItem({
           className="absolute -left-[31px] top-10 -bottom-2 w-0 origin-top border-l-2 border-dashed border-paper/70 sm:-left-[33px]"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-80px 0px -80px 0px" }}
           transition={{ duration: 0.9, ease: "easeOut", delay: 0.25 }}
         />
       )}
@@ -53,9 +54,9 @@ export function TimelineItem({
       <motion.span
         aria-hidden="true"
         className="absolute -left-[46px] top-1 grid h-8 w-8 place-items-center rounded-full border-2 border-paper bg-ink text-paper sm:-left-[48px]"
-        initial={{ scale: 0, rotate: -40 }}
-        whileInView={{ scale: 1, rotate: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        initial={{ scale: 0.3, opacity: 0, rotate: -40 }}
+        whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
+        viewport={{ once: true, margin: "-80px 0px -80px 0px" }}
         transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.1 }}
       >
         {icon}
@@ -66,7 +67,7 @@ export function TimelineItem({
       {first && startLabel && (
         <span
           aria-hidden="true"
-          className="note absolute -left-[62px] -top-7 w-16 text-center !text-xs sm:-left-[64px]"
+          className="note absolute z-10 !text-xs max-md:-left-[64px] max-md:-top-7 max-md:w-[66px] max-md:text-center md:right-full md:top-0 md:mr-[46px] md:w-max md:whitespace-nowrap md:text-right"
         >
           {startLabel}
         </span>
@@ -81,9 +82,10 @@ export function TimelineItem({
             aria-hidden="true"
             className="absolute -left-[36px] top-[62px] h-3 w-3 rounded-full border-2 border-paper bg-paper sm:-left-[38px]"
           />
+          {/* label hangs below the end dot, to the left of the rail so the card never covers it */}
           <span
             aria-hidden="true"
-            className="note absolute -left-[80px] top-[78px] w-24 text-center !text-xs sm:-left-[82px]"
+            className="note absolute z-10 !text-xs !leading-tight max-md:-left-[72px] max-md:top-[80px] max-md:w-[82px] max-md:text-center md:right-full md:top-[56px] md:mr-[46px] md:w-max md:max-w-[120px] md:whitespace-nowrap md:text-right"
           >
             {endLabel}
           </span>
