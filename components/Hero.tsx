@@ -229,8 +229,15 @@ export default function Hero({ shipArt }: { shipArt?: string }) {
               <InkShip className="w-full" />
             )}
           </div>
-          <span className="caption-ink absolute -bottom-4 right-2">
-            Fig. 1 — the daily driver
+          {/* hull nameplate */}
+          <span className="caption-ink absolute -bottom-4 right-2 !px-3 !py-1.5 !leading-none">
+            <span className="block font-mono text-[10px] font-normal tracking-[0.22em] text-paper/70">
+              SPACEFLIGHT
+            </span>
+            <span className="mt-1 block font-display text-lg tracking-[0.1em]">MAVEKNIGHT</span>
+            <span className="mt-1 block font-mono text-[10px] font-normal tracking-[0.22em] text-paper/70">
+              REG. KS-2026 · GHAZIABAD SHIPYARDS
+            </span>
           </span>
         </motion.div>
       </div>
