@@ -69,11 +69,6 @@ export default function SpaceBackground() {
       {/* galaxy + Earth, fixed behind content */}
       <CosmosCanvas />
 
-      {/* occasional shooting stars */}
-      <div className="shooting-star shooting-star--1" />
-      <div className="shooting-star shooting-star--2" />
-      <div className="shooting-star shooting-star--3" />
-
       {/* readability vignettes: bottom fade everywhere, left-side shade on phones */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/20 via-transparent to-ink/80" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/60 via-ink/20 to-transparent md:hidden" />
