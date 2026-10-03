@@ -20,14 +20,16 @@ export function showUpRate(b: Board) {
   return `${r < 1 ? r.toFixed(2) : Math.round(r)}%`;
 }
 
-// The X post. X builds its preview card from the first link and hides a link that ends
-// the post, so the one link sits mid-post: it stays visible, and its card shows the
-// sharer's front page while the link itself opens a blank page to print your own.
-export function shareText(by: string | null, checkUrl: string): string {
+// The X post, with two links. X builds its preview card from the first link, so the
+// sharer's edition goes first (the card shows their front page and the link stays
+// visible), then the link to print a new edition. No numbers or names in the words.
+export function shareText(by: string | null, mineUrl: string, newUrl: string): string {
   const credit = by ? ` by @${by}` : "";
   return [
     `Got my GitHub circle printed as a front page${credit} 🗞️`,
-    `Check yours now 👉 ${checkUrl}`,
+    "",
+    `My stats 👉 ${mineUrl}`,
+    `Check yours now 👉 ${newUrl}`,
     "",
     "It ranks the people who actually review, comment and commit with you on GitHub, not just who follows.",
   ].join("\n");

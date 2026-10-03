@@ -130,9 +130,9 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
   // clipboard and X opens, so Ctrl+V in the post attaches it. (X's web composer can't
   // receive a picture any other way.)
   const share = async () => {
-    // one link in the post: its preview shows this front page, and it opens a blank page
-    // where the reader prints their own
-    const text = shareText(ownerX, `${window.location.origin}/daily-commit?via=${encodeURIComponent(board.login)}`);
+    // two links: this edition first (its preview card is this front page), then a blank
+    // page where the reader prints their own
+    const text = shareText(ownerX, link(), `${window.location.origin}/daily-commit?via=${encodeURIComponent(board.login)}`);
     const intent = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
     const paste = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘V" : "Ctrl+V";
     const started = performance.now();
