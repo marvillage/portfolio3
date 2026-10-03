@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Board, Kind, Person } from "@/lib/circle";
 import { BOTH_WAYS_BONUS, COMMIT_POINTS_MAX, MUTUAL_BONUS, W } from "@/lib/circleScore";
 import { fmt, headline, pad3, shareText, showUpRate } from "@/lib/edition";
@@ -87,7 +87,23 @@ const BTN =
 export default function Edition({ board, owner, ownerX, onNewEdition }: { board: Board; owner: string; ownerX: string | null; onNewEdition: () => void }) {
   const [printed, setPrinted] = useState("");
   const [copied, setCopied] = useState(false);
+  const [note, setNote] = useState<{ text: string; open?: string } | null>(null);
+  const [preparing, setPreparing] = useState(false);
   useEffect(() => setPrinted(ago(board.builtAt)), [board.builtAt]);
+
+  // The full front page as a picture, fetched ahead of time so Share can attach it at once.
+  const imageUrl = `/api/daily-commit/page-image?u=${encodeURIComponent(board.login)}`;
+  const picture = useRef<Promise<Blob | null> | null>(null);
+  const getPicture = () =>
+    (picture.current ??= fetch(imageUrl)
+      .then((r) => (r.ok ? r.blob() : null))
+      .catch(() => null));
+  useEffect(() => {
+    picture.current = null;
+    const t = setTimeout(getPicture, 600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageUrl]);
 
   const [h1, h2] = headline(board);
   const lead = board.top[0];
@@ -109,10 +125,51 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
       window.prompt("Copy this link", link());
     }
   };
-  const share = () => {
-    // X turns the link into a card showing the front page (see the share-image route)
+  // Share on X with the whole front page attached. Phones: the share sheet takes the
+  // picture and the text, and X is picked from it. Computers: the picture goes on the
+  // clipboard and X opens, so Ctrl+V in the post attaches it. (X's web composer can't
+  // receive a picture any other way.)
+  const share = async () => {
     const text = shareText(ownerX);
-    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link())}`, "_blank", "noopener");
+    const url = link();
+    const intent = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    const paste = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘V" : "Ctrl+V";
+    const started = performance.now();
+    setPreparing(true);
+    const blob = await getPicture();
+    setPreparing(false);
+    const file = blob ? new File([blob], `daily-commit-${board.login}.png`, { type: "image/png" }) : null;
+
+    if (file && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], text: `${text}
+${url}` });
+        return;
+      } catch (e) {
+        if (e instanceof DOMException && e.name === "AbortError") return;
+      }
+    }
+
+    let onClipboard = false;
+    if (blob && typeof ClipboardItem !== "undefined") {
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+        onClipboard = true;
+      } catch {
+        onClipboard = false;
+      }
+    }
+    const message = onClipboard
+      ? `Front page copied. Press ${paste} in the post to attach it.`
+      : "Use Download image to attach the front page to your post.";
+    // browsers only allow opening a tab shortly after the click; if the picture took a
+    // while, offer a button instead
+    if (performance.now() - started < 3500) {
+      window.open(intent, "_blank", "noopener");
+      setNote({ text: message });
+    } else {
+      setNote({ text: message, open: intent });
+    }
   };
 
   return (
@@ -312,15 +369,27 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
         <button type="button" onClick={copy} className={BTN}>
           {copied ? "Link copied" : "Copy link"}
         </button>
-        <button type="button" onClick={share} className={BTN}>
-          Share on X
+        <button type="button" onClick={share} disabled={preparing} className={`${BTN} disabled:cursor-wait disabled:opacity-60`}>
+          {preparing ? "Preparing…" : "Share on X"}
         </button>
-        <a href={`/api/daily-commit/og?u=${encodeURIComponent(board.login)}`} download={`daily-commit-${board.login}.png`} className={BTN}>
+        <a href={imageUrl} download={`daily-commit-${board.login}.png`} className={BTN}>
           Download image
         </a>
         <button type="button" onClick={onNewEdition} className={BTN}>
           New edition
         </button>
+      </div>
+      <div aria-live="polite">
+        {note && (
+          <p className="dc-serif mx-auto mt-5 flex max-w-xl flex-wrap items-center justify-center gap-x-3 gap-y-2 border-l-4 border-[var(--dc-ink)] bg-[var(--dc-paper-2)] px-4 py-3 text-center text-[16px]">
+            <span>{note.text}</span>
+            {note.open && (
+              <a href={note.open} target="_blank" rel="noreferrer" className="dc-head font-black uppercase tracking-[0.06em] underline underline-offset-2">
+                Open X
+              </a>
+            )}
+          </p>
+        )}
       </div>
       <p className="dc-label mt-5 text-center !text-[10.5px] text-[var(--dc-ink-2)]">
         {printed && `Printed ${printed} · `}next edition in 12 h · scored from the latest 40 PRs & issues, 100 comments, 1 year of reviews, 12 repos · edited by @{owner}
