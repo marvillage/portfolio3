@@ -20,20 +20,11 @@ export function showUpRate(b: Board) {
   return `${r < 1 ? r.toFixed(2) : Math.round(r)}%`;
 }
 
-// The X post: a hook from the numbers, the #1 collaborator, then an invitation to check
-// your own. Collaborators are named without "@" so nobody unrelated gets tagged on X.
-export function shareText(b: Board, by: string | null): string {
-  const hook =
-    b.circle === 0
-      ? "My GitHub circle is empty.\nTime to open some PRs 😅"
-      : b.showUp === 0
-        ? `${fmt(b.followers)} people follow me on GitHub.\nNone of them have shown up yet 💀`
-        : b.followers === 0
-          ? `0 followers on GitHub.\n${fmt(b.showUp)} people show up for me anyway 😤`
-          : b.showUp < b.followers
-            ? `${fmt(b.followers)} people follow me on GitHub.\nOnly ${fmt(b.showUp)} actually show up 👀`
-            : `${fmt(b.showUp)} people show up for me on GitHub.\nOnly ${fmt(b.followers)} follow me 😅`;
-  const top = b.top[0];
-  const lead = top ? `\n\nMy #1 collaborator: ${top.name ?? top.login}` : "";
-  return `${hook}${lead}\n\nGot my circle printed as a front page${by ? ` by @${by}` : ""} 🗞️\nWho really shows up for you? Check yours now 👇`;
+// The X post: what the page is, in two plain sentences, then an invitation to check your
+// own. No numbers or names; the link's card picture carries the edition itself.
+export function shareText(by: string | null): string {
+  return `Got my GitHub circle printed as a front page${by ? ` by @${by}` : ""} 🗞️
+It ranks the people who actually review, comment and commit with me on GitHub, not just who follows.
+
+Check yours now 👇`;
 }

@@ -111,7 +111,7 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
   };
   const share = () => {
     // X turns the link into a card showing the front page (see the share-image route)
-    const text = shareText(board, ownerX);
+    const text = shareText(ownerX);
     window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link())}`, "_blank", "noopener");
   };
 
