@@ -33,13 +33,15 @@ dash, lower-cased, with spaces turned into hyphens.
 | `astronexus.png` | A mission-control wall of monitors inside an observatory: a sun with flares on one screen, an asteroid track on another, a tiny ISS passing a window. |
 | `civicfix.png` | A city skyline seen from orbit with a tractor beam from a small repair ship fixing a broken street light. |
 | `agriguard.png` | Terraced farm fields under a glass dome on a moon, with a small irrigation drone and a weather satellite overhead. |
-| `athleteinsight.png` | An astronaut runner on a zero-gravity track with a holographic heart-rate line trailing behind. |
 | `call-insight.png` | A deep-space listening dish catching sound waves drawn as comic speech bubbles. |
 | `e-waste-management-g-tron.png` | A salvage ship towing a net of broken circuit boards and old satellites toward a recycling station. |
-| `mindrelic.png` | A floating crystalline vault with memory orbs inside, a cable plugging into a pilot helmet. |
 | `dendrite-ai.png` | Two astronauts sketching on a shared glass whiteboard in a cockpit, the sketch coming to life as a wireframe. |
 | `devrishi-2-0.png` | An ancient scroll unrolling inside a spaceship med-bay, herbs and planets drawn in the margins. |
-| `college-predictor.png` | A star chart with a navigation computer plotting a course between labelled planets drawn as university domes. |
+
+Projects whose live site works show a browser-framed capture of it instead, from
+`projects/live/<slug>.webp` (first screen, 1200 × 750) and optionally `<slug>-full.webp`
+(the whole page, scrolled on hover). Re-capture these when a site changes.
+`dendrite-ai.webp` currently reuses the crystal-vault scene drawn for a removed project.
 
 Any project without a file simply shows no thumbnail. You can also point a project
 at a specific file with the `image` field in `data/projects.ts`.
@@ -52,7 +54,11 @@ None of these are required. Each appears only when the file exists.
 |---|---|---|---|
 | `patches/aecad-ai.png` | 800 × 800, black or transparent | Round badge on the AECAD.ai experience card | Circular mission patch: a wireframe 3D building and a drafting compass inside a ring border, no text. |
 | `patches/beehyv-software-solutions.png` | 800 × 800, black or transparent | Round badge on the BeeHyv experience card | Circular mission patch: a honeycomb of hexagons with a small satellite and a data stream, no text. |
-| `education-crest.png` | 800 × 800, black background | Square crest on the IIIT Nagpur card | Academy crest shield with a star chart, an open book and a small rocket. |
+| `academy/backdrop.png` | 2048 × 768, black sky | Academic Journey panorama (banner on phones) | Ultra-wide view rising left to right: hometown cliffs, a domed school in a river valley, an orbital academy citadel with a ring station on the right (no moon: the one in the generated art was painted out); upper-left two thirds left as open starry sky. |
+| `academy/ship.png` | ~1800 × 900, **transparent PNG** | The ship that flies the Academic Journey path | Scout starship in side profile, nose pointing right, twin engine glow trailing left, thick white sticker outline. |
+| `academy/planet-1.png` | 800 × 800, **transparent PNG** | First planet on the path (Class X) | Earth-like planet, swirling clouds, cross-hatched continents, white sticker outline. |
+| `academy/planet-2.png` | 800 × 800, **transparent PNG** | Second planet (Class XII); an inked moon is drawn in code until this exists | Small cratered grey moon with a tiny training station and a debris band, white sticker outline. |
+| `academy/planet-3.png` | ~1500 × 1000, **transparent PNG** | Third planet (B.Tech) | Ringed planet with city lights on its night side and a small satellite beside it, white sticker outline. |
 | `code-content-banner.png` | 1800 × 600, black background | Strip under the Code & Content heading | Split scene: a pilot at a cockpit console with abstract glyph streams on the left, the same pilot on a stage with a microphone and a script on the right. |
 | `achievements-banner.png` | 1800 × 600, black background | Strip under the Achievements heading | Trophy shelf bolted to a ship bulkhead: cups, medals, a laurel wreath around a small planet, a numberless stopwatch. |
 | `writing-banner.png` | 1800 × 600, black background | Strip under the Writing heading | A writer's desk in a space-station observation deck: typewriter, ink bottle, pages drifting in zero gravity, a nebula through the big window. |

@@ -6,11 +6,16 @@ export type Project = {
   live?: string;
   // emoji/planet used as the visual marker
   planet: string;
-  // optional inked thumbnail, e.g. /art/projects/zentro.png (auto-detected by slug when omitted)
+  // optional inked thumbnail, e.g. /art/projects/zentro.png (auto-detected by slug when omitted);
+  // a capture of the live site in /art/projects/live/<slug>.webp is shown instead when present
   image?: string;
+  // page of the live site shown in that capture, when it is not the home page
+  livePath?: string;
   // one-line speech-bubble quip shown on hover (comic-strip dialogue)
   quip?: string;
   featured?: boolean;
+  // shown after every other card, featured or not
+  last?: boolean;
 };
 
 // Edit freely — each project renders as a card. `featured: true` cards show first.
@@ -21,7 +26,9 @@ export const projects: Project[] = [
     blurb:
       "Modular FastAPI + PostgreSQL backend behind a React/TypeScript workplace: a transactional outbox event bus with at-least-once delivery and dead-letter replay, a durable job scheduler and async full-text search. Three-tier tenant isolation (JWT-scoped org context, repository filtering, row-level security), capability-based auth, TOTP step-up, a hash-chained audit log and Redis rate limiting that fails closed. Ships an approval workflow engine, idempotent payment release, an authorizing WebSocket gateway and HMAC-verified GitHub webhooks.",
     tags: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "Redis", "Docker", "React", "TypeScript", "WebSockets", "S3"],
-    live: "https://zentro-app.vercel.app",
+    github: "https://github.com/marvillage/zentro",
+    live: "https://zentro-umber.vercel.app",
+    livePath: "/dashboard",
     planet: "🛰️",
     featured: true,
   },
@@ -31,19 +38,22 @@ export const projects: Project[] = [
     blurb:
       "Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin.",
     tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary"],
-    // repo is private; no public link yet
+    github: "https://github.com/marvillage/civicfix",
+    live: "https://civicfix-ruby.vercel.app",
+    livePath: "/issues",
     planet: "🏙️",
     featured: true,
   },
   {
-    title: "AstroNexus — Space Intelligence Platform",
-    quip: "Solar flare inbound. Your coffee is safe. Probably.",
+    title: "Judiciary Copilot — CaseGraph Litigation Intelligence",
+    quip: "Objection overruled. The graph has receipts.",
     blurb:
-      "One dashboard for space weather, near-Earth asteroids, live ISS and satellite passes, a launch calendar, space news, an exoplanet explorer and the NASA picture of the day. Next.js App Router pulls NOAA SWPC, NASA NeoWs, Launch Library 2, Spaceflight News and the Exoplanet Archive, proxies and caches them server-side, and exposes a public JSON API. MVP live.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "NASA / NOAA APIs", "Redis cache", "Recharts", "Leaflet"],
-    github: "https://github.com/marvillage/astronexus",
-    live: "https://astronexus-three.vercel.app",
-    planet: "🌠",
+      "Litigation intelligence for Indian courts: four products on one Neo4j knowledge graph — case pendency prediction, legal research with a citation graph, undertrial bail monitoring and consumer-complaint drafting. FastAPI with LangChain retrieval and LangGraph agents behind human review gates, ML classifiers and regressors for disposal time, local embeddings and drafting through Ollama, built on open eCourts, Supreme Court judgment and IndiaCode data. Drafts are released only after a person approves them.",
+    tags: ["React", "TypeScript", "Vite", "FastAPI", "Neo4j", "LangGraph", "LangChain", "Ollama", "ML"],
+    github: "https://github.com/marvillage/judiciary-copilot",
+    live: "https://judiciary-copilot.vercel.app",
+    livePath: "/app",
+    planet: "⚖️",
     featured: true,
   },
   {
@@ -55,17 +65,6 @@ export const projects: Project[] = [
     github: "https://github.com/marvillage/AgriGuard",
     live: "https://mavestorm-agriguard.onrender.com",
     planet: "🌱",
-    featured: true,
-  },
-  {
-    title: "AthleteInsight — Anti-Doping Monitoring",
-    quip: "Clean sheet, clean passport.",
-    blurb:
-      "Full-stack athlete integrity dashboard. Sports authorities register athletes, track doping-risk scores and biological-passport markers, and flag athletes for review — backed by a real Postgres database with row-level security and Supabase email/password auth.",
-    tags: ["React", "TypeScript", "Supabase", "Postgres", "Auth", "Dashboard"],
-    github: "https://github.com/marvillage/AthleteInsight",
-    live: "https://athlete-insight-gamma.vercel.app",
-    planet: "🏅",
     featured: true,
   },
   {
@@ -91,16 +90,6 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "MindRelic — Web3 AI Memory Vault",
-    quip: "Thoughts in, relics out.",
-    blurb:
-      "A cyberpunk journaling app that turns thoughts into AI-analyzed 'memory relics.' Detects mood and keyword themes on-device (no API key needed), with optional Claude-powered analysis, voice journaling via the Web Speech API, and a searchable relic gallery. Explore instantly in guest mode or connect a Web3 wallet.",
-    tags: ["Next.js", "React", "TypeScript", "Web3", "AI", "Tailwind"],
-    github: "https://github.com/marvillage/mindrelic2",
-    live: "https://mindrelic2.vercel.app",
-    planet: "🧠",
-  },
-  {
     title: "Dendrite AI — Whiteboard ML Studio",
     quip: "Sketch it. The model names it.",
     blurb:
@@ -121,13 +110,16 @@ export const projects: Project[] = [
     planet: "☄️",
   },
   {
-    title: "College Predictor",
-    quip: "Chart the course before launch day.",
+    title: "AstroNexus — Space Intelligence Platform",
+    quip: "Solar flare inbound. Your coffee is safe. Probably.",
     blurb:
-      "Tool that lets Indian students predict colleges from their exam ranks, with an integrated scholarship search.",
-    tags: ["Python", "Jupyter", "Data"],
-    github: "https://github.com/marvillage/college-predictor",
-    live: "https://futures.avantifellows.org",
-    planet: "🛰️",
+      "One dashboard for space weather, near-Earth asteroids, live ISS and satellite passes, a launch calendar, space news, an exoplanet explorer and the NASA picture of the day. Next.js App Router pulls NOAA SWPC, NASA NeoWs, Launch Library 2, Spaceflight News and the Exoplanet Archive, proxies and caches them server-side, and exposes a public JSON API. MVP live.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "NASA / NOAA APIs", "Redis cache", "Recharts", "Leaflet"],
+    github: "https://github.com/marvillage/astronexus",
+    live: "https://astronexus-three.vercel.app",
+    livePath: "/dashboard",
+    planet: "🌠",
+    featured: true,
+    last: true,
   },
 ];

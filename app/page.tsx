@@ -44,6 +44,7 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const projectArt = listArt("projects");
+  const liveCaptures = listArt("projects/live");
   const originArt = [1, 2, 3].map((n) => findArt(`origin/${n}`));
   const stopArt = {
     ghaziabad: findArt("origin/1"),
@@ -79,11 +80,17 @@ export default async function Home() {
         <InkDivider />
         <CodeContent banner={findArt("code-content-banner")} stopArt={stopArt} yearArt={yearArt} />
         <InkDivider />
-        <Education crest={findArt("education-crest")} />
+        <Education
+          art={{
+            backdrop: findArt("academy/backdrop"),
+            ship: findArt("academy/ship"),
+            planets: [1, 2, 3].map((n) => findArt(`academy/planet-${n}`)),
+          }}
+        />
         <InkDivider />
         <Certifications art={certArt} />
         <InkDivider />
-        <Projects artFiles={projectArt} />
+        <Projects artFiles={projectArt} liveFiles={liveCaptures} />
         <InkDivider />
         <Achievements
           banner={findArt("achievements-banner")}

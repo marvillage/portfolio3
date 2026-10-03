@@ -24,9 +24,46 @@ export function projectSlug(title: string) {
     .replace(/^-|-$/g, "");
 }
 
-export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
+// Browser-framed capture of a project's live site. When a full-page capture exists the
+// view scrolls down the page on hover, like someone skimming the dashboard.
+function LivePreview({ title, href, src, full }: { title: string; href: string; src: string; full?: string }) {
+  const url = href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open the live ${title}`}
+      className="relative block border-b border-paper/40 bg-ink"
+    >
+      <div className="flex items-center gap-2 border-b border-paper/30 bg-ink-2 px-3 py-2">
+        <span aria-hidden className="flex gap-1">
+          <span className="h-2 w-2 rounded-full border border-paper/60" />
+          <span className="h-2 w-2 rounded-full border border-paper/60" />
+          <span className="h-2 w-2 rounded-full border border-paper/60" />
+        </span>
+        <span className="min-w-0 flex-1 truncate border border-paper/25 bg-ink px-2 py-0.5 font-mono text-[10px] tracking-[0.04em] text-paper/70">
+          {url}
+        </span>
+      </div>
+      <div className="relative aspect-[16/10] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={full ?? src}
+          alt={`Screenshot of the live ${title}`}
+          loading="lazy"
+          className={`h-full w-full object-cover [filter:grayscale(1)_contrast(1.08)] ${
+            full ? "object-top transition-[object-position] duration-[5s] ease-in-out group-hover:object-bottom" : "object-top"
+          }`}
+        />
+      </div>
+    </a>
+  );
+}
+
+export default function Projects({ artFiles = [], liveFiles = [] }: { artFiles?: string[]; liveFiles?: string[] }) {
   const ordered = [...projects].sort(
-    (a, b) => Number(!!b.featured) - Number(!!a.featured)
+    (a, b) => Number(!!a.last) - Number(!!b.last) || Number(!!b.featured) - Number(!!a.featured)
   );
 
   const artFor = (title: string, explicit?: string) => {
@@ -34,6 +71,15 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
     const slug = projectSlug(title);
     const hit = artFiles.find((f) => f.replace(/\.[a-z0-9]+$/i, "") === slug);
     return hit ? `/art/projects/${hit}` : undefined;
+  };
+  // capture of the live site: <slug>.webp for the first screen, <slug>-full.webp for the whole page
+  const liveFor = (title: string) => {
+    const slug = projectSlug(title);
+    const find = (name: string) => liveFiles.find((f) => f.replace(/\.[a-z0-9]+$/i, "") === name);
+    const first = find(slug);
+    if (!first) return undefined;
+    const full = find(`${slug}-full`);
+    return { src: `/art/projects/live/${first}`, full: full ? `/art/projects/live/${full}` : undefined };
   };
 
   return (
@@ -44,9 +90,10 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
         subtitle="Things I've designed, built and shipped. Each one links to its live deployment or source."
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {ordered.map((p, i) => {
-          const img = artFor(p.title, p.image);
+          const shot = p.live ? liveFor(p.title) : undefined;
+          const img = shot ? undefined : artFor(p.title, p.image);
           const status = p.live ? "Live" : p.github ? "Source" : "Private";
           const burst = BURSTS[i % BURSTS.length];
           const quip = p.quip ?? QUIPS[i % QUIPS.length];
@@ -68,7 +115,7 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
               </span>
               <div
                 aria-hidden="true"
-                className="bubble pointer-events-none absolute left-4 top-16 z-20 max-w-[72%] translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                className={`bubble pointer-events-none absolute left-4 ${shot ? "top-28" : "top-16"} z-20 max-w-[72%] translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100`}
               >
                 {quip}
               </div>
@@ -88,7 +135,10 @@ export default function Projects({ artFiles = [] }: { artFiles?: string[] }) {
                 <span className="caption -rotate-3 !py-1 !text-xs">{status}</span>
               </div>
 
-              {/* optional inked thumbnail */}
+              {/* the live site, captured; otherwise the inked thumbnail */}
+              {shot && p.live && (
+                <LivePreview title={p.title.split(/[—(]/)[0].trim()} href={p.live + (p.livePath ?? "")} src={shot.src} full={shot.full} />
+              )}
               {img && (
                 <div className="relative aspect-[16/9] overflow-hidden border-b border-paper/40 bg-ink">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
