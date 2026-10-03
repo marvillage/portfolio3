@@ -17,6 +17,8 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import InkDivider from "@/components/InkDivider";
 import { getMediumPosts } from "@/lib/medium";
+import { getStats } from "@/lib/stats";
+import { profile } from "@/data/profile";
 import { mediumStats } from "@/data/articles";
 
 // Optional hand-drawn art lives in /public/art (see public/art/PROMPTS.md).
@@ -61,7 +63,7 @@ export default async function Home() {
       ["anomaly-detection", "supervised-ml", "azure-ai", "python", "backend", "cybersecurity", "cosmos", "flight"].map((k) => [k, findArt(`certs/icons/${k}`)])
     ),
   };
-  const medium = await getMediumPosts();
+  const [medium, stats] = await Promise.all([getMediumPosts(), getStats(profile.github, profile.leetcode)]);
 
   return (
     <>
@@ -101,7 +103,7 @@ export default async function Home() {
           published={mediumStats.published}
         />
         <InkDivider />
-        <Stats />
+        <Stats stats={stats} room={findArt("stats/control-room")} />
         <InkDivider />
         <Contact art={findArt("contact-signal")} />
         <Footer />

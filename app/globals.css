@@ -616,3 +616,48 @@ body {
   20% { opacity: 1; }
   100% { transform: translateX(420%) skewX(-12deg); opacity: 0; }
 }
+
+/* mission control screens: scanlines + slow scan band, flicker, status LEDs, radar */
+.tele-scan {
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.32) 2px 3px);
+}
+.tele-scan::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: -30%;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, rgba(243, 241, 234, 0.06), transparent);
+  animation: tele-band 6s linear infinite;
+}
+@keyframes tele-band {
+  from { transform: translateY(0); }
+  to { transform: translateY(440%); }
+}
+.tele-flicker {
+  animation: crt-flicker 5.2s steps(1) infinite;
+}
+.tele-led {
+  animation: tele-led 1.6s steps(2) infinite;
+}
+@keyframes tele-led {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.tele-sweep {
+  background: conic-gradient(from 0deg, rgba(243, 241, 234, 0.42), rgba(243, 241, 234, 0) 26%);
+  animation: tele-spin 3.6s linear infinite;
+}
+@keyframes tele-spin {
+  to { transform: rotate(360deg); }
+}
+.tele-blip {
+  animation: tele-blip 3.6s ease-out infinite;
+}
+@keyframes tele-blip {
+  0%, 60%, 100% { opacity: 0.15; }
+  65% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tele-scan::after, .tele-flicker, .tele-led, .tele-sweep, .tele-blip { animation: none; }
+}
