@@ -237,7 +237,7 @@ function Edition({ b, pics, rest, date }: { b: Board; pics: (string | null)[]; r
                   </div>
                 ))}
               </div>
-              <div style={{ display: "flex", fontFamily: "Mono", fontSize: 11, letterSpacing: 1.5, color: INK2 }}>{`${fmt(more)} MORE`}</div>
+              {more > 0 && <div style={{ display: "flex", fontFamily: "Mono", fontSize: 11, letterSpacing: 1.5, color: INK2 }}>{`${fmt(more)} MORE`}</div>}
             </div>
           )}
 
