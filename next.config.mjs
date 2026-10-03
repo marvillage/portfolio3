@@ -16,6 +16,15 @@ const nextConfig = {
       },
     ];
   },
+  // The Daily Commit moved to its own site; links already shared keep working
+  async redirects() {
+    const DC = "https://dailycommit-gh.vercel.app";
+    return [
+      { source: "/daily-commit", destination: `${DC}/`, permanent: true },
+      { source: "/api/daily-commit/og", destination: `${DC}/api/og`, permanent: true },
+      { source: "/api/daily-commit/page-image", destination: `${DC}/api/page-image`, permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "github-readme-stats.vercel.app" },
