@@ -207,7 +207,7 @@ export default function DailyCommit({
         <form onSubmit={print} className={`dc-coupon relative mx-auto px-4 pb-4 pt-5 sm:px-6 ${board ? "mt-6 max-w-[860px]" : "mt-9 max-w-[760px]"}`}>
           <Scissors className="absolute -top-[11px] left-5 h-5 w-5 bg-[var(--dc-paper)] px-0.5" aria-hidden />
           <label htmlFor="dc-u" className="dc-label block !text-[11px]">
-            {board ? "Print another edition" : "Clip & fill in: look up any GitHub user"}
+            {board ? "Check your own now: who shows up for you?" : "Clip & fill in: look up any GitHub user"}
           </label>
           <div className="mt-2 flex flex-col gap-2 sm:flex-row">
             <div className="flex h-12 min-w-0 shrink-0 items-center border-b-2 border-[var(--dc-ink)] sm:flex-1">
@@ -229,7 +229,7 @@ export default function DailyCommit({
               disabled={!!loading}
               className="dc-head h-12 shrink-0 bg-[var(--dc-ink)] px-6 text-[15px] font-black uppercase tracking-[0.08em] text-[var(--dc-paper)] transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dc-red)] disabled:cursor-wait disabled:opacity-60"
             >
-              {loading ? "Printing…" : "Print edition"}
+              {loading ? "Printing…" : board ? "Check mine" : "Print edition"}
             </button>
           </div>
           <p className="dc-label mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 !text-[10.5px] text-[var(--dc-ink-2)]">

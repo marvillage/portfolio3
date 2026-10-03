@@ -19,3 +19,21 @@ export function showUpRate(b: Board) {
   const r = (b.showUp / b.followers) * 100;
   return `${r < 1 ? r.toFixed(2) : Math.round(r)}%`;
 }
+
+// The X post: a hook from the numbers, the #1 collaborator, then an invitation to check
+// your own. Collaborators are named without "@" so nobody unrelated gets tagged on X.
+export function shareText(b: Board, by: string | null): string {
+  const hook =
+    b.circle === 0
+      ? "My GitHub circle is empty.\nTime to open some PRs 😅"
+      : b.showUp === 0
+        ? `${fmt(b.followers)} people follow me on GitHub.\nNone of them have shown up yet 💀`
+        : b.followers === 0
+          ? `0 followers on GitHub.\n${fmt(b.showUp)} people show up for me anyway 😤`
+          : b.showUp < b.followers
+            ? `${fmt(b.followers)} people follow me on GitHub.\nOnly ${fmt(b.showUp)} actually show up 👀`
+            : `${fmt(b.showUp)} people show up for me on GitHub.\nOnly ${fmt(b.followers)} follow me 😅`;
+  const top = b.top[0];
+  const lead = top ? `\n\nMy #1 collaborator: ${top.name ?? top.login}` : "";
+  return `${hook}${lead}\n\nGot my circle printed as a front page${by ? ` by @${by}` : ""} 🗞️\nWho really shows up for you? Check yours now 👇`;
+}

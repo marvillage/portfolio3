@@ -23,7 +23,10 @@ const DESCRIPTION = "Who actually shows up for you on GitHub? Followers against 
 
 export function generateMetadata({ searchParams }: Props): Metadata {
   const u = param(searchParams.u);
-  const title = u ? `@${u} · The Daily Commit, GitHub Edition` : "The Daily Commit · GitHub Edition";
+  const title = u ? `Who actually shows up for @${u} on GitHub?` : "Who actually shows up for you on GitHub? · The Daily Commit";
+  const description = u
+    ? `@${u}'s GitHub circle, printed as a front page. Followers vs. the people who really review, comment and commit. See yours, free.`
+    : DESCRIPTION;
   // the front page as a picture, so a shared link shows the edition on X and elsewhere
   const image = {
     url: u ? `/api/daily-commit/og?u=${encodeURIComponent(u)}` : "/api/daily-commit/og",
@@ -33,9 +36,9 @@ export function generateMetadata({ searchParams }: Props): Metadata {
   };
   return {
     title,
-    description: DESCRIPTION,
-    openGraph: { title, description: DESCRIPTION, type: "website", images: [image] },
-    twitter: { card: "summary_large_image", title, description: DESCRIPTION, images: [image] },
+    description,
+    openGraph: { title, description, type: "website", images: [image] },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
   };
 }
 

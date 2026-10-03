@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { Board, Kind, Person } from "@/lib/circle";
 import { BOTH_WAYS_BONUS, COMMIT_POINTS_MAX, MUTUAL_BONUS, W } from "@/lib/circleScore";
-import { fmt, headline, pad3, showUpRate } from "@/lib/edition";
+import { fmt, headline, pad3, shareText, showUpRate } from "@/lib/edition";
 
 const KINDS: { k: Kind; short: string; one: string; many: string }[] = [
   { k: "review", short: "REV", one: "review", many: "reviews" },
@@ -111,7 +111,7 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
   };
   const share = () => {
     // X turns the link into a card showing the front page (see the share-image route)
-    const text = `My GitHub circle: ${h1.toLowerCase()} ${h2.toLowerCase()} 🗞️ The Daily Commit${ownerX ? ` by @${ownerX}` : ""}`;
+    const text = shareText(board, ownerX);
     window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link())}`, "_blank", "noopener");
   };
 
