@@ -83,6 +83,7 @@ export default function DailyCommit({
   owner,
   ownerName,
   ownerX,
+  via,
   today,
 }: {
   initialBoard: Board | null;
@@ -91,6 +92,7 @@ export default function DailyCommit({
   owner: string;
   ownerName: string;
   ownerX: string | null;
+  via: string | null;
   today: string;
 }) {
   const [login, setLogin] = useState(initialLogin);
@@ -103,6 +105,11 @@ export default function DailyCommit({
   const input = useRef<HTMLInputElement>(null);
   const top = useRef<HTMLDivElement>(null);
   const counted = useRef(false);
+
+  // arriving from someone's shared post: the username box is ready to type in
+  useEffect(() => {
+    if (via) input.current?.focus({ preventScroll: true });
+  }, [via]);
 
   // one page view per load
   useEffect(() => {
@@ -195,6 +202,15 @@ export default function DailyCommit({
         {/* landing front page */}
         {!board && !loading && (
           <section className="dc-set mt-10 text-center" aria-labelledby="dc-front">
+            {via && (
+              <p className="dc-label mb-5 inline-flex flex-wrap items-center justify-center gap-x-2 border-y border-[var(--dc-ink)] px-3 py-1.5 !text-[11px]">
+                <span>@{via} just printed theirs</span>
+                <span aria-hidden>·</span>
+                <a href={`/daily-commit?u=${encodeURIComponent(via)}`} className="font-medium underline underline-offset-2 hover:text-[var(--dc-red)]">
+                  See @{via}&rsquo;s edition
+                </a>
+              </p>
+            )}
             <p className="dc-label text-[var(--dc-red)]">Extra! Extra!</p>
             <h1 id="dc-front" className="dc-head mx-auto mt-3 max-w-[16ch] text-[clamp(40px,8vw,100px)] font-black uppercase leading-[0.92] [text-wrap:balance]">
               Who actually shows up for you on GitHub?
@@ -207,7 +223,7 @@ export default function DailyCommit({
         <form onSubmit={print} className={`dc-coupon relative mx-auto px-4 pb-4 pt-5 sm:px-6 ${board ? "mt-6 max-w-[860px]" : "mt-9 max-w-[760px]"}`}>
           <Scissors className="absolute -top-[11px] left-5 h-5 w-5 bg-[var(--dc-paper)] px-0.5" aria-hidden />
           <label htmlFor="dc-u" className="dc-label block !text-[11px]">
-            {board ? "Check your own now: who shows up for you?" : "Clip & fill in: look up any GitHub user"}
+            {board ? "Check your own now: who shows up for you?" : via ? "Your turn: enter your GitHub username" : "Clip & fill in: look up any GitHub user"}
           </label>
           <div className="mt-2 flex flex-col gap-2 sm:flex-row">
             <div className="flex h-12 min-w-0 shrink-0 items-center border-b-2 border-[var(--dc-ink)] sm:flex-1">

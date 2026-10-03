@@ -130,9 +130,10 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
   // clipboard and X opens, so Ctrl+V in the post attaches it. (X's web composer can't
   // receive a picture any other way.)
   const share = async () => {
-    const text = shareText(ownerX, `${window.location.origin}/daily-commit`);
-    const url = link();
-    const intent = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    // one link in the post: its preview shows this front page, and it opens a blank page
+    // where the reader prints their own
+    const text = shareText(ownerX, `${window.location.origin}/daily-commit?via=${encodeURIComponent(board.login)}`);
+    const intent = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
     const paste = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘V" : "Ctrl+V";
     const started = performance.now();
     setPreparing(true);
@@ -142,8 +143,7 @@ export default function Edition({ board, owner, ownerX, onNewEdition }: { board:
 
     if (file && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
       try {
-        await navigator.share({ files: [file], text: `${text}
-${url}` });
+        await navigator.share({ files: [file], text });
         return;
       } catch (e) {
         if (e instanceof DOMException && e.name === "AbortError") return;

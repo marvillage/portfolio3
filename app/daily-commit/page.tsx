@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Libre_Caslon_Text, Playfair_Display, UnifrakturMaguntia } from "next/font/google";
 import DailyCommit from "@/components/dailycommit/DailyCommit";
 import { headers } from "next/headers";
-import { CircleError, getBoard, type Board } from "@/lib/circle";
+import { CircleError, getBoard, validLogin, type Board } from "@/lib/circle";
 import { visitorKey } from "@/lib/clientIp";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
@@ -16,23 +16,33 @@ const caslon = Libre_Caslon_Text({ weight: ["400", "700"], style: ["normal", "it
 
 export const dynamic = "force-dynamic";
 
-type Props = { searchParams: { u?: string | string[] } };
-const param = (u: Props["searchParams"]["u"]) => (typeof u === "string" ? u.trim().replace(/^@/, "") : "");
+type Props = { searchParams: { u?: string | string[]; via?: string | string[] } };
+const param = (u: string | string[] | undefined) => (typeof u === "string" ? u.trim().replace(/^@/, "") : "");
+// ?via=login is the link people share: a blank page to print your own edition, whose link
+// preview shows the sharer's front page
+const viaOf = (p: Props["searchParams"]) => {
+  const v = param(p.via);
+  return !param(p.u) && validLogin(v) ? v : null;
+};
 
 const DESCRIPTION = "Who actually shows up for you on GitHub? Followers against the people who review, comment and commit with you, printed as a front page.";
 
 export function generateMetadata({ searchParams }: Props): Metadata {
   const u = param(searchParams.u);
+  const via = viaOf(searchParams);
+  const pictured = u || via;
   const title = u ? `Who actually shows up for @${u} on GitHub?` : "Who actually shows up for you on GitHub? · The Daily Commit";
   const description = u
     ? `@${u}'s GitHub circle, printed as a front page. Followers vs. the people who really review, comment and commit. See yours, free.`
-    : DESCRIPTION;
+    : via
+      ? `@${via} printed their GitHub circle as a front page. Followers vs. the people who really review, comment and commit. Print yours, free.`
+      : DESCRIPTION;
   // the front page as a picture, so a shared link shows the edition on X and elsewhere
   const image = {
-    url: u ? `/api/daily-commit/og?u=${encodeURIComponent(u)}` : "/api/daily-commit/og",
+    url: pictured ? `/api/daily-commit/og?u=${encodeURIComponent(pictured)}` : "/api/daily-commit/og",
     width: 1200,
     height: 630,
-    alt: u ? `@${u}'s circle report in The Daily Commit` : "The Daily Commit, GitHub Edition",
+    alt: pictured ? `@${pictured}'s circle report in The Daily Commit` : "The Daily Commit, GitHub Edition",
   };
   return {
     title,
@@ -62,7 +72,7 @@ export default async function DailyCommitPage({ searchParams }: Props) {
 
   return (
     <div className={`${blackletter.variable} ${headline.variable} ${caslon.variable}`}>
-      <DailyCommit initialBoard={board} initialError={error} initialLogin={u} owner={profile.github} ownerName={profile.name} ownerX={ownerX} today={today} />
+      <DailyCommit initialBoard={board} initialError={error} initialLogin={u} owner={profile.github} ownerName={profile.name} ownerX={ownerX} via={viaOf(searchParams)} today={today} />
     </div>
   );
 }
