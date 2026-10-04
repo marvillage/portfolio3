@@ -31,7 +31,7 @@ dash, lower-cased, with spaces turned into hyphens.
 |---|---|
 | `zentro.png` | A space-station control deck with many small docking bays, each bay holding a different tiny ship: multi-tenant, one hub. |
 | `astronexus.png` | A mission-control wall of monitors inside an observatory: a sun with flares on one screen, an asteroid track on another, a tiny ISS passing a window. |
-| `civicfix.png` | A city skyline seen from orbit with a tractor beam from a small repair ship fixing a broken street light. |
+| `fixity.png` | A city skyline seen from orbit with a tractor beam from a small repair ship fixing a broken street light. |
 | `agriguard.png` | Terraced farm fields under a glass dome on a moon, with a small irrigation drone and a weather satellite overhead. |
 | `call-insight.png` | A deep-space listening dish catching sound waves drawn as comic speech bubbles. |
 | `e-waste-management-g-tron.png` | A salvage ship towing a net of broken circuit boards and old satellites toward a recycling station. |

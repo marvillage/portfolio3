@@ -33,14 +33,14 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "CivicFix — Civic Issue Reporting & Resolution",
+    title: "Fixity — Civic Issue Reporting & Resolution",
     quip: "Report a pothole from orbit. City hall gets the ping.",
     blurb:
-      "Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin.",
-    tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary"],
+      "Formerly CivicFix. Citizens report issues with photos, voice notes and GPS; municipalities resolve them. React 19 + Leaflet front end over 57 REST endpoints in Express 5, TypeScript, Prisma and PostgreSQL. Google Gemini vision classifies photos by category and severity (output validated, not trusted), Cloudinary handles media, and the issue lifecycle is a transactional state machine with append-only history, self-escalating SLA deadlines and JWT role-based access for citizen, authority and admin. Rebuilt as Fixity on a navy and signal-yellow design system with dark mode, it adds City Pulse analytics (reported vs fixed, backlog, a weekday × hour heatmap, ward scorecards on a map, costs and ratings) on an in-house colour-blind-safe SVG chart kit, plus ward bulletins, watch-zone alerts, ward votes, cleanup drives and budgets with a cost ledger, all behind a permission matrix enforced on every route and pinned by 89 tests.",
+    tags: ["React 19", "TypeScript", "Vite", "Leaflet", "Express 5", "Prisma", "PostgreSQL", "Gemini", "Cloudinary", "Zod", "RBAC"],
     github: "https://github.com/marvillage/civicfix",
     live: "https://civicfix-ruby.vercel.app",
-    livePath: "/issues",
+    livePath: "/pulse",
     planet: "🏙️",
     featured: true,
   },
