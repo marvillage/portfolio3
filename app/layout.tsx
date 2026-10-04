@@ -4,7 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { Bangers, Kalam, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const SITE_URL = "https://portfolio3-kappa-rosy.vercel.app";
+const SITE_URL = "https://kushagra-srivastava-portfolio.vercel.app";
 
 // Link-preview image: used when public/art/og-cover.(webp|png) exists.
 const ogCover = ["og-cover.webp", "og-cover.png"].find((f) =>
