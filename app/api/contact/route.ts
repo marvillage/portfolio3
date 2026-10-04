@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { isBot, limiter, requestInfo } from "@/lib/visitor";
 
 export const runtime = "nodejs";
 
-type Payload = { name?: string; email?: string; message?: string };
+type Payload = { name?: string; email?: string; message?: string; website?: string };
+
+// 5 messages per address per 10 minutes is plenty for a person and stops floods
+const allow = limiter(5, 10 * 60_000);
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -12,6 +17,17 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
+  }
+
+  // honeypot: a hidden field people never see; bots fill it in. Pretend it worked.
+  if ((body.website ?? "").trim()) return NextResponse.json({ ok: true });
+
+  const info = requestInfo(req);
+  if (!allow(info.ip || info.ua)) {
+    return NextResponse.json(
+      { ok: false, error: "Too many messages in a short time. Please try again in a few minutes." },
+      { status: 429 }
+    );
   }
 
   const name = (body.name ?? "").trim();
@@ -30,6 +46,9 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+  if (name.length > 200 || email.length > 320) {
+    return NextResponse.json({ ok: false, error: "Name or email is too long." }, { status: 400 });
+  }
   if (message.length > 5000) {
     return NextResponse.json(
       { ok: false, error: "Message is too long." },
@@ -43,7 +62,19 @@ export async function POST(req: Request) {
 
   let stored = false;
 
-  // 1) Persist to Supabase (online Postgres database)
+  // 1) Store in the portfolio database; the admin inbox at /admin reads from here
+  const sql = db();
+  if (sql && !isBot(info.ua)) {
+    try {
+      await sql`insert into portfolio.messages (name, email, message, country, city, device)
+                values (${name}, ${email}, ${message}, ${info.country}, ${info.city}, ${info.device})`;
+      stored = true;
+    } catch (e) {
+      console.error("Message insert failed:", e);
+    }
+  }
+
+  // 2) Also persist to Supabase when configured (older backend)
   if (SUPABASE_URL && SUPABASE_KEY) {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
@@ -63,7 +94,7 @@ export async function POST(req: Request) {
     }
   }
 
-  // 2) Optionally forward via Formspree (email delivery)
+  // 3) Optionally forward via Formspree (email delivery)
   if (FORMSPREE) {
     try {
       const res = await fetch(FORMSPREE, {
@@ -81,7 +112,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  // 3) No backend configured (or all failed) → tell the client to use mailto
+  // 4) No backend configured (or all failed) → tell the client to use mailto
   return NextResponse.json(
     {
       ok: false,

@@ -11,7 +11,7 @@ import ArtStrip from "./ArtStrip";
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function Contact({ art }: { art?: string }) {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
   const [status, setStatus] = useState<Status>("idle");
   const [note, setNote] = useState("");
 
@@ -39,7 +39,7 @@ export default function Contact({ art }: { art?: string }) {
       const data = await res.json();
       if (data.ok) {
         setStatus("sent");
-        setForm({ name: "", email: "", message: "" });
+        setForm({ name: "", email: "", message: "", website: "" });
       } else if (data.fallback) {
         mailtoFallback();
         setStatus("idle");
@@ -157,6 +157,12 @@ export default function Contact({ art }: { art?: string }) {
                 placeholder="Tell me about it…"
                 className="field resize-none"
               />
+            </div>
+
+            {/* spam trap: hidden from people and screen readers, filled in by bots */}
+            <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+              <label htmlFor="contact-website">Website</label>
+              <input id="contact-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={update("website")} />
             </div>
 
             <button

@@ -14,6 +14,7 @@ import Achievements from "@/components/Achievements";
 import Articles from "@/components/Articles";
 import Stats from "@/components/Stats";
 import Contact from "@/components/Contact";
+import Analytics from "@/components/Analytics";
 import Footer from "@/components/Footer";
 import InkDivider from "@/components/InkDivider";
 import { getMediumPosts } from "@/lib/medium";
@@ -70,6 +71,7 @@ export default async function Home() {
     <>
       <SpaceBackground />
       <ScrollProgress />
+      <Analytics />
       <Navbar />
       <main className="relative z-10">
         <Hero shipArt={findArt("hero-ship")} />
